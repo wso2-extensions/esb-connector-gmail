@@ -30,6 +30,9 @@
         <property name="uri.var.clientSecret" expression="$func:clientSecret"/>
         <property name="uri.var.grantType" expression="$func:grantType"/>
 
+        <property name="FORCE_POST_PUT_NOBODY" value="true" scope="axis2" type="BOOLEAN" />
+        <property name="messageType" value="application/x-www-form-urlencoded" scope="axis2"/>
+        <property name="DISABLE_CHUNKING" value="true" scope="axis2"/>
         <call>
             <endpoint>
                 <http method="post"
@@ -38,8 +41,8 @@
         </call>
         <filter source="$axis2:HTTP_SC" regex="[2][0][0]">
             <then>
-                <property name="access_token" expression="json-eval($.access_token)"/>
-                <header name="Authorization" expression="fn:concat('Bearer ',get-property('access_token'))"
+                <property name="accessToken" expression="json-eval($.access_token)"/>
+                <header name="Authorization" expression="fn:concat('Bearer ',get-property('accessToken'))"
                         scope="transport"/>
             </then>
         </filter>

@@ -17,13 +17,12 @@
 -->
 
 <template name="gmailRestinit" xmlns="http://ws.apache.org/ns/synapse">
-    <parameter name="access_token" description="URL of the nimble API"/>
-    <parameter name="userId" description="URL of the nimble API"/>
-
+    <parameter name="apiUrl" description="The URL of Gmail REST API."/>
+    <parameter name="apiVersion" description="Version of the API."/>
+    <parameter name="userId" description="Email ID of the user."/>
     <sequence>
-        <property name="uri.var.apiUrl" value="https://www.googleapis.com/gmail"/>
-        <property name="uri.var.access_token" expression="$func:access_token"/>
-        <property name="uri.var.userId" expression="$func:userId"/>
+        <property name="uri.var.apiUrl" expression="$func:apiUrl"/>
         <property name="uri.var.apiVersion" value="v1"/>
+        <property name="uri.var.userId" expression="$func:userId"/>
     </sequence>
 </template>
