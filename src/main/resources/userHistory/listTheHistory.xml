@@ -16,7 +16,6 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-
 <template name="listTheHistory" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="startHistoryId" description="Returns history records after the specified startHistoryId"/>
     <parameter name="labelId" description="Only return messages with a label matching the ID"/>
@@ -28,6 +27,16 @@
         <property name="uri.var.maxResults" expression="$func:maxResults"/>
         <property name="uri.var.pageToken" expression="$func:pageToken"/>
         <property name="gmailParameters" value=""/>
+        <filter
+                xpath="get-property('uri.var.startHistoryId') = '' or  not(string(get-property('uri.var.startHistoryId')))">
+            <then>
+                <property name="uri.var.startHistoryId" value=""/>
+            </then>
+            <else>
+                <property name="gmailParameters" expression="fn:concat(get-property('gmailParameters'),
+               '&amp;startHistoryId=', get-property('uri.var.startHistoryId'))"/>
+            </else>
+        </filter>
         <filter
                 xpath="get-property('uri.var.labelId') = '' or  not(string(get-property('uri.var.labelId')))">
             <then>

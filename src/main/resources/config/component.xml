@@ -16,27 +16,27 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-
 <component name="config" type="synapse/template">
     <subComponents>
-        <component name="gmailRestinit">
-            <file>gmailRestinit.xml</file>
+        <component name="gmailRestInit">
+            <file>gmailRestInit.xml</file>
             <description>get the basic details of api</description>
         </component>
         <component name="passwordLogin">
             <file>passwordLogin.xml</file>
-            <description>Login to the Gmail account using username and password
-            </description>
+            <description>Login to the Gmail account using username and password</description>
         </component>
         <component name="endSession">
             <file>endSession.xml</file>
-            <description>Terminate the existing IMAP and SMTP connections with
-                Gmail
-            </description>
+            <description>Terminate the existing IMAP and SMTP connections with Gmail</description>
         </component>
         <component name="init">
             <file>init.xml</file>
             <description>get the basic details of the attachments</description>
+        </component>
+        <component name="getAccessTokenFromRefreshToken">
+            <file>getAccessTokenFromRefreshToken.xml</file>
+            <description>get the access token from refresh token</description>
         </component>
     </subComponents>
 </component>

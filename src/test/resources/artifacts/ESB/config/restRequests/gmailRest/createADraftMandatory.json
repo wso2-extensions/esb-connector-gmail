@@ -1,0 +1,17 @@
+{
+  "refreshToken": "%s(refreshToken)",
+  "clientId": "%s(clientId)",
+  "clientSecret": "%s(clientSecret)",
+  "userId": "%s(userId)",
+  "accessToken": "%s(accessToken)",
+  "apiUrl": "%s(apiUrl)",
+  "accessTokenRegistryPath": "%s(accessTokenRegistryPath)",
+  "to": "%s(to)",
+  "cc": "%s(cc)",
+  "bcc": "%s(bcc)",
+  "subject": "%s(subject)",
+  "messageBody": "%s(messageBody)",
+  "from": "%s(from)",
+  "id": "%s(draftId)",
+  "threadId": "%s(threadId)"
+}

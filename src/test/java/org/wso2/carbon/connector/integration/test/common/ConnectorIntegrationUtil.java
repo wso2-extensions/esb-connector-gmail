@@ -327,7 +327,7 @@ public class ConnectorIntegrationUtil {
      *
      * @param path
      * @return String contents of file
-     * @throws java.io.IOException
+     * @throws IOException
      */
     public static String getFileContent(String path) throws IOException {
 
@@ -384,7 +384,7 @@ public class ConnectorIntegrationUtil {
      * @param attachmentDataHandler The attachment to add to the message context.
      * @param attachmentContentId   The content ID for the attachment.
      * @return The built MEP Client
-     * @throws org.apache.axis2.AxisFault on failure to initialize the client.
+     * @throws AxisFault on failure to initialize the client.
      */
     public static OperationClient buildMEPClientWithAttachment(EndpointReference endpoint,
                                                                OMElement request,
@@ -418,7 +418,7 @@ public class ConnectorIntegrationUtil {
      * @param endpoint The endpoint to configure the client for.
      * @param request  The request to add as a SOAP envelope
      * @return The built MEP Client
-     * @throws org.apache.axis2.AxisFault on failure to initialize the client.
+     * @throws AxisFault on failure to initialize the client.
      */
     public static OperationClient buildMEPClient(EndpointReference endpoint, OMElement request)
             throws AxisFault {

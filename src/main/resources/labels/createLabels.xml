@@ -16,7 +16,6 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-
 <template name="createLabels" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="name" description="The display name of the label"/>
     <parameter name="messageListVisibility"
@@ -24,7 +23,7 @@
     <parameter name="labelListVisibility"
                description="The visibility of the label in the label list in the Gmail web interface"/>
     <parameter name="type" description="The owner type for the label."/>
-    <parameter name="messagesTotal" description="he total number of messages with the label"/>
+    <parameter name="messagesTotal" description="The total number of messages with the label"/>
     <parameter name="messagesUnread" description="The number of unread messages with the label"/>
     <parameter name="threadsTotal" description="The total number of threads with the label"/>
     <parameter name="threadsUnread" description="The number of unread threads with the label"/>

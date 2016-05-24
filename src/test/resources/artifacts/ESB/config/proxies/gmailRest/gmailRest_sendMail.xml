@@ -16,7 +16,6 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-
 <proxy xmlns="http://ws.apache.org/ns/synapse" name="gmailRest_sendMail"
        transports="https,http" statistics="disable" trace="disable"
        startOnLoad="true">

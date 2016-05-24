@@ -16,8 +16,8 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.carbon.connector</groupId>
@@ -45,14 +45,16 @@
             <artifactId>java-gmail-imap</artifactId>
             <version>1.4.4-gm-ext-0.5</version>
             <scope>system</scope>
-            <systemPath>${basedir}/src/main/resources/lib/java-gmail-imap-1.4.4-gm-ext-0.5.jar</systemPath>
+            <systemPath>${basedir}/src/main/resources/lib/java-gmail-imap-1.4.4-gm-ext-0.5.jar
+            </systemPath>
         </dependency>
         <dependency>
             <groupId>com.google.code</groupId>
             <artifactId>samples.oauth2</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>${basedir}/src/main/resources/lib/samples.oauth2-0.0.1-SNAPSHOT.jar</systemPath>
+            <systemPath>${basedir}/src/main/resources/lib/samples.oauth2-0.0.1-SNAPSHOT.jar
+            </systemPath>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon.mediation</groupId>
@@ -148,7 +150,8 @@
         </dependency>
     </dependencies>
     <scm>
-        <connection>scm:git:https://github.com/wso2-extensions/esb-connector-gmailrest.git</connection>
+        <connection>scm:git:https://github.com/wso2-extensions/esb-connector-gmailrest.git
+        </connection>
         <url>https://github.com/wso2-extensions/esb-connector-gmailrest.git</url>
         <developerConnection>scm:git:https://github.com/wso2-extensions/esb-connector-gmailrest
         </developerConnection>

@@ -16,7 +16,6 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-
 <template name="sendMailWithAttachment" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="subject" description="(Optional) Subject of the e-mail message"/>
     <parameter name="toRecipients" description="A comma seperated list of recipients"/>

@@ -16,7 +16,6 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-
 <proxy xmlns="http://ws.apache.org/ns/synapse"
        name="gmailRest_getALabel"
        transports="https,http"
@@ -32,19 +31,18 @@
             <property name="refreshToken" expression="json-eval($.refreshToken)"/>
             <property name="clientId" expression="json-eval($.clientId)"/>
             <property name="clientSecret" expression="json-eval($.clientSecret)"/>
-            <property name="grantType" expression="json-eval($.grantType)"/>
-            <gmailRest.getAccessTokenFromRefreshToken>
-                <refreshToken>{$ctx:refreshToken}</refreshToken>
-                <clientId>{$ctx:clientId}</clientId>
-                <clientSecret>{$ctx:clientSecret}</clientSecret>
-                <grantType>{$ctx:grantType}</grantType>
-            </gmailRest.getAccessTokenFromRefreshToken>
-            <gmailRest.gmailRestinit>
-                <apiUrl>{$ctx:apiUrl}</apiUrl>
-                <access_token>{$ctx:access_token}</access_token>
+            <property name="accessToken" expression="json-eval($.accessToken)"/>
+            <property name="accessTokenRegistryPath" expression="json-eval($.accessTokenRegistryPath)"/>
+            <property name="apiUrl" expression="json-eval($.apiUrl)"/>
+            <gmailRest.gmailRestInit>
                 <userId>{$ctx:userId}</userId>
-                <apiVersion>{$ctx:apiVersion}</apiVersion>
-            </gmailRest.gmailRestinit>
+                <refreshToken>{$ctx:refreshToken}</refreshToken>
+                <clientSecret>{$ctx:clientSecret}</clientSecret>
+                <clientId>{$ctx:clientId}</clientId>
+                <accessTokenRegistryPath>{$ctx:accessTokenRegistryPath}</accessTokenRegistryPath>
+                <accessToken>{$ctx:accessToken}</accessToken>
+                <apiUrl>{$ctx:apiUrl}</apiUrl>
+            </gmailRest.gmailRestInit>
             <gmailRest.getALabel>
                 <id>{$ctx:id}</id>
                 <format>{$ctx:format}</format>
