@@ -16,13 +16,26 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-
 <template name="listDrafts" xmlns="http://ws.apache.org/ns/synapse">
+    <parameter name="includeSpamTrash"
+               description="Include messages from SPAM and TRASH in the results. (Default: false)"/>
     <parameter name="maxResults" description="Maximum number of messages to return"/>
     <parameter name="pageToken" description="Page token to retrieve a specific page of results in the list"/>
     <sequence>
+        <property name="uri.var.includeSpamTrash" expression="$func:includeSpamTrash"/>
         <property name="uri.var.maxResults" expression="$func:maxResults"/>
         <property name="uri.var.pageToken" expression="$func:pageToken"/>
+        <property name="gmailParameters" value=""/>
+        <filter
+                xpath="get-property('uri.var.includeSpamTrash') = '' or  not(string(get-property('uri.var.includeSpamTrash')))">
+            <then>
+                <property name="uri.var.includeSpamTrash" value=""/>
+            </then>
+            <else>
+                <property name="gmailParameters" expression="fn:concat(get-property('gmailParameters'),
+               '&amp;includeSpamTrash=', get-property('uri.var.includeSpamTrash'))"/>
+            </else>
+        </filter>
         <filter
                 xpath="get-property('uri.var.maxResults') = '' or  not(string(get-property('uri.var.maxResults')))">
             <then>

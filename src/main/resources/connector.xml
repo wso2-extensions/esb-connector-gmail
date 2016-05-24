@@ -16,7 +16,6 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-
 <connector>
     <component name="gmailRest" package="org.wso2.carbon.connector">
         <dependency component="messages"/>
@@ -26,7 +25,7 @@
         <dependency component="userHistory"/>
         <dependency component="userProfile"/>
         <dependency component="drafts"/>
-        <dependency component="authToken"/>
-        <description>wso2 gmail connector library</description>
+        <description>WSO2 Gmail connector library</description>
+        <authenticationInfo>https://docs.wso2.com/display/ESBCONNECTORS/Configuring+Gmail+Operations</authenticationInfo>
     </component>
 </connector>

@@ -16,7 +16,6 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-
 <template name="init" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="username" description="E-mail address of the user"/>
     <parameter name="oauthAccessToken" description="OAuth access token of the user"/>

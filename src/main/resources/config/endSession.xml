@@ -16,8 +16,6 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-
-
 <template name="endSession" xmlns="http://ws.apache.org/ns/synapse">
     <sequence>
         <log level="custom">

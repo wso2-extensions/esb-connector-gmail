@@ -34,7 +34,6 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
 
     private Map<String, String> esbRequestHeadersMap = new HashMap<String, String>();
     private Map<String, String> apiRequestHeadersMap = new HashMap<String, String>();
-    private Map<String, String> headersMap = new HashMap<String, String>();
 
     /**
      * Set up the environment.
@@ -44,23 +43,54 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
         init("gmailRest-connector-2.0.1-SNAPSHOT");
         esbRequestHeadersMap.put("Accept-Charset", "UTF-8");
         esbRequestHeadersMap.put("Content-Type", "application/json");
-        String authorization = connectorProperties.getProperty("accessToken");
+
+        String methodName = "gmailRest_gmailInit";
+        RestResponse<JSONObject> esbRestResponse =
+                sendJsonRestRequest(getProxyServiceURL(methodName), "POST", esbRequestHeadersMap, "gmailInitMandatory.json");
+        String accessToken = esbRestResponse.getBody().get("access_token").toString();
+        connectorProperties.put("access_Token", accessToken);
+        String authorization = connectorProperties.getProperty("access_Token");
         apiRequestHeadersMap.put("Authorization", "Bearer " + authorization);
+        apiRequestHeadersMap.putAll(esbRequestHeadersMap);
+    }
+
+    /**
+     * Positive test case for createAMail method with mandatory parameters.
+     */
+    @Test(enabled = true, description = "gmailRest {createAMail} integration test with mandatory parameter.")
+    public void testCreateAMailWithMandatoryParameters() throws IOException, JSONException {
+        String methodName = "gmailRest_createAMail";
+        RestResponse<JSONObject> esbRestResponse =
+                sendJsonRestRequest(getProxyServiceURL(methodName), "POST", esbRequestHeadersMap, "createAMailMandatory.json");
+
+        Assert.assertEquals(esbRestResponse.getHttpStatusCode(), 200);
+
+        String messageId = esbRestResponse.getBody().get("id").toString();
+        String apiEndPoint =
+                connectorProperties.getProperty("apiUrl") + "/" +
+                        connectorProperties.getProperty("apiVersion") + "/users/" +
+                        connectorProperties.getProperty("userId") + "/messages/" +
+                        messageId;
+        RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
+
+        Assert.assertEquals(apiRestResponse.getBody().get("id").toString(), messageId);
     }
 
     /**
      * Positive test case for listAllMails method with mandatory parameters.
      */
     @Test(enabled = true, description = "gmailRest {listAllMails} integration test with mandatory parameter.")
-    public void testGetAListOfContactsWithMandatoryParameters() throws IOException, JSONException {
+    public void testListAllMailsWithMandatoryParameters() throws IOException, JSONException {
         String methodName = "gmailRest_listAllMails";
         String apiEndPoint =
                 connectorProperties.getProperty("apiUrl") + "/" +
                         connectorProperties.getProperty("apiVersion") + "/users/" +
                         connectorProperties.getProperty("userId") + "/messages";
+
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(getProxyServiceURL(methodName), "POST", esbRequestHeadersMap, "listAllMailsMandatory.json");
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
+
         Assert.assertEquals(esbRestResponse.getBody().toString(), apiRestResponse.getBody().toString());
     }
 
@@ -68,7 +98,7 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
      * Positive test case for listAllMails method with optional parameters.
      */
     @Test(enabled = true, description = "gmailRest {listAllMails} integration test with optional parameter.")
-    public void testGetAListOfContactsWithOptionalParameters() throws IOException, JSONException {
+    public void testListAllMailsWithOptionalParameters() throws IOException, JSONException {
         String methodName = "gmailRest_listAllMails";
         String apiEndPoint =
                 connectorProperties.getProperty("apiUrl") + "/" +
@@ -82,6 +112,7 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(getProxyServiceURL(methodName), "POST", esbRequestHeadersMap, "listAllMailsOptional.json");
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
+
         Assert.assertEquals(esbRestResponse.getBody().toString(), apiRestResponse.getBody().toString());
     }
 
@@ -99,6 +130,7 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(getProxyServiceURL(methodName), "POST", esbRequestHeadersMap, "getAMailMandatory.json");
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
+
         Assert.assertEquals(esbRestResponse.getBody().toString(), apiRestResponse.getBody().toString());
     }
 
@@ -117,6 +149,7 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(getProxyServiceURL(methodName), "POST", esbRequestHeadersMap, "getAMailOptional.json");
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
+
         Assert.assertEquals(esbRestResponse.getBody().toString(), apiRestResponse.getBody().toString());
     }
 
@@ -151,6 +184,7 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(getProxyServiceURL(methodName), "POST", esbRequestHeadersMap, "getALabelMandatory.json");
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
+
         Assert.assertEquals(esbRestResponse.getBody().toString(), apiRestResponse.getBody().toString());
     }
 
@@ -167,6 +201,7 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(getProxyServiceURL(methodName), "POST", esbRequestHeadersMap, "listAllThreadsMandatory.json");
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
+
         Assert.assertEquals(esbRestResponse.getBody().toString(), apiRestResponse.getBody().toString());
     }
 
@@ -188,6 +223,7 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(getProxyServiceURL(methodName), "POST", esbRequestHeadersMap, "listAllThreadsOptional.json");
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
+
         Assert.assertEquals(esbRestResponse.getBody().toString(), apiRestResponse.getBody().toString());
     }
 
@@ -205,6 +241,7 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(getProxyServiceURL(methodName), "POST", esbRequestHeadersMap, "getAThreadMandatory.json");
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
+
         Assert.assertEquals(esbRestResponse.getBody().toString(), apiRestResponse.getBody().toString());
     }
 
@@ -223,7 +260,28 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(getProxyServiceURL(methodName), "POST", esbRequestHeadersMap, "getAThreadOptional.json");
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
+
         Assert.assertEquals(esbRestResponse.getBody().toString(), apiRestResponse.getBody().toString());
+    }
+
+    /**
+     * Positive test case for createADrafts method with mandatory parameters.
+     */
+    @Test(enabled = true, description = "gmailRest {createADraft} integration test with mandatory parameter.")
+    public void testCreateADraftWithMandatoryParameters() throws IOException, JSONException {
+        String methodName = "gmailRest_createADraft";
+        RestResponse<JSONObject> esbRestResponse =
+                sendJsonRestRequest(getProxyServiceURL(methodName), "POST", esbRequestHeadersMap, "createADraftMandatory.json");
+        Assert.assertEquals(esbRestResponse.getHttpStatusCode(), 200);
+        String messageId = esbRestResponse.getBody().get("id").toString();
+        String apiEndPoint =
+                connectorProperties.getProperty("apiUrl") + "/" +
+                        connectorProperties.getProperty("apiVersion") + "/users/" +
+                        connectorProperties.getProperty("userId") + "/drafts/" +
+                        messageId;
+        RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
+
+        Assert.assertEquals(apiRestResponse.getBody().get("id").toString(), messageId);
     }
 
     /**
@@ -239,6 +297,7 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(getProxyServiceURL(methodName), "POST", esbRequestHeadersMap, "listDraftsMandatory.json");
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
+
         Assert.assertEquals(esbRestResponse.getBody().toString(), apiRestResponse.getBody().toString());
     }
 
@@ -260,6 +319,7 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(getProxyServiceURL(methodName), "POST", esbRequestHeadersMap, "listDraftsOptional.json");
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
+
         Assert.assertEquals(esbRestResponse.getBody().toString(), apiRestResponse.getBody().toString());
     }
 
@@ -355,7 +415,6 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
         Assert.assertEquals(esbRestResponse.getBody().toString(), apiRestResponse.getBody().toString());
     }
 
-
     /**
      * Positive test case for createLabels method with mandatory parameters.
      */
@@ -371,9 +430,8 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
                         connectorProperties.getProperty("apiVersion") + "/users/" +
                         connectorProperties.getProperty("userId") + "/labels/" +
                         messageId;
-
-        System.out.println(apiEndPoint);
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
+
         Assert.assertEquals(apiRestResponse.getBody().get("name").toString(), connectorProperties.getProperty("labelNameMandatory"));
     }
 
@@ -393,25 +451,7 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
                         connectorProperties.getProperty("userId") + "/labels/" +
                         messageId;
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
-        Assert.assertEquals(apiRestResponse.getBody().get("name").toString(), connectorProperties.getProperty("labelNameOptional"));
-    }
 
-    /**
-     * Positive test case for createAMail method with mandatory parameters.
-     */
-    @Test(enabled = false, description = "gmailRest {createAMail} integration test with mandatory parameter.")
-    public void testCreateAMailWithMandatoryParameters() throws IOException, JSONException {
-        String methodName = "gmailRest_createAMail";
-        RestResponse<JSONObject> esbRestResponse =
-                sendJsonRestRequest(getProxyServiceURL(methodName), "POST", esbRequestHeadersMap, "createAMailMandatory.json");
-        Assert.assertEquals(esbRestResponse.getHttpStatusCode(), 200);
-        String messageId = esbRestResponse.getBody().get("id").toString();
-        String apiEndPoint =
-                connectorProperties.getProperty("apiUrl") + "/" +
-                        connectorProperties.getProperty("apiVersion") + "/users/" +
-                        connectorProperties.getProperty("userId") + "/messages/" +
-                        messageId;
-        RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
-        Assert.assertEquals(apiRestResponse.getBody().get("name").toString(), connectorProperties.getProperty("labelName"));
+        Assert.assertEquals(apiRestResponse.getBody().get("name").toString(), connectorProperties.getProperty("labelNameOptional"));
     }
 }

@@ -16,7 +16,6 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-
 <template name="createADraft" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="to" description="Receiver mail ID "/>
     <parameter name="subject" description="Subject of the message"/>
@@ -123,9 +122,9 @@
             <format>
                 {
                 "message":
-                {
-                "raw":"$1"
-                }
+                    {
+                    "raw":"$1"
+                    }
                 }
             </format>
             <args/>

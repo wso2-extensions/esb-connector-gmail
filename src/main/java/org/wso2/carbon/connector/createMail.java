@@ -40,6 +40,4 @@ public class createMail extends AbstractConnector {
             throw new ConnectException(e);
         }
     }
-
-
 }

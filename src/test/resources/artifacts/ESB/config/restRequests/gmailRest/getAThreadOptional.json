@@ -1,9 +1,11 @@
 {
-"refreshToken":"%s(refreshToken)",
-"clientId":"%s(clientId)",
-"clientSecret":"%s(clientSecret)",
-"grantType":"%s(grantType)",
-"userId":"%s(userId)",
-  "id":"%s(threadId)",
-  "format":"%s(format)"
+  "refreshToken": "%s(refreshToken)",
+  "clientId": "%s(clientId)",
+  "clientSecret": "%s(clientSecret)",
+  "accessTokenRegistryPath": "%s(accessTokenRegistryPath)",
+  "userId": "%s(userId)",
+  "accessToken": "%s(accessToken)",
+  "apiUrl": "%s(apiUrl)",
+  "id": "%s(threadId)",
+  "format": "%s(format)"
 }

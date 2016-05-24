@@ -16,7 +16,6 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-
 <template name="listAllThreads" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="includeSpamTrash"
                description="Include thread from SPAM and TRASH in the results. (Default: false)"/>

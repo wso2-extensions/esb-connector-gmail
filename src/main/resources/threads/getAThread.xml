@@ -16,7 +16,6 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-
 <template name="getAThread" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="id" description="The ID of the message to retrieve"/>
     <parameter name="format" description="The format to return the message"/>
@@ -41,7 +40,6 @@
                '&amp;format=', get-property('uri.var.format'))"/>
             </else>
         </filter>
-
         <filter
                 xpath="get-property('uri.var.metadataHeaders') = '' or  not(string(get-property('uri.var.metadataHeaders')))">
             <then>

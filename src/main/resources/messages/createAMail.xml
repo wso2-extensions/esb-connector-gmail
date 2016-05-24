@@ -16,7 +16,6 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-
 <template name="createAMail" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="to" description="Receiver mail ID "/>
     <parameter name="subject" description="Subject of the message"/>
