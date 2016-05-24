@@ -41,7 +41,7 @@
                 <arg expression="$ctx:uri.var.clientId"/>
             </args>
         </payloadFactory>
-        <property name="FORCE_POST_PUT_NOBODY" value="true" scope="axis2" type="BOOLEAN" />
+        <property name="FORCE_POST_PUT_NOBODY" value="true" scope="axis2" type="BOOLEAN"/>
         <property name="messageType" value="application/x-www-form-urlencoded" scope="axis2"/>
         <property name="DISABLE_CHUNKING" value="true" scope="axis2"/>
         <call>
@@ -61,13 +61,13 @@
                 var existingAccessToken = mc.getConfiguration().getRegistry().getResource(newAccessRegistryPath);
                     if(existingAccessToken == null){
                     // Create the registry entry if no such entry exists.
-                    mc.getConfiguration().getRegistry().newResource(newAccessRegistryPath,false);
-                    mc.getConfiguration().getRegistry().updateResource(newAccessRegistryPath,newAccessToken);
+                        mc.getConfiguration().getRegistry().newResource(newAccessRegistryPath,false);
+                        mc.getConfiguration().getRegistry().updateResource(newAccessRegistryPath,newAccessToken);
                     } else {
                         // Update the registry entry if it already exists.
                         mc.getConfiguration().getRegistry().updateResource(newAccessRegistryPath,newAccessToken);
                     }
-            }
+                }
             ]]>
         </script>
         <!-- store the new accessToken into registry. -->
