@@ -40,7 +40,7 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
      */
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-        init("gmailRest-connector-2.0.1-SNAPSHOT");
+        init("gmailRest-connector-2.0.1");
         esbRequestHeadersMap.put("Accept-Charset", "UTF-8");
         esbRequestHeadersMap.put("Content-Type", "application/json");
 
