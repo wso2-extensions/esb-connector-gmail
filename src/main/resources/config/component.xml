@@ -18,10 +18,6 @@
 -->
 <component name="config" type="synapse/template">
     <subComponents>
-        <component name="gmailRestInit">
-            <file>gmailRestInit.xml</file>
-            <description>get the basic details of api</description>
-        </component>
         <component name="passwordLogin">
             <file>passwordLogin.xml</file>
             <description>Login to the Gmail account using username and password</description>
@@ -32,7 +28,7 @@
         </component>
         <component name="init">
             <file>init.xml</file>
-            <description>get the basic details of the attachments</description>
+            <description>get the basic details of api</description>
         </component>
         <component name="getAccessTokenFromRefreshToken">
             <file>getAccessTokenFromRefreshToken.xml</file>
