@@ -38,14 +38,13 @@ public class GmailConfig extends AbstractConnector {
     public void connect(MessageContext messageContext) throws ConnectException {
         try {
             // Reading OAuth access token and user name from the message context
-            String oauthAccessToken =
-                    GmailUtils.lookupFunctionParam(messageContext,
-                            GmailConstants.GMAIL_PARAM_OAUTH_ACCESS_TOKEN);
-            String username =
+            String accessToken =
+                    (String) messageContext.getProperty(GmailConstants.GMAIL_ACCESSTOKEN);
+            String userId =
                     GmailUtils.lookupFunctionParam(messageContext,
                             GmailConstants.GMAIL_PARAM_USERNAME);
             // Storing OAuth user login details in the message context
-            this.storeOauthUserLogin(messageContext, username, oauthAccessToken);
+            this.storeOauthUserLogin(messageContext, userId, accessToken);
         } catch (MessagingException e) {
             GmailUtils.storeErrorResponseStatus(messageContext,
                     e,
@@ -61,23 +60,23 @@ public class GmailConfig extends AbstractConnector {
     /**
      * Stores user name and access token for OAuth authentication
      *
-     * @param messageContext   message context where the user login information should be
-     *                         stored
-     * @param username         user name
-     * @param oauthAccessToken access token
+     * @param messageContext message context where the user login information should be
+     *                       stored
+     * @param userId         user name
+     * @param accessToken    access token
      * @throws com.google.code.javax.mail.MessagingException
      */
-    private void storeOauthUserLogin(MessageContext messageContext, String username,
-                                     String oauthAccessToken) throws MessagingException {
+    private void storeOauthUserLogin(MessageContext messageContext, String userId,
+                                     String accessToken) throws MessagingException {
         org.apache.axis2.context.MessageContext axis2MessageContext =
                 ((Axis2MessageContext) messageContext).getAxis2MessageContext();
         Object loginMode = axis2MessageContext.getProperty(GmailConstants.GMAIL_LOGIN_MODE);
         if (loginMode != null &&
                 (loginMode.toString() == GmailConstants.GMAIL_OAUTH_LOGIN_MODE) &&
                 messageContext.getProperty(GmailConstants.GMAIL_OAUTH_USERNAME).toString()
-                        .equals(username) &&
+                        .equals(userId) &&
                 messageContext.getProperty(GmailConstants.GMAIL_OAUTH_ACCESS_TOKEN).toString()
-                        .equals(oauthAccessToken)) {
+                        .equals(accessToken)) {
             log.info("The same authentication is already available. Hence no changes are needed.");
             return;
         }
@@ -85,11 +84,11 @@ public class GmailConfig extends AbstractConnector {
         // Reset already stored instances
         GmailUtils.closeConnection(axis2MessageContext);
 
-        log.info("Setting the loggin mode to \"OAUTH\"");
+        log.info("Setting the logging mode to \"OAUTH\"");
         axis2MessageContext.setProperty(GmailConstants.GMAIL_LOGIN_MODE,
                 GmailConstants.GMAIL_OAUTH_LOGIN_MODE);
-        log.info("Storing new username and access token");
-        messageContext.setProperty(GmailConstants.GMAIL_OAUTH_USERNAME, username);
-        messageContext.setProperty(GmailConstants.GMAIL_OAUTH_ACCESS_TOKEN, oauthAccessToken);
+        log.info("Storing the new username and access token");
+        messageContext.setProperty(GmailConstants.GMAIL_OAUTH_USERNAME, userId);
+        messageContext.setProperty(GmailConstants.GMAIL_OAUTH_ACCESS_TOKEN, accessToken);
     }
 }

@@ -38,7 +38,7 @@ public final class GmailConstants {
     /**
      * Name of the "username" parameter in synapse configuration.
      */
-    public static final String GMAIL_PARAM_USERNAME = "username";
+    public static final String GMAIL_PARAM_USERNAME = "userId";
     /**
      * Name of the "password" parameter in synapse configuration.
      */
@@ -46,7 +46,7 @@ public final class GmailConstants {
     /**
      * Name of the "OAuth access token" parameter in synapse configuration.
      */
-    public static final String GMAIL_PARAM_OAUTH_ACCESS_TOKEN = "oauthAccessToken";
+    public static final String GMAIL_PARAM_OAUTH_ACCESS_TOKEN = "accessToken";
     /**
      * Property name to store the user name for SASL authentication.
      */
@@ -199,6 +199,10 @@ public final class GmailConstants {
      * SMTP port
      */
     public static final int GMAIL_SMTP_PORT = 587;
+    /**
+     * Access Token to access the GMAIL REST api
+     */
+    public static final String GMAIL_ACCESSTOKEN = "uri.var.accessToken";
 
     /**
      * Making the default constructor private since Utility classes should not

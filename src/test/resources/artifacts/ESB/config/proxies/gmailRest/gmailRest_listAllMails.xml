@@ -36,7 +36,7 @@
             <property name="accessToken" expression="json-eval($.accessToken)"/>
             <property name="accessTokenRegistryPath" expression="json-eval($.accessTokenRegistryPath)"/>
             <property name="apiUrl" expression="json-eval($.apiUrl)"/>
-            <gmailRest.gmailRestInit>
+            <gmailRest.init>
                 <userId>{$ctx:userId}</userId>
                 <refreshToken>{$ctx:refreshToken}</refreshToken>
                 <clientSecret>{$ctx:clientSecret}</clientSecret>
@@ -44,7 +44,7 @@
                 <accessTokenRegistryPath>{$ctx:accessTokenRegistryPath}</accessTokenRegistryPath>
                 <accessToken>{$ctx:accessToken}</accessToken>
                 <apiUrl>{$ctx:apiUrl}</apiUrl>
-            </gmailRest.gmailRestInit>
+            </gmailRest.init>
             <gmailRest.listAllMails>
                 <includeSpamTrash>{$ctx:includeSpamTrash}</includeSpamTrash>
                 <labelIds>{$ctx:labelIds}</labelIds>
