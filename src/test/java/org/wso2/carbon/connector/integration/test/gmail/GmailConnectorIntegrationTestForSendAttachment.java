@@ -16,7 +16,7 @@
  *  under the License.
  */
 
-package org.wso2.carbon.connector.integration.test.gmailRest;
+package org.wso2.carbon.connector.integration.test.gmail;
 
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.util.AXIOMUtil;

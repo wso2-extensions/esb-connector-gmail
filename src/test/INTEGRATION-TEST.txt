@@ -30,5 +30,5 @@ with following information
 	- Scroll down and click on the link "Details" which is near the label "Last account activity: xx minutes ago"
 	- Click on "Sign out all other sessions"
 
-5. Navigate to "{GMAIL_REST_HOME}" and run the following command.
+5. Navigate to "{GMAIL_HOME}" and run the following command.
       $ mvn clean install

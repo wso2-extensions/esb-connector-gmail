@@ -17,18 +17,15 @@
  ~  under the License.
 -->
 <proxy xmlns="http://ws.apache.org/ns/synapse"
-       name="gmailRest_listAllMails"
+       name="gmail_getADraft"
        transports="https,http"
        statistics="disable"
        trace="disable"
        startOnLoad="true">
     <target>
         <inSequence>
-            <property name="includeSpamTrash" expression="json-eval($.includeSpamTrash)"/>
-            <property name="labelIds" expression="json-eval($.labelIds)"/>
-            <property name="maxResults" expression="json-eval($.maxResults)"/>
-            <property name="pageToken" expression="json-eval($.pageToken)"/>
-            <property name="q" expression="json-eval($.q)"/>
+            <property name="id" expression="json-eval($.id)"/>
+            <property name="format" expression="json-eval($.format)"/>
             <property name="userId" expression="json-eval($.userId)"/>
             <property name="refreshToken" expression="json-eval($.refreshToken)"/>
             <property name="clientId" expression="json-eval($.clientId)"/>
@@ -36,7 +33,7 @@
             <property name="accessToken" expression="json-eval($.accessToken)"/>
             <property name="accessTokenRegistryPath" expression="json-eval($.accessTokenRegistryPath)"/>
             <property name="apiUrl" expression="json-eval($.apiUrl)"/>
-            <gmailRest.init>
+            <gmail.init>
                 <userId>{$ctx:userId}</userId>
                 <refreshToken>{$ctx:refreshToken}</refreshToken>
                 <clientSecret>{$ctx:clientSecret}</clientSecret>
@@ -44,14 +41,11 @@
                 <accessTokenRegistryPath>{$ctx:accessTokenRegistryPath}</accessTokenRegistryPath>
                 <accessToken>{$ctx:accessToken}</accessToken>
                 <apiUrl>{$ctx:apiUrl}</apiUrl>
-            </gmailRest.init>
-            <gmailRest.listAllMails>
-                <includeSpamTrash>{$ctx:includeSpamTrash}</includeSpamTrash>
-                <labelIds>{$ctx:labelIds}</labelIds>
-                <maxResults>{$ctx:maxResults}</maxResults>
-                <pageToken>{$ctx:pageToken}</pageToken>
-                <q>{$ctx:q}</q>
-            </gmailRest.listAllMails>
+            </gmail.init>
+            <gmail.getADraft>
+                <id>{$ctx:id}</id>
+                <format>{$ctx:format}</format>
+            </gmail.getADraft>
             <respond/>
         </inSequence>
         <outSequence>
@@ -62,3 +56,4 @@
     <parameter name="serviceType">proxy</parameter>
     <description/>
 </proxy>
+

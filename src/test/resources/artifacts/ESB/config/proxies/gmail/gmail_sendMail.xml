@@ -16,7 +16,7 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-<proxy xmlns="http://ws.apache.org/ns/synapse" name="gmailRest_sendMail"
+<proxy xmlns="http://ws.apache.org/ns/synapse" name="gmail_sendMail"
        transports="https,http" statistics="disable" trace="disable"
        startOnLoad="true">
     <target>
@@ -37,18 +37,18 @@
                       expression="//ns:textContent/text()"/>
             <property name="attachmentIDs"
                       expression="//ns:attachmentIDs/text()"/>
-            <gmailRest.init>
+            <gmail.init>
                 <username>{$ctx:username}</username>
                 <oauthAccessToken>{$ctx:oauthAccessToken}</oauthAccessToken>
-            </gmailRest.init>
-            <gmailRest.sendMailWithAttachment>
+            </gmail.init>
+            <gmail.sendMailWithAttachment>
                 <subject>{$ctx:subject}</subject>
                 <toRecipients>{$ctx:toRecipients}</toRecipients>
                 <ccRecipients>{$ctx:ccRecipients}</ccRecipients>
                 <bccRecipients>{$ctx:bccRecipients}</bccRecipients>
                 <textContent>{$ctx:textContent}</textContent>
                 <attachmentIDs>{$ctx:attachmentIDs}</attachmentIDs>
-            </gmailRest.sendMailWithAttachment>
+            </gmail.sendMailWithAttachment>
             <gmailRest.endSession/>
             <respond/>
         </inSequence>

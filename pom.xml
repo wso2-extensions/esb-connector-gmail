@@ -21,13 +21,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.carbon.connector</groupId>
-    <artifactId>org.wso2.carbon.connector.gmailrest</artifactId>
+    <artifactId>org.wso2.carbon.connector.gmail</artifactId>
     <packaging>jar</packaging>
-    <version>2.0.3-SNAPSHOT</version>
-    <name>WSO2 Carbon - Mediation Library Connector For Gmail Rest</name>
+    <version>3.0.0</version>
+    <name>WSO2 Carbon - Mediation Library Connector For Gmail</name>
     <url>http://wso2.org</url>
     <properties>
-        <connector.name>gmailRest</connector.name>
+        <connector.name>gmail</connector.name>
         <test.framework.version>4.2.0</test.framework.version>
         <esb.version>4.9.0</esb.version>
         <carbon.kernel.version>4.4.1</carbon.kernel.version>
