@@ -17,13 +17,15 @@
  ~  under the License.
 -->
 <proxy xmlns="http://ws.apache.org/ns/synapse"
-       name="gmailRest_listDrafts"
+       name="gmail_listTheHistory"
        transports="https,http"
        statistics="disable"
        trace="disable"
        startOnLoad="true">
     <target>
         <inSequence>
+            <property name="startHistoryId" expression="json-eval($.startHistoryId)"/>
+            <property name="labelId" expression="json-eval($.labelId)"/>
             <property name="maxResults" expression="json-eval($.maxResults)"/>
             <property name="pageToken" expression="json-eval($.pageToken)"/>
             <property name="userId" expression="json-eval($.userId)"/>
@@ -33,7 +35,7 @@
             <property name="accessToken" expression="json-eval($.accessToken)"/>
             <property name="accessTokenRegistryPath" expression="json-eval($.accessTokenRegistryPath)"/>
             <property name="apiUrl" expression="json-eval($.apiUrl)"/>
-            <gmailRest.init>
+            <gmail.init>
                 <userId>{$ctx:userId}</userId>
                 <refreshToken>{$ctx:refreshToken}</refreshToken>
                 <clientSecret>{$ctx:clientSecret}</clientSecret>
@@ -41,11 +43,13 @@
                 <accessTokenRegistryPath>{$ctx:accessTokenRegistryPath}</accessTokenRegistryPath>
                 <accessToken>{$ctx:accessToken}</accessToken>
                 <apiUrl>{$ctx:apiUrl}</apiUrl>
-            </gmailRest.init>
-            <gmailRest.listDrafts>
+            </gmail.init>
+            <gmail.listTheHistory>
+                <startHistoryId>{$ctx:startHistoryId}</startHistoryId>
+                <labelId>{$ctx:labelId}</labelId>
                 <maxResults>{$ctx:maxResults}</maxResults>
                 <pageToken>{$ctx:pageToken}</pageToken>
-            </gmailRest.listDrafts>
+            </gmail.listTheHistory>
             <respond/>
         </inSequence>
         <outSequence>

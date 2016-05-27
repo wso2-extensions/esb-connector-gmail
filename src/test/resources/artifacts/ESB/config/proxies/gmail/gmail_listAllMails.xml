@@ -17,7 +17,7 @@
  ~  under the License.
 -->
 <proxy xmlns="http://ws.apache.org/ns/synapse"
-       name="gmailRest_listAllThreads"
+       name="gmail_listAllMails"
        transports="https,http"
        statistics="disable"
        trace="disable"
@@ -36,7 +36,7 @@
             <property name="accessToken" expression="json-eval($.accessToken)"/>
             <property name="accessTokenRegistryPath" expression="json-eval($.accessTokenRegistryPath)"/>
             <property name="apiUrl" expression="json-eval($.apiUrl)"/>
-            <gmailRest.init>
+            <gmail.init>
                 <userId>{$ctx:userId}</userId>
                 <refreshToken>{$ctx:refreshToken}</refreshToken>
                 <clientSecret>{$ctx:clientSecret}</clientSecret>
@@ -44,14 +44,14 @@
                 <accessTokenRegistryPath>{$ctx:accessTokenRegistryPath}</accessTokenRegistryPath>
                 <accessToken>{$ctx:accessToken}</accessToken>
                 <apiUrl>{$ctx:apiUrl}</apiUrl>
-            </gmailRest.init>
-            <gmailRest.listAllThreads>
+            </gmail.init>
+            <gmail.listAllMails>
                 <includeSpamTrash>{$ctx:includeSpamTrash}</includeSpamTrash>
                 <labelIds>{$ctx:labelIds}</labelIds>
                 <maxResults>{$ctx:maxResults}</maxResults>
                 <pageToken>{$ctx:pageToken}</pageToken>
                 <q>{$ctx:q}</q>
-            </gmailRest.listAllThreads>
+            </gmail.listAllMails>
             <respond/>
         </inSequence>
         <outSequence>

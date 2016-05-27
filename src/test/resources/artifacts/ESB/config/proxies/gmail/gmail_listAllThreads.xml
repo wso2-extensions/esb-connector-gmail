@@ -17,16 +17,18 @@
  ~  under the License.
 -->
 <proxy xmlns="http://ws.apache.org/ns/synapse"
-       name="gmailRest_getAMail"
+       name="gmail_listAllThreads"
        transports="https,http"
        statistics="disable"
        trace="disable"
        startOnLoad="true">
     <target>
         <inSequence>
-            <property name="id" expression="json-eval($.id)"/>
-            <property name="format" expression="json-eval($.format)"/>
-            <property name="metadataHeaders" expression="json-eval($.metadataHeaders)"/>
+            <property name="includeSpamTrash" expression="json-eval($.includeSpamTrash)"/>
+            <property name="labelIds" expression="json-eval($.labelIds)"/>
+            <property name="maxResults" expression="json-eval($.maxResults)"/>
+            <property name="pageToken" expression="json-eval($.pageToken)"/>
+            <property name="q" expression="json-eval($.q)"/>
             <property name="userId" expression="json-eval($.userId)"/>
             <property name="refreshToken" expression="json-eval($.refreshToken)"/>
             <property name="clientId" expression="json-eval($.clientId)"/>
@@ -34,7 +36,7 @@
             <property name="accessToken" expression="json-eval($.accessToken)"/>
             <property name="accessTokenRegistryPath" expression="json-eval($.accessTokenRegistryPath)"/>
             <property name="apiUrl" expression="json-eval($.apiUrl)"/>
-            <gmailRest.init>
+            <gmail.init>
                 <userId>{$ctx:userId}</userId>
                 <refreshToken>{$ctx:refreshToken}</refreshToken>
                 <clientSecret>{$ctx:clientSecret}</clientSecret>
@@ -42,12 +44,14 @@
                 <accessTokenRegistryPath>{$ctx:accessTokenRegistryPath}</accessTokenRegistryPath>
                 <accessToken>{$ctx:accessToken}</accessToken>
                 <apiUrl>{$ctx:apiUrl}</apiUrl>
-            </gmailRest.init>
-            <gmailRest.getAMail>
-                <id>{$ctx:id}</id>
-                <format>{$ctx:format}</format>
-                <metadataHeaders>{$ctx:metadataHeaders}</metadataHeaders>
-            </gmailRest.getAMail>
+            </gmail.init>
+            <gmail.listAllThreads>
+                <includeSpamTrash>{$ctx:includeSpamTrash}</includeSpamTrash>
+                <labelIds>{$ctx:labelIds}</labelIds>
+                <maxResults>{$ctx:maxResults}</maxResults>
+                <pageToken>{$ctx:pageToken}</pageToken>
+                <q>{$ctx:q}</q>
+            </gmail.listAllThreads>
             <respond/>
         </inSequence>
         <outSequence>

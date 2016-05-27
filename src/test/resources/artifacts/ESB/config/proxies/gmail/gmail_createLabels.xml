@@ -17,21 +17,29 @@
  ~  under the License.
 -->
 <proxy xmlns="http://ws.apache.org/ns/synapse"
-       name="gmailRest_getUserProfile"
+       name="gmail_createLabels"
        transports="https,http"
        statistics="disable"
        trace="disable"
        startOnLoad="true">
     <target>
         <inSequence>
+            <property name="name" expression="json-eval($.name)"/>
+            <property name="messageListVisibility" expression="json-eval($.messageListVisibility)"/>
+            <property name="labelListVisibility" expression="json-eval($.labelListVisibility)"/>
+            <property name="type" expression="json-eval($.type)"/>
+            <property name="messagesTotal" expression="json-eval($.messagesTotal)"/>
+            <property name="messagesUnread" expression="json-eval($.messagesUnread)"/>
+            <property name="threadsTotal" expression="json-eval($.threadsTotal)"/>
+            <property name="threadsUnread" expression="json-eval($.threadsUnread)"/>
             <property name="userId" expression="json-eval($.userId)"/>
             <property name="refreshToken" expression="json-eval($.refreshToken)"/>
             <property name="clientId" expression="json-eval($.clientId)"/>
             <property name="clientSecret" expression="json-eval($.clientSecret)"/>
             <property name="accessToken" expression="json-eval($.accessToken)"/>
-            <property name="accessTokenRegistryPath" expression="json-eval($.accessTokenRegistryPath)"/>
             <property name="apiUrl" expression="json-eval($.apiUrl)"/>
-            <gmailRest.init>
+            <property name="accessTokenRegistryPath" expression="json-eval($.accessTokenRegistryPath)"/>
+            <gmail.init>
                 <userId>{$ctx:userId}</userId>
                 <refreshToken>{$ctx:refreshToken}</refreshToken>
                 <clientSecret>{$ctx:clientSecret}</clientSecret>
@@ -39,8 +47,17 @@
                 <accessTokenRegistryPath>{$ctx:accessTokenRegistryPath}</accessTokenRegistryPath>
                 <accessToken>{$ctx:accessToken}</accessToken>
                 <apiUrl>{$ctx:apiUrl}</apiUrl>
-            </gmailRest.init>
-            <gmailRest.getUserProfile/>
+            </gmail.init>
+            <gmail.createLabels>
+                <name>{$ctx:name}</name>
+                <messageListVisibility>{$ctx:messageListVisibility}</messageListVisibility>
+                <labelListVisibility>{$ctx:labelListVisibility}</labelListVisibility>
+                <type>{$ctx:type}</type>
+                <messagesTotal>{$ctx:messagesTotal}</messagesTotal>
+                <messagesUnread>{$ctx:messagesUnread}</messagesUnread>
+                <threadsTotal>{$ctx:threadsTotal}</threadsTotal>
+                <threadsUnread>{$ctx:threadsUnread}</threadsUnread>
+            </gmail.createLabels>
             <respond/>
         </inSequence>
         <outSequence>
