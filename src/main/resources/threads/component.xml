@@ -22,8 +22,8 @@
             <file>listAllThreads.xml</file>
             <description>List all threads</description>
         </component>
-        <component name="getAThread">
-            <file>getAThread.xml</file>
+        <component name="readThread">
+            <file>readThread.xml</file>
             <description>get an email thread</description>
         </component>
         <component name="trashThreads">

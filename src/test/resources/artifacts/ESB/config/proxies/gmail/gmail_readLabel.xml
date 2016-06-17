@@ -17,28 +17,23 @@
  ~  under the License.
 -->
 <proxy xmlns="http://ws.apache.org/ns/synapse"
-       name="gmail_createAMail"
+       name="gmail_readLabel"
        transports="https,http"
        statistics="disable"
        trace="disable"
        startOnLoad="true">
     <target>
         <inSequence>
-            <property name="to" expression="json-eval($.to)"/>
-            <property name="subject" expression="json-eval($.subject)"/>
-            <property name="from" expression="json-eval($.from)"/>
-            <property name="messageBody" expression="json-eval($.messageBody)"/>
-            <property name="cc" expression="json-eval($.cc)"/>
-            <property name="bcc" expression="json-eval($.bcc)"/>
             <property name="id" expression="json-eval($.id)"/>
-            <property name="threadId" expression="json-eval($.threadId)"/>
+            <property name="format" expression="json-eval($.format)"/>
+            <property name="metadataHeaders" expression="json-eval($.metadataHeaders)"/>
             <property name="userId" expression="json-eval($.userId)"/>
             <property name="refreshToken" expression="json-eval($.refreshToken)"/>
             <property name="clientId" expression="json-eval($.clientId)"/>
             <property name="clientSecret" expression="json-eval($.clientSecret)"/>
             <property name="accessToken" expression="json-eval($.accessToken)"/>
-            <property name="apiUrl" expression="json-eval($.apiUrl)"/>
             <property name="accessTokenRegistryPath" expression="json-eval($.accessTokenRegistryPath)"/>
+            <property name="apiUrl" expression="json-eval($.apiUrl)"/>
             <gmail.init>
                 <userId>{$ctx:userId}</userId>
                 <refreshToken>{$ctx:refreshToken}</refreshToken>
@@ -48,16 +43,11 @@
                 <accessToken>{$ctx:accessToken}</accessToken>
                 <apiUrl>{$ctx:apiUrl}</apiUrl>
             </gmail.init>
-            <gmail.createAMail>
-                <cc>{$ctx:cc}</cc>
-                <from>{$ctx:from}</from>
-                <messageBody>{$ctx:messageBody}</messageBody>
-                <subject>{$ctx:subject}</subject>
+            <gmail.readLabel>
                 <id>{$ctx:id}</id>
-                <threadId>{$ctx:threadId}</threadId>
-                <bcc>{$ctx:bcc}</bcc>
-                <to>{$ctx:to}</to>
-            </gmail.createAMail>
+                <format>{$ctx:format}</format>
+                <metadataHeaders>{$ctx:metadataHeaders}</metadataHeaders>
+            </gmail.readLabel>
             <respond/>
         </inSequence>
         <outSequence>

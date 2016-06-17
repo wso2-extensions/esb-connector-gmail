@@ -22,16 +22,16 @@
             <file>listDrafts.xml</file>
             <description>list all drafts</description>
         </component>
-        <component name="getADraft">
-            <file>getADraft.xml</file>
+        <component name="readDraft">
+            <file>readDraft.xml</file>
             <description>read a particular draft</description>
         </component>
-        <component name="deleteADraft">
-            <file>deleteADraft.xml</file>
+        <component name="deleteDraft">
+            <file>deleteDraft.xml</file>
             <description>delete an existing draft</description>
         </component>
-        <component name="createADraft">
-            <file>createADraft.xml</file>
+        <component name="createDraft">
+            <file>createDraft.xml</file>
             <description>create a plain draft</description>
         </component>
     </subComponents>

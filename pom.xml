@@ -150,10 +150,10 @@
         </dependency>
     </dependencies>
     <scm>
-        <connection>scm:git:https://github.com/wso2-extensions/esb-connector-gmailrest.git
+        <connection>scm:git:https://github.com/wso2-extensions/esb-connector-gmail.git
         </connection>
-        <url>https://github.com/wso2-extensions/esb-connector-gmailrest.git</url>
-        <developerConnection>scm:git:https://github.com/wso2-extensions/esb-connector-gmailrest
+        <url>https://github.com/wso2-extensions/esb-connector-gmail.git</url>
+        <developerConnection>scm:git:https://github.com/wso2-extensions/esb-connector-gmail
         </developerConnection>
         <tag>HEAD</tag>
     </scm>

@@ -46,7 +46,7 @@ import java.util.*;
 
 public class GmailConnectorIntegrationTestForSendAttachment extends ESBIntegrationTest {
 
-    private static final String CONNECTOR_NAME = "gmailRest-connector-2.0.1-SNAPSHOT";
+    private static final String CONNECTOR_NAME = "GmailRest-connector-2.0.1-SNAPSHOT";
     private String gmailConnectorFileName = CONNECTOR_NAME + ".zip";
     private static final float SLEEP_TIMER_PROGRESSION_FACTOR = 0.5f;
     private static final String[] fileNames = new String[]{"test.txt", "smile.png"};

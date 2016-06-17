@@ -24,7 +24,7 @@ import org.wso2.carbon.connector.core.AbstractConnector;
 import org.wso2.carbon.connector.core.ConnectException;
 
 
-public class createMail extends AbstractConnector {
+public class CreateMail extends AbstractConnector {
     public static final String parameters = "parameters";
 
     public void connect(MessageContext messageContext) throws ConnectException {

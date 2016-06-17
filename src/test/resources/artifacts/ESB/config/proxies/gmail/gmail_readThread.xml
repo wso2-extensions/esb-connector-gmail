@@ -17,7 +17,7 @@
  ~  under the License.
 -->
 <proxy xmlns="http://ws.apache.org/ns/synapse"
-       name="gmail_getALabel"
+       name="gmail_readThread"
        transports="https,http"
        statistics="disable"
        trace="disable"
@@ -43,11 +43,11 @@
                 <accessToken>{$ctx:accessToken}</accessToken>
                 <apiUrl>{$ctx:apiUrl}</apiUrl>
             </gmail.init>
-            <gmail.getALabel>
+            <gmail.readThread>
                 <id>{$ctx:id}</id>
                 <format>{$ctx:format}</format>
                 <metadataHeaders>{$ctx:metadataHeaders}</metadataHeaders>
-            </gmail.getALabel>
+            </gmail.readThread>
             <respond/>
         </inSequence>
         <outSequence>
