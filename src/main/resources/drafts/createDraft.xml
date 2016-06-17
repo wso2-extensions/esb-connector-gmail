@@ -16,7 +16,7 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-<template name="createADraft" xmlns="http://ws.apache.org/ns/synapse">
+<template name="createDraft" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="to" description="Receiver mail ID "/>
     <parameter name="subject" description="Subject of the message"/>
     <parameter name="from" description="Sender mail ID"/>
@@ -116,7 +116,7 @@
             </else>
         </filter>
         <property name="parameters" expression="get-property('gmailParameters')"/>
-        <class name="org.wso2.carbon.connector.createMail"/>
+        <class name="org.wso2.carbon.connector.CreateMail"/>
         <property name="encodedValue" expression="get-property('uri.var.encoded')"/>
         <payloadFactory media-type="json">
             <format>

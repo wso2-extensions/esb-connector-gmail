@@ -22,8 +22,8 @@
             <file>listAllMails.xml</file>
             <description>List all mails</description>
         </component>
-        <component name="getAMail">
-            <file>getAMail.xml</file>
+        <component name="readMail">
+            <file>readMail.xml</file>
             <description>Read a mail by it's Id</description>
         </component>
         <component name="trashMessages">
@@ -38,8 +38,8 @@
             <file>modifyExistingMessages.xml</file>
             <description>Modify existing messages</description>
         </component>
-        <component name="createAMail">
-            <file>createAMail.xml</file>
+        <component name="sendMail">
+            <file>sendMail.xml</file>
             <description>Send a plain mail</description>
         </component>
         <component name="sendMailWithAttachment">

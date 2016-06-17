@@ -21,12 +21,12 @@ import org.apache.synapse.MessageContext;
 import org.wso2.carbon.connector.core.AbstractConnector;
 import org.wso2.carbon.connector.core.ConnectException;
 
-public class gmailRest extends AbstractConnector {
+public class GmailRest extends AbstractConnector {
 
     public void connect(MessageContext messageContext) throws ConnectException {
         Object templateParam = getParameter(messageContext, "generated_param");
         try {
-            System.out.println("Hello WORLD " + "gmailRest !!!" + " : paramter :" + templateParam.toString());
+            System.out.println("Hello WORLD " + "GmailRest !!!" + " : paramter :" + templateParam.toString());
             /**
              * Add your connector code here
              */

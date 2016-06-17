@@ -22,8 +22,8 @@
             <file>listLabels.xml</file>
             <description>List all labels</description>
         </component>
-        <component name="getALabel">
-            <file>getALabel.xml</file>
+        <component name="readLabel">
+            <file>readLabel.xml</file>
             <description>Get a label detail</description>
         </component>
         <component name="createLabels">

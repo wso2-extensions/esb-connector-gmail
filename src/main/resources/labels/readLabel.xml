@@ -16,14 +16,14 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-<template name="deleteADraft" xmlns="http://ws.apache.org/ns/synapse">
-    <parameter name="id" description="The ID of the draft to delete"/>
+<template name="readLabel" xmlns="http://ws.apache.org/ns/synapse">
+    <parameter name="id" description="The ID of the draft to retrieve"/>
     <sequence>
         <property name="uri.var.id" expression="$func:id"/>
         <call>
             <endpoint>
-                <http method="delete"
-                      uri-template="{+uri.var.apiUrl}/{+uri.var.apiVersion}/users/{+uri.var.userId}/drafts/{+uri.var.id}?{+uri.var.parameters}"/>
+                <http method="get"
+                      uri-template="{+uri.var.apiUrl}/{+uri.var.apiVersion}/users/{+uri.var.userId}/labels/{+uri.var.id}?{+uri.var.parameters}"/>
             </endpoint>
         </call>
         <!-- Remove response custom header information -->

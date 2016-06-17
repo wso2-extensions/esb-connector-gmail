@@ -16,56 +16,55 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-<proxy xmlns="http://ws.apache.org/ns/synapse" name="gmail_sendMail"
-       transports="https,http" statistics="disable" trace="disable"
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="gmail_sendMail"
+       transports="https,http"
+       statistics="disable"
+       trace="disable"
        startOnLoad="true">
     <target>
         <inSequence>
-            <property name="username"
-                      expression="//ns:username/text()"/>
-            <property name="oauthAccessToken"
-                      expression="//ns:oauthAccessToken/text()"/>
-            <property name="subject"
-                      expression="//ns:subject/text()"/>
-            <property name="toRecipients"
-                      expression="//ns:toRecipients/text()"/>
-            <property name="ccRecipients"
-                      expression="//ns:ccRcecipients/text()"/>
-            <property name="bccRecipients"
-                      expression="//ns:bccRecipients/text()"/>
-            <property name="textContent"
-                      expression="//ns:textContent/text()"/>
-            <property name="attachmentIDs"
-                      expression="//ns:attachmentIDs/text()"/>
+            <property name="to" expression="json-eval($.to)"/>
+            <property name="subject" expression="json-eval($.subject)"/>
+            <property name="from" expression="json-eval($.from)"/>
+            <property name="messageBody" expression="json-eval($.messageBody)"/>
+            <property name="cc" expression="json-eval($.cc)"/>
+            <property name="bcc" expression="json-eval($.bcc)"/>
+            <property name="id" expression="json-eval($.id)"/>
+            <property name="threadId" expression="json-eval($.threadId)"/>
+            <property name="userId" expression="json-eval($.userId)"/>
+            <property name="refreshToken" expression="json-eval($.refreshToken)"/>
+            <property name="clientId" expression="json-eval($.clientId)"/>
+            <property name="clientSecret" expression="json-eval($.clientSecret)"/>
+            <property name="accessToken" expression="json-eval($.accessToken)"/>
+            <property name="apiUrl" expression="json-eval($.apiUrl)"/>
+            <property name="accessTokenRegistryPath" expression="json-eval($.accessTokenRegistryPath)"/>
             <gmail.init>
-                <username>{$ctx:username}</username>
-                <oauthAccessToken>{$ctx:oauthAccessToken}</oauthAccessToken>
+                <userId>{$ctx:userId}</userId>
+                <refreshToken>{$ctx:refreshToken}</refreshToken>
+                <clientSecret>{$ctx:clientSecret}</clientSecret>
+                <clientId>{$ctx:clientId}</clientId>
+                <accessTokenRegistryPath>{$ctx:accessTokenRegistryPath}</accessTokenRegistryPath>
+                <accessToken>{$ctx:accessToken}</accessToken>
+                <apiUrl>{$ctx:apiUrl}</apiUrl>
             </gmail.init>
-            <gmail.sendMailWithAttachment>
+            <gmail.sendMail>
+                <cc>{$ctx:cc}</cc>
+                <from>{$ctx:from}</from>
+                <messageBody>{$ctx:messageBody}</messageBody>
                 <subject>{$ctx:subject}</subject>
-                <toRecipients>{$ctx:toRecipients}</toRecipients>
-                <ccRecipients>{$ctx:ccRecipients}</ccRecipients>
-                <bccRecipients>{$ctx:bccRecipients}</bccRecipients>
-                <textContent>{$ctx:textContent}</textContent>
-                <attachmentIDs>{$ctx:attachmentIDs}</attachmentIDs>
-            </gmail.sendMailWithAttachment>
-            <gmailRest.endSession/>
+                <id>{$ctx:id}</id>
+                <threadId>{$ctx:threadId}</threadId>
+                <bcc>{$ctx:bcc}</bcc>
+                <to>{$ctx:to}</to>
+            </gmail.sendMail>
             <respond/>
         </inSequence>
         <outSequence>
             <log/>
             <send/>
         </outSequence>
-        <faultSequence>
-            <makefault version="soap11">
-                <code expression="get-property('ERROR_CODE')"/>
-                <reason expression="get-property('ERROR_MESSAGE')"/>
-                <detail expression="get-property('ERROR_DETAIL')"/>
-            </makefault>
-            <send/>
-        </faultSequence>
-
     </target>
+    <parameter name="serviceType">proxy</parameter>
     <description/>
 </proxy>
-
