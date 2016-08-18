@@ -5,23 +5,28 @@
   "properties": {
     "labelIds": {
       "id": "http:\/\/wso2jsonschema.org\/labelIds",
-      "type": "string"
+      "type": "string",
+      "nullable": "true"
     },
     "q": {
       "id": "http:\/\/wso2jsonschema.org\/q",
-      "type": "string"
+      "type": "string",
+      "nullable": "true"
     },
     "includeSpamTrash": {
       "id": "http:\/\/wso2jsonschema.org\/includeSpamTrash",
-      "type": "string"
+      "type": "string",
+      "nullable": "true"
     },
     "pageToken": {
       "id": "http:\/\/wso2jsonschema.org\/pageToken",
-      "type": "string"
+      "type": "string",
+      "nullable": "true"
     },
     "maxResults": {
       "id": "http:\/\/wso2jsonschema.org\/maxResults",
-      "type": "string"
+      "type": "string",
+      "nullable": "true"
     }
   },
   "type": "object"

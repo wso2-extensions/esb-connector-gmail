@@ -9,7 +9,8 @@
     },
     "messagesUnread": {
       "id": "http:\/\/wso2jsonschema.org\/messagesUnread",
-      "type": "string"
+      "type": "string",
+      "nullable": "true"
     },
     "labelListVisibility": {
       "id": "http:\/\/wso2jsonschema.org\/labelListVisibility",
@@ -17,11 +18,13 @@
     },
     "threadsUnread": {
       "id": "http:\/\/wso2jsonschema.org\/threadsUnread",
-      "type": "string"
+      "type": "string",
+      "nullable": "true"
     },
     "messagesTotal": {
       "id": "http:\/\/wso2jsonschema.org\/messagesTotal",
-      "type": "string"
+      "type": "string",
+      "nullable": "true"
     },
     "messageListVisibility": {
       "id": "http:\/\/wso2jsonschema.org\/messageListVisibility",
@@ -33,11 +36,13 @@
     },
     "type": {
       "id": "http:\/\/wso2jsonschema.org\/type",
-      "type": "string"
+      "type": "string",
+      "nullable": "true"
     },
     "threadsTotal": {
       "id": "http:\/\/wso2jsonschema.org\/threadsTotal",
-      "type": "string"
+      "type": "string",
+      "nullable": "true"
     }
   },
   "type": "object"
