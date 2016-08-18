@@ -9,7 +9,8 @@
     },
     "format": {
       "id": "http:\/\/wso2jsonschema.org\/format",
-      "type": "string"
+      "type": "string",
+      "nullable": "true"
     }
   },
   "type": "object"

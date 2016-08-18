@@ -5,19 +5,23 @@
   "properties": {
     "startHistoryId": {
       "id": "http:\/\/wso2jsonschema.org\/startHistoryId",
-      "type": "string"
+      "type": "string",
+      "nullable": "true"
     },
     "pageToken": {
       "id": "http:\/\/wso2jsonschema.org\/pageToken",
-      "type": "string"
+      "type": "string",
+      "nullable": "true"
     },
     "maxResults": {
       "id": "http:\/\/wso2jsonschema.org\/maxResults",
-      "type": "string"
+      "type": "string",
+      "nullable": "true"
     },
     "labelId": {
       "id": "http:\/\/wso2jsonschema.org\/labelId",
-      "type": "string"
+      "type": "string",
+      "nullable": "true"
     }
   },
   "type": "object"
