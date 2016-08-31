@@ -38,11 +38,8 @@ public class GmailConfig extends AbstractConnector {
     public void connect(MessageContext messageContext) throws ConnectException {
         try {
             // Reading OAuth access token and user name from the message context
-            String accessToken =
-                    (String) messageContext.getProperty(GmailConstants.GMAIL_ACCESSTOKEN);
-            String userId =
-                    GmailUtils.lookupFunctionParam(messageContext,
-                            GmailConstants.GMAIL_PARAM_USERNAME);
+            String accessToken = (String) messageContext.getProperty(GmailConstants.GMAIL_ACCESSTOKEN);
+            String userId = GmailUtils.lookupFunctionParam(messageContext, GmailConstants.GMAIL_PARAM_USERNAME);
             // Storing OAuth user login details in the message context
             this.storeOauthUserLogin(messageContext, userId, accessToken);
         } catch (MessagingException e) {
@@ -83,11 +80,14 @@ public class GmailConfig extends AbstractConnector {
 
         // Reset already stored instances
         GmailUtils.closeConnection(axis2MessageContext);
-
-        log.info("Setting the logging mode to \"OAUTH\"");
+        if (log.isDebugEnabled()) {
+            log.debug("Setting the logging mode to \"OAUTH\"");
+        }
         axis2MessageContext.setProperty(GmailConstants.GMAIL_LOGIN_MODE,
                 GmailConstants.GMAIL_OAUTH_LOGIN_MODE);
-        log.info("Storing the new username and access token");
+        if (log.isDebugEnabled()) {
+            log.debug("Storing the new username and access token");
+        }
         messageContext.setProperty(GmailConstants.GMAIL_OAUTH_USERNAME, userId);
         messageContext.setProperty(GmailConstants.GMAIL_OAUTH_ACCESS_TOKEN, accessToken);
     }
