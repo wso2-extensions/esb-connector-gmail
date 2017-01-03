@@ -122,20 +122,19 @@
             <format>
                 {
                 "message":
-                    {
-                    "raw":"$1"
-                    }
+                {
+                "raw":"$1"
+                }
                 }
             </format>
             <args/>
         </payloadFactory>
         <script language="js">
             <![CDATA[
-
-                    var to = mc.getProperty('encodedValue');
-                    var payload = mc.getPayloadJSON();
-                    payload.message.raw=to;
-                    mc.setPayloadJSON(payload);
+                var to = mc.getProperty('encodedValue');
+                var payload = mc.getPayloadJSON();
+                payload.message.raw=to;
+                mc.setPayloadJSON(payload);
             ]]>
         </script>
         <property name="messageType" value="application/json"
