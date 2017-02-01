@@ -7,12 +7,12 @@ Pre-requisites:
 
 Tested Platform: 
 
- -  MAC OS and ubuntu 14.04
- -  WSO2 ESB 4.9.0
+ -  MAC OS and ubuntu 16.04
+ -  WSO2 ESB 5.0.0
 
 STEPS:
 
-1. Copy the ESB 4.9.0 zip to the location "Connector_Home/repository/"
+1. Copy the ESB 5.0.0 zip to the location "Connector_Home/repository/"
 
 2. Obtain the authorization credentials following below steps;
 	- Access https://developers.google.com/gmail/api/auth/web-server
