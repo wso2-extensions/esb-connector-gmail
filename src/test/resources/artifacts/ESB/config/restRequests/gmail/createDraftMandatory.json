@@ -13,5 +13,6 @@
   "messageBody": "%s(messageBody)",
   "from": "%s(from)",
   "id": "%s(draftId)",
-  "threadId": "%s(threadId)"
+  "threadId": "%s(threadId)",
+  "contentType":"%s(contentType)"
 }

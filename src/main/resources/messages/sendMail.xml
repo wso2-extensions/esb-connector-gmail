@@ -35,7 +35,7 @@
         <property name="uri.var.bcc" expression="$func:bcc"/>
         <property name="uri.var.id" expression="$func:id"/>
         <property name="uri.var.threadId" expression="$func:threadId"/>
-	<property name="uri.var.contentType" expression="$func:contentType"/>
+	    <property name="uri.var.contentType" expression="$func:contentType"/>
         <property name="gmailParameters" value=""/>
         <filter
                 xpath="get-property('uri.var.to') = '' or  not(string(get-property('uri.var.to')))">
