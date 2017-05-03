@@ -39,6 +39,7 @@
             <property name="accessToken" expression="json-eval($.accessToken)"/>
             <property name="apiUrl" expression="json-eval($.apiUrl)"/>
             <property name="accessTokenRegistryPath" expression="json-eval($.accessTokenRegistryPath)"/>
+            <property name="contentType" expression="json-eval($.contentType)"/>
             <gmail.init>
                 <userId>{$ctx:userId}</userId>
                 <refreshToken>{$ctx:refreshToken}</refreshToken>
@@ -57,6 +58,7 @@
                 <threadId>{$ctx:threadId}</threadId>
                 <bcc>{$ctx:bcc}</bcc>
                 <to>{$ctx:to}</to>
+                <contentType>{$ctx:contentType}</contentType>
             </gmail.sendMail>
             <respond/>
         </inSequence>
