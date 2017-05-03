@@ -23,7 +23,7 @@
     <groupId>org.wso2.carbon.connector</groupId>
     <artifactId>org.wso2.carbon.connector.gmail</artifactId>
     <packaging>jar</packaging>
-    <version>3.0.5</version>
+    <version>3.0.5-SNAPSHOT</version>
     <name>WSO2 Carbon - Mediation Library Connector For Gmail</name>
     <url>http://wso2.org</url>
     <properties>
