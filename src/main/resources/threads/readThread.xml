@@ -19,7 +19,8 @@
 <template name="readThread" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="id" description="The ID of the message to retrieve"/>
     <parameter name="format" description="The format to return the message"/>
-    <parameter name="metadataHeaders" description="When given and format is METADATA, only include headers specified"/>
+    <parameter name="metadataHeaders"
+               description="When given and format is METADATA, only include headers specified"/>
     <sequence>
         <property name="uri.var.id" expression="$func:id"/>
         <property name="uri.var.format" expression="$func:format"/>
@@ -31,26 +32,20 @@
             mc.setProperty('uri.var.metadataHeaders', encodedQuery);
             ]]>
         <filter
-                xpath="get-property('uri.var.format') = '' or  not(string(get-property('uri.var.format')))">
+                xpath="boolean($ctx:uri.var.format)">
             <then>
-                <property name="uri.var.format" value=""/>
+                <property name="gmailParameters" expression="fn:concat($ctx:gmailParameters,
+               '&amp;format=', $ctx:uri.var.format)"/>
             </then>
-            <else>
-                <property name="gmailParameters" expression="fn:concat(get-property('gmailParameters'),
-               '&amp;format=', get-property('uri.var.format'))"/>
-            </else>
         </filter>
         <filter
-                xpath="get-property('uri.var.metadataHeaders') = '' or  not(string(get-property('uri.var.metadataHeaders')))">
+                xpath="boolean($ctx:uri.var.metaDataHeaders)">
             <then>
-                <property name="uri.var.metadataHeaders" value=""/>
+                <property name="gmailParameters" expression="fn:concat($ctx:gmailParameters,
+               '&amp;metadataHeaders=', $ctx:uri.var.metadataHeaders)"/>
             </then>
-            <else>
-                <property name="gmailParameters" expression="fn:concat(get-property('gmailParameters'),
-               '&amp;metadataHeaders=', get-property('uri.var.metadataHeaders'))"/>
-            </else>
         </filter>
-        <property name="uri.var.parameters" expression="get-property('gmailParameters')"/>
+        <property name="uri.var.parameters" expression="$ctx:gmailParameters"/>
         <call>
             <endpoint>
                 <http method="get"

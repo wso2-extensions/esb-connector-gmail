@@ -24,16 +24,13 @@
         <property name="uri.var.format" expression="$func:format"/>
         <property name="gmailParameters" value=""/>
         <filter
-                xpath="get-property('uri.var.format') = '' or  not(string(get-property('uri.var.format')))">
+                xpath="boolean($ctx:uri.var.format)">
             <then>
-                <property name="uri.var.format" value=""/>
+                <property name="gmailParameters" expression="fn:concat($ctx:gmailParameters,
+               '&amp;format=', $ctx:uri.var.format)"/>
             </then>
-            <else>
-                <property name="gmailParameters" expression="fn:concat(get-property('gmailParameters'),
-               '&amp;format=', get-property('uri.var.format'))"/>
-            </else>
         </filter>
-        <property name="uri.var.parameters" expression="get-property('gmailParameters')"/>
+        <property name="uri.var.parameters" expression="$ctx:gmailParameters"/>
         <call>
             <endpoint>
                 <http method="get"

@@ -19,7 +19,8 @@
 <template name="modifyExistingMessages" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="id" description="The ID of the message to modify"/>
     <parameter name="addLabelIds" description="A list of IDs of labels to add to this message"/>
-    <parameter name="removeLabelIds" description="A list of IDs of labels to remove from this message"/>
+    <parameter name="removeLabelIds"
+               description="A list of IDs of labels to remove from this message"/>
     <sequence>
         <property name="uri.var.id" expression="$func:id"/>
         <property name="uri.var.addLabelIds" expression="$func:addLabelIds"/>
@@ -32,11 +33,11 @@
                 }
             </format>
             <args>
-                <arg expression="get-property('uri.var.addLabelIds')"/>
-                <arg expression="get-property('uri.var.removeLabelIds')"/>
+                <arg expression="$ctx:uri.var.addLabelIds"/>
+                <arg expression="$ctx:uri.var.removeLabelIds"/>
             </args>
         </payloadFactory>
-        <filter xpath="get-property('uri.var.addLabelIds') = '' or (not(string(get-property('uri.var.addLabelIds'))))">
+        <filter source="boolean($ctx:uri.var.addLabelIds)" regex="false">
             <then>
                 <script language="js"><![CDATA[
                     var payload = mc.getPayloadJSON();
@@ -46,7 +47,7 @@
                 </script>
             </then>
         </filter>
-        <filter xpath="get-property('uri.var.removeLabelIds') = '' or (not(string(get-property('uri.var.removeLabelIds'))))">
+        <filter source="boolean($ctx:uri.var.removeLabelIds)" regex="false">
             <then>
                 <script language="js"><![CDATA[
                     var payload = mc.getPayloadJSON();
