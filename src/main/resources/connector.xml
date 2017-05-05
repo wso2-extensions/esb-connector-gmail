@@ -26,6 +26,8 @@
         <dependency component="userProfile"/>
         <dependency component="drafts"/>
         <description>WSO2 Gmail connector library</description>
-        <authenticationInfo>https://docs.wso2.com/display/ESBCONNECTORS/Configuring+Gmail+Operations</authenticationInfo>
+        <authenticationInfo>
+            https://docs.wso2.com/display/ESBCONNECTORS/Configuring+Gmail+Operations
+        </authenticationInfo>
     </component>
 </connector>

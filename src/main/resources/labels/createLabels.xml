@@ -50,17 +50,17 @@
                 }
             </format>
             <args>
-                <arg expression="get-property('uri.var.name')"/>
-                <arg expression="get-property('uri.var.messageListVisibility')"/>
-                <arg expression="get-property('uri.var.labelListVisibility')"/>
-                <arg expression="get-property('uri.var.type')"/>
-                <arg expression="get-property('uri.var.messagesTotal')"/>
-                <arg expression="get-property('uri.var.messagesUnread')"/>
-                <arg expression="get-property('uri.var.threadsTotal')"/>
-                <arg expression="get-property('uri.var.threadsUnread')"/>
+                <arg expression="$ctx:uri.var.name"/>
+                <arg expression="$ctx:uri.var.messageListVisibility"/>
+                <arg expression="$ctx:uri.var.labelListVisibility"/>
+                <arg expression="$ctx:uri.var.type"/>
+                <arg expression="$ctx:uri.var.messagesTotal"/>
+                <arg expression="$ctx:uri.var.messagesUnread"/>
+                <arg expression="$ctx:uri.var.threadsTotal"/>
+                <arg expression="$ctx:uri.var.threadsUnread"/>
             </args>
         </payloadFactory>
-        <filter xpath="get-property('uri.var.type') = '' or (not(string(get-property('uri.var.type'))))">
+        <filter source="boolean($ctx:uri.var.type)" regex="false">
             <then>
                 <script language="js"><![CDATA[
                     var payload = mc.getPayloadJSON();
@@ -70,7 +70,7 @@
                 </script>
             </then>
         </filter>
-        <filter xpath="get-property('uri.var.messagesTotal') = '' or (not(string(get-property('uri.var.messagesTotal'))))">
+        <filter source="boolean($ctx:uri.var.messagesTotal)" regex="false">
             <then>
                 <script language="js"><![CDATA[
                     var payload = mc.getPayloadJSON();
@@ -80,7 +80,7 @@
                 </script>
             </then>
         </filter>
-        <filter xpath="get-property('uri.var.messagesUnread') = '' or (not(string(get-property('uri.var.messagesUnread'))))">
+        <filter source="boolean($ctx:uri.var.messagesUnread)" regex="false">
             <then>
                 <script language="js"><![CDATA[
                     var payload = mc.getPayloadJSON();
@@ -90,7 +90,7 @@
                 </script>
             </then>
         </filter>
-        <filter xpath="get-property('uri.var.threadsTotal') = '' or (not(string(get-property('uri.var.threadsTotal'))))">
+        <filter source="boolean($ctx:uri.var.threadsTotal)" regex="false">
             <then>
                 <script language="js"><![CDATA[
                     var payload = mc.getPayloadJSON();
@@ -100,7 +100,7 @@
                 </script>
             </then>
         </filter>
-        <filter xpath="get-property('uri.var.threadsUnread') = '' or (not(string(get-property('uri.var.threadsUnread'))))">
+        <filter source="boolean($ctx:uri.var.threadsUnread)" regex="false">
             <then>
                 <script language="js"><![CDATA[
                     var payload = mc.getPayloadJSON();

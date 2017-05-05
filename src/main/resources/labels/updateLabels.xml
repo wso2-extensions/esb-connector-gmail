@@ -18,10 +18,12 @@
 -->
 <template name="updateLabels" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="id" description="The ID of the label to update"/>
-    <parameter name="name" description="Specifies the type of contact to create the record type.company/person"/>
+    <parameter name="name"
+               description="Specifies the type of contact to create the record type.company/person"/>
     <parameter name="messageListVisibility"
                description=" Describes a dictionary organized in the same structure as a contact listing response"/>
-    <parameter name="labelListVisibility" description="Specifies whether tags should be included in the results"/>
+    <parameter name="labelListVisibility"
+               description="Specifies whether tags should be included in the results"/>
     <parameter name="type" description="Avatar url to be added"/>
     <parameter name="messagesTotal" description="Avatar url to be added"/>
     <parameter name="messagesUnread" description="Avatar url to be added"/>
@@ -51,17 +53,17 @@
                 }
             </format>
             <args>
-                <arg expression="get-property('uri.var.name')"/>
-                <arg expression="get-property('uri.var.messageListVisibility')"/>
-                <arg expression="get-property('uri.var.labelListVisibility')"/>
-                <arg expression="get-property('uri.var.type')"/>
-                <arg expression="get-property('uri.var.messagesTotal')"/>
-                <arg expression="get-property('uri.var.messagesUnread')"/>
-                <arg expression="get-property('uri.var.threadsTotal')"/>
-                <arg expression="get-property('uri.var.threadsUnread')"/>
+                <arg expression="$ctx:uri.var.name"/>
+                <arg expression="$ctx:uri.var.messageListVisibility')"/>
+                <arg expression="$ctx:uri.var.labelListVisibility"/>
+                <arg expression="$ctx:uri.var.type"/>
+                <arg expression="$ctx:uri.var.messagesTotal"/>
+                <arg expression="$ctx:uri.var.messagesUnread"/>
+                <arg expression="$ctx:uri.var.threadsTotal"/>
+                <arg expression="$ctx:uri.var.threadsUnread"/>
             </args>
         </payloadFactory>
-        <filter xpath="get-property('uri.var.type') = '' or (not(string(get-property('uri.var.type'))))">
+        <filter source="boolean($ctx:uri.var.type)" regex="false">
             <then>
                 <script language="js"><![CDATA[
                     var payload = mc.getPayloadJSON();
@@ -71,7 +73,7 @@
                 </script>
             </then>
         </filter>
-        <filter xpath="get-property('uri.var.messagesTotal') = '' or (not(string(get-property('uri.var.messagesTotal'))))">
+        <filter source="boolean($ctx:uri.var.messagesTotal)" regex="false">
             <then>
                 <script language="js"><![CDATA[
                     var payload = mc.getPayloadJSON();
@@ -81,7 +83,7 @@
                 </script>
             </then>
         </filter>
-        <filter xpath="get-property('uri.var.messagesUnread') = '' or (not(string(get-property('uri.var.messagesUnread'))))">
+        <filter source="boolean($ctx:uri.var.messagesUnread)" regex="false">
             <then>
                 <script language="js"><![CDATA[
                     var payload = mc.getPayloadJSON();
@@ -91,7 +93,7 @@
                 </script>
             </then>
         </filter>
-        <filter xpath="get-property('uri.var.threadsTotal') = '' or (not(string(get-property('uri.var.threadsTotal'))))">
+        <filter source="boolean($ctx:uri.var.threadsTotal)" regex="false">
             <then>
                 <script language="js"><![CDATA[
                     var payload = mc.getPayloadJSON();
@@ -101,7 +103,7 @@
                 </script>
             </then>
         </filter>
-        <filter xpath="get-property('uri.var.threadsUnread') = '' or (not(string(get-property('uri.var.threadsUnread'))))">
+        <filter source="boolean($ctx:uri.var.threadsUnread)" regex="false">
             <then>
                 <script language="js"><![CDATA[
                     var payload = mc.getPayloadJSON();

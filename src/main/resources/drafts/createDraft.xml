@@ -38,98 +38,71 @@
         <property name="uri.var.contentType" expression="$func:contentType"/>
         <property name="gmailParameters" value=""/>
         <filter
-                xpath="get-property('uri.var.to') = '' or  not(string(get-property('uri.var.to')))">
+                xpath="boolean($ctx:uri.var.to)">
             <then>
-                <property name="uri.var.to" value=""/>
+                <property name="gmailParameters" expression="fn:concat($ctx:gmailParameters,
+               'to:', $ctx:uri.var.to,'&#xA;')"/>
             </then>
-            <else>
-                <property name="gmailParameters" expression="fn:concat(get-property('gmailParameters'),
-               'to:', get-property('uri.var.to'),'&#xA;')"/>
-            </else>
         </filter>
         <filter
-                xpath="get-property('uri.var.subject') = '' or  not(string(get-property('uri.var.subject')))">
+                xpath="boolean($ctx:uri.var.subject)">
             <then>
-                <property name="uri.var.subject" value=""/>
+                <property name="gmailParameters" expression="fn:concat($ctx:gmailParameters,
+               'subject:', $ctx:uri.var.subject,'&#xA;')"/>
             </then>
-            <else>
-                <property name="gmailParameters" expression="fn:concat(get-property('gmailParameters'),
-               'subject:', get-property('uri.var.subject'),'&#xA;')"/>
-            </else>
         </filter>
         <filter
-                xpath="get-property('uri.var.from') = '' or  not(string(get-property('uri.var.from')))">
+                xpath="boolean($ctx:uri.var.from)">
             <then>
-                <property name="uri.var.from" value=""/>
+                <property name="gmailParameters" expression="fn:concat($ctx:gmailParameters,
+               'from:', $ctx:uri.var.from,'&#xA;')"/>
             </then>
-            <else>
-                <property name="gmailParameters" expression="fn:concat(get-property('gmailParameters'),
-               'from:', get-property('uri.var.from'),'&#xA;')"/>
-            </else>
         </filter>
         <filter
-                xpath="get-property('uri.var.cc') = '' or  not(string(get-property('uri.var.cc')))">
+                xpath="boolean($ctx:uri.var.cc)">
             <then>
-                <property name="uri.var.cc" value=""/>
+                <property name="gmailParameters" expression="fn:concat($ctx:gmailParameters,
+               'cc:', $ctx:uri.var.cc,'&#xA;')"/>
             </then>
-            <else>
-                <property name="gmailParameters" expression="fn:concat(get-property('gmailParameters'),
-               'cc:', get-property('uri.var.cc'),'&#xA;')"/>
-            </else>
         </filter>
         <filter
-                xpath="get-property('uri.var.bcc') = '' or  not(string(get-property('uri.var.bcc')))">
+                xpath="boolean($ctx:uri.var.bcc)">
             <then>
-                <property name="uri.var.bcc" value=""/>
+                <property name="gmailParameters" expression="fn:concat($ctx:gmailParameters,
+               'bcc:', $ctx:uri.var.bcc,'&#xA;')"/>
             </then>
-            <else>
-                <property name="gmailParameters" expression="fn:concat(get-property('gmailParameters'),
-               'bcc:', get-property('uri.var.bcc'),'&#xA;')"/>
-            </else>
         </filter>
         <filter
-                xpath="get-property('uri.var.id') = '' or  not(string(get-property('uri.var.id')))">
+                xpath="boolean($ctx:uri.var.id)">
             <then>
-                <property name="uri.var.id" value=""/>
+                <property name="gmailParameters" expression="fn:concat($ctx:gmailParameters,
+               'id:', $ctx:uri.var.id,'&#xA;')"/>
             </then>
-            <else>
-                <property name="gmailParameters" expression="fn:concat(get-property('gmailParameters'),
-               'id:', get-property('uri.var.id'),'&#xA;')"/>
-            </else>
         </filter>
         <filter
-                xpath="get-property('uri.var.threadId') = '' or  not(string(get-property('uri.var.threadId')))">
+                xpath="boolean($ctx:uri.var.threadId)">
             <then>
-                <property name="uri.var.threadId" value=""/>
+                <property name="gmailParameters" expression="fn:concat($ctx:gmailParameters,
+               'threadId:', $ctx:uri.var.threadId,'&#xA;')"/>
             </then>
-            <else>
-                <property name="gmailParameters" expression="fn:concat(get-property('gmailParameters'),
-               'threadId:', get-property('uri.var.threadId'),'&#xA;')"/>
-            </else>
         </filter>
         <filter
-                xpath="get-property('uri.var.contentType') = '' or  not(string(get-property('uri.var.contentType')))">
+                xpath="boolean($ctx:uri.var.contentType)">
             <then>
-                <property name="uri.var.contentType" value=""/>
+                <property name="gmailParameters" expression="fn:concat($ctx:gmailParameters,
+               'content-Type:', $ctx:uri.var.contentType,'&#xA;')"/>
             </then>
-            <else>
-                <property name="gmailParameters" expression="fn:concat(get-property('gmailParameters'),
-               'content-Type:', get-property('uri.var.contentType'),'&#xA;')"/>
-            </else>
         </filter>
         <filter
-                xpath="get-property('uri.var.messageBody') = '' or  not(string(get-property('uri.var.messageBody')))">
+                xpath="boolean($ctx:uri.var.messageBody)">
             <then>
-                <property name="uri.var.messageBody" value=""/>
+                <property name="gmailParameters" expression="fn:concat($ctx:gmailParameters,
+               '&#xA;', $ctx:uri.var.messageBody,'&#xA;')"/>
             </then>
-            <else>
-                <property name="gmailParameters" expression="fn:concat(get-property('gmailParameters'),
-               '&#xA;', get-property('uri.var.messageBody'),'&#xA;')"/>
-            </else>
         </filter>
-        <property name="parameters" expression="get-property('gmailParameters')"/>
+        <property name="parameters" expression="$ctx:gmailParameters"/>
         <class name="org.wso2.carbon.connector.CreateMail"/>
-        <property name="encodedValue" expression="get-property('uri.var.encoded')"/>
+        <property name="encodedValue" expression="$ctx:uri.var.encoded"/>
         <payloadFactory media-type="json">
             <format>
                 {

@@ -17,10 +17,12 @@
  ~  under the License.
 -->
 <template name="listTheHistory" xmlns="http://ws.apache.org/ns/synapse">
-    <parameter name="startHistoryId" description="Returns history records after the specified startHistoryId"/>
+    <parameter name="startHistoryId"
+               description="Returns history records after the specified startHistoryId"/>
     <parameter name="labelId" description="Only return messages with a label matching the ID"/>
     <parameter name="maxResults" description="The maximum number of history records to return"/>
-    <parameter name="pageToken" description="Page token to retrieve a specific page of results in the list"/>
+    <parameter name="pageToken"
+               description="Page token to retrieve a specific page of results in the list"/>
     <sequence>
         <property name="uri.var.startHistoryId" expression="$func:startHistoryId"/>
         <property name="uri.var.labelId" expression="$func:labelId"/>
@@ -28,46 +30,34 @@
         <property name="uri.var.pageToken" expression="$func:pageToken"/>
         <property name="gmailParameters" value=""/>
         <filter
-                xpath="get-property('uri.var.startHistoryId') = '' or  not(string(get-property('uri.var.startHistoryId')))">
+                xpath="boolean($ctx:uri.var.startHistoryId)">
             <then>
-                <property name="uri.var.startHistoryId" value=""/>
+                <property name="gmailParameters" expression="fn:concat($ctx:gmailParameters,
+               '&amp;startHistoryId=', $ctx:uri.var.startHistoryId)"/>
             </then>
-            <else>
-                <property name="gmailParameters" expression="fn:concat(get-property('gmailParameters'),
-               '&amp;startHistoryId=', get-property('uri.var.startHistoryId'))"/>
-            </else>
         </filter>
         <filter
-                xpath="get-property('uri.var.labelId') = '' or  not(string(get-property('uri.var.labelId')))">
+                xpath="boolean($ctx:uri.var.labelId)">
             <then>
-                <property name="uri.var.labelId" value=""/>
+                <property name="gmailParameters" expression="fn:concat($ctx:gmailParameters,
+               '&amp;labelId=', $ctx:uri.var.labelId)"/>
             </then>
-            <else>
-                <property name="gmailParameters" expression="fn:concat(get-property('gmailParameters'),
-               '&amp;labelId=', get-property('uri.var.labelId'))"/>
-            </else>
         </filter>
         <filter
-                xpath="get-property('uri.var.maxResults') = '' or  not(string(get-property('uri.var.maxResults')))">
+                xpath="boolean($ctx:uri.var.maxResults)">
             <then>
-                <property name="uri.var.maxResults" value=""/>
+                <property name="gmailParameters" expression="fn:concat($ctx:gmailParameters,
+               '&amp;maxResults=', $ctx:uri.var.maxResults)"/>
             </then>
-            <else>
-                <property name="gmailParameters" expression="fn:concat(get-property('gmailParameters'),
-               '&amp;maxResults=', get-property('uri.var.maxResults'))"/>
-            </else>
         </filter>
         <filter
-                xpath="get-property('uri.var.pageToken') = '' or  not(string(get-property('uri.var.pageToken')))">
+                xpath="boolean($ctx:uri.var.pageToken)">
             <then>
-                <property name="uri.var.pageToken" value=""/>
+                <property name="gmailParameters" expression="fn:concat($ctx:gmailParameters,
+               '&amp;pageToken=', $ctx:uri.var.pageToken)"/>
             </then>
-            <else>
-                <property name="gmailParameters" expression="fn:concat(get-property('gmailParameters'),
-               '&amp;pageToken=', get-property('uri.var.pageToken'))"/>
-            </else>
         </filter>
-        <property name="uri.var.parameters" expression="get-property('gmailParameters')"/>
+        <property name="uri.var.parameters" expression="$ctx:gmailParameters"/>
         <call>
             <endpoint>
                 <http method="get"
