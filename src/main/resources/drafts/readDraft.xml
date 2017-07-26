@@ -34,7 +34,7 @@
         <call>
             <endpoint>
                 <http method="get"
-                      uri-template="legacy-encoding:{+uri.var.apiUrl}/{+uri.var.apiVersion}/users/{+uri.var.userId}/drafts/{+uri.var.id}?{uri.var.parameters}"/>
+                      uri-template="legacy-encoding:{+uri.var.gmail.apiUrl}/{+uri.var.gmail.apiVersion}/users/{+uri.var.gmail.userId}/drafts/{+uri.var.id}?{uri.var.parameters}"/>
             </endpoint>
         </call>
         <!-- Remove response custom header information -->

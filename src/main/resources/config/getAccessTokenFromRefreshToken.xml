@@ -23,9 +23,9 @@
                description="clientSecret of your App, given by google console when you registered your application"/>
     <parameter name="refreshToken" description="Refresh token to exchange with an access token."/>
     <sequence>
-        <property name="uri.var.refreshToken" expression="$func:refreshToken"/>
-        <property name="uri.var.clientId" expression="$func:clientId"/>
-        <property name="uri.var.clientSecret" expression="$func:clientSecret"/>
+        <property name="uri.var.gmail.refreshToken" expression="$func:refreshToken"/>
+        <property name="uri.var.gmail.clientId" expression="$func:clientId"/>
+        <property name="uri.var.gmail.clientSecret" expression="$func:clientSecret"/>
         <payloadFactory media-type="json">
             <format>
                 {
@@ -36,9 +36,9 @@
                 }
             </format>
             <args>
-                <arg expression="$ctx:uri.var.refreshToken"/>
-                <arg expression="$ctx:uri.var.clientSecret"/>
-                <arg expression="$ctx:uri.var.clientId"/>
+                <arg expression="$ctx:uri.var.gmail.refreshToken"/>
+                <arg expression="$ctx:uri.var.gmail.clientSecret"/>
+                <arg expression="$ctx:uri.var.gmail.clientId"/>
             </args>
         </payloadFactory>
         <property name="FORCE_POST_PUT_NOBODY" value="true" scope="axis2" type="BOOLEAN"/>
@@ -51,12 +51,12 @@
             </endpoint>
         </call>
         <!-- Setting the new access token to the property. -->
-        <property name="uri.var.accessToken" expression="json-eval($.access_token)"/>
+        <property name="uri.var.gmail.accessToken" expression="json-eval($.access_token)"/>
         <script language="js">
             <![CDATA[
             importPackage(Packages.org.apache.synapse.config);
-            var newAccessToken = mc.getProperty('uri.var.accessToken');
-            var newAccessRegistryPath = mc.getProperty('uri.var.accessTokenRegistryPath');
+            var newAccessToken = mc.getProperty('uri.var.gmail.accessToken');
+            var newAccessRegistryPath = mc.getProperty('uri.var.gmail.accessTokenRegistryPath');
             if(newAccessToken != null && newAccessToken != ''){
                 var existingAccessToken = mc.getConfiguration().getRegistry().getResource(newAccessRegistryPath);
                     if(existingAccessToken == null){
@@ -70,7 +70,7 @@
                 }
             ]]>
         </script>
-        <header name="Authorization" expression="fn:concat('Bearer ', $ctx:uri.var.accessToken)"
+        <header name="Authorization" expression="fn:concat('Bearer ', $ctx:uri.var.gmail.accessToken)"
                 scope="transport"/>
         <header name="Cache-Control" action="remove" scope="transport"/>
         <header name="Pragma" action="remove" scope="transport"/>

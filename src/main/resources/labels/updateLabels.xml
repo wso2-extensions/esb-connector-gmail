@@ -119,7 +119,7 @@
         <call>
             <endpoint>
                 <http method="put"
-                      uri-template="{+uri.var.apiUrl}/{+uri.var.apiVersion}/users/{+uri.var.userId}/labels/{+uri.var.id}"/>
+                      uri-template="{+uri.var.gmail.apiUrl}/{+uri.var.gmail.apiVersion}/users/{+uri.var.gmail.userId}/labels/{+uri.var.id}"/>
             </endpoint>
         </call>
     </sequence>

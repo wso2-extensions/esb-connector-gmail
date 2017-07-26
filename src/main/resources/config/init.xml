@@ -28,37 +28,37 @@
     <parameter name="accessTokenRegistryPath"
                description="Registry Path of the Connector where the values are stored."/>
     <sequence>
-        <property name="uri.var.apiUrl" expression="$func:apiUrl"/>
-        <property name="uri.var.apiVersion" value="v1"/>
-        <property name="uri.var.userId" expression="$func:userId"/>
-        <property name="uri.var.accessToken" expression="$func:accessToken"/>
-        <property name="uri.var.refreshToken" expression="$func:refreshToken"/>
-        <property name="uri.var.clientId" expression="$func:clientId"/>
-        <property name="uri.var.clientSecret" expression="$func:clientSecret"/>
-        <property name="uri.var.accessTokenRegistryPath"
+        <property name="uri.var.gmail.apiUrl" expression="$func:apiUrl"/>
+        <property name="uri.var.gmail.apiVersion" value="v1"/>
+        <property name="uri.var.gmail.userId" expression="$func:userId"/>
+        <property name="uri.var.gmail.accessToken" expression="$func:accessToken"/>
+        <property name="uri.var.gmail.refreshToken" expression="$func:refreshToken"/>
+        <property name="uri.var.gmail.clientId" expression="$func:clientId"/>
+        <property name="uri.var.gmail.clientSecret" expression="$func:clientSecret"/>
+        <property name="uri.var.gmail.accessTokenRegistryPath"
                   expression="$func:accessTokenRegistryPath"/>
-        <filter source="boolean($ctx:uri.var.refreshToken) and boolean($ctx:uri.var.clientSecret) and boolean($ctx:uri.var.clientId) and boolean($ctx:uri.var.accessToken)"
+        <filter source="boolean($ctx:uri.var.gmail.refreshToken) and boolean($ctx:uri.var.gmail.clientSecret) and boolean($ctx:uri.var.gmail.clientId) and boolean($ctx:uri.var.gmail.accessToken)"
                 regex="true">
             <then>
-                <filter source="boolean($ctx:uri.var.accessTokenRegistryPath)" regex="false">
+                <filter source="boolean($ctx:uri.var.gmail.accessTokenRegistryPath)" regex="false">
                     <then>
-                        <property name="uri.var.accessTokenRegistryPath"
+                        <property name="uri.var.gmail.accessTokenRegistryPath"
                                   value="connectors/Gmail/accessToken"/>
                     </then>
                     <else>
-                        <property name="uri.var.accessTokenRegistryPath"
-                                  expression="$ctx:uri.var.accessTokenRegistryPath"/>
+                        <property name="uri.var.gmail.accessTokenRegistryPath"
+                                  expression="$ctx:uri.var.gmail.accessTokenRegistryPath"/>
                     </else>
                 </filter>
-                <property name="uri.var.accessToken.reg"
-                          expression="get-property('registry', $ctx:uri.var.accessTokenRegistryPath)"/>
-                <filter source="$ctx:uri.var.accessToken.reg=''" regex="true">
+                <property name="uri.var.gmail.accessToken.reg"
+                          expression="get-property('registry', $ctx:uri.var.gmail.accessTokenRegistryPath)"/>
+                <filter source="$ctx:uri.var.gmail.accessToken.reg=''" regex="true">
                     <then>
                         <script language="js">
                             <![CDATA[
                            importPackage(Packages.org.apache.synapse.config);
-                           var newAccess = mc.getProperty('uri.var.accessToken');
-                           var newAccessRegistryPath = mc.getProperty('uri.var.accessTokenRegistryPath');
+                           var newAccess = mc.getProperty('uri.var.gmail.accessToken');
+                           var newAccessRegistryPath = mc.getProperty('uri.var.gmail.accessTokenRegistryPath');
                            if(newAccess != null && newAccess != ''){
                                //Create the registry entry if no such entry exists.
                                mc.getConfiguration().getRegistry().newResource(newAccessRegistryPath,false);
@@ -68,27 +68,27 @@
                         </script>
                     </then>
                     <else>
-                        <property name="uri.var.accessToken"
-                                  expression="$ctx:uri.var.accessToken.reg"/>
+                        <property name="uri.var.gmail.accessToken"
+                                  expression="$ctx:uri.var.gmail.accessToken.reg"/>
                     </else>
                 </filter>
                 <header name="Transfer-Encoding" action="remove" scope="transport"/>
                 <call>
                     <endpoint>
                         <http method="get"
-                              uri-template="https://www.googleapis.com/oauth2/v1/tokeninfo?access_token={+uri.var.accessToken}"/>
+                              uri-template="https://www.googleapis.com/oauth2/v1/tokeninfo?access_token={+uri.var.gmail.accessToken}"/>
                     </endpoint>
                 </call>
-                <property name="error" expression="json-eval($.error)"/>
-                <filter source="$ctx:error='invalid_token'"
+                <property name="uri.var.gmail.error" expression="json-eval($.error)"/>
+                <filter source="$ctx:uri.var.gmail.error='invalid_token'"
                         regex="true">
                     <gmail.getAccessTokenFromRefreshToken/>
-                    <property name="uri.var.accessToken"
+                    <property name="uri.var.gmail.accessToken"
                               expression="json-eval($.access_token)"/>
                 </filter>
             </then>
         </filter>
-        <header name="Authorization" expression="fn:concat('Bearer ', $ctx:uri.var.accessToken)"
+        <header name="Authorization" expression="fn:concat('Bearer ', $ctx:uri.var.gmail.accessToken)"
                 scope="transport"/>
         <class name="org.wso2.carbon.connector.GmailConfig"/>
     </sequence>
