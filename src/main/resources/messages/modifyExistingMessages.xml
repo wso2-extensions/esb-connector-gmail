@@ -63,7 +63,7 @@
         <call>
             <endpoint>
                 <http method="post"
-                      uri-template="{+uri.var.apiUrl}/{+uri.var.apiVersion}/users/{+uri.var.userId}/messages/{+uri.var.id}/modify"/>
+                      uri-template="{+uri.var.gmail.apiUrl}/{+uri.var.gmail.apiVersion}/users/{+uri.var.gmail.userId}/messages/{+uri.var.id}/modify"/>
             </endpoint>
         </call>
     </sequence>
