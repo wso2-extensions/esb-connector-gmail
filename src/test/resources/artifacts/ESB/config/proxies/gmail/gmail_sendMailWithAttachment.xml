@@ -1,55 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- ~  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
- ~
- ~  WSO2 Inc. licenses this file to you under the Apache License,
- ~  Version 2.0 (the "License"); you may not use this file except
- ~  in compliance with the License.
- ~  You may obtain a copy of the License at
- ~
- ~    http://www.apache.org/licenses/LICENSE-2.0
- ~
- ~  Unless required by applicable law or agreed to in writing,
- ~  software distributed under the License is distributed on an
- ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- ~  KIND, either express or implied.  See the License for the
- ~  specific language governing permissions and limitations
- ~  under the License.
--->
-<proxy xmlns="http://ws.apache.org/ns/synapse" name="gmail_sendMailWithAttachment"
-       transports="https,http" statistics="disable" trace="disable"
-       startOnLoad="true">
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="gmail_sendMailWithAttachment"
+       startOnLoad="true"
+       statistics="disable"
+       trace="disable"
+       transports="https,http">
     <target>
         <inSequence>
-            <property name="username"
-                      expression="//ns:username/text()"/>
-            <property name="oauthAccessToken"
-                      expression="//ns:oauthAccessToken/text()"/>
-            <property name="subject"
-                      expression="//ns:subject/text()"/>
-            <property name="toRecipients"
-                      expression="//ns:toRecipients/text()"/>
-            <property name="ccRecipients"
-                      expression="//ns:ccRcecipients/text()"/>
-            <property name="bccRecipients"
-                      expression="//ns:bccRecipients/text()"/>
-            <property name="textContent"
-                      expression="//ns:textContent/text()"/>
-            <property name="attachmentIDs"
-                      expression="//ns:attachmentIDs/text()"/>
+            <property expression="json-eval($.to)" name="to"/>
+            <property expression="json-eval($.subject)" name="subject"/>
+            <property expression="json-eval($.from)" name="from"/>
+            <property expression="json-eval($.messageBody)" name="messageBody"/>
+            <property expression="json-eval($.cc)" name="cc"/>
+            <property expression="json-eval($.bcc)" name="bcc"/>
+            <property expression="json-eval($.id)" name="id"/>
+            <property expression="json-eval($.threadId)" name="threadId"/>
+            <property expression="json-eval($.userId)" name="userId"/>
+            <property expression="json-eval($.refreshToken)" name="refreshToken"/>
+            <property expression="json-eval($.clientId)" name="clientId"/>
+            <property expression="json-eval($.clientSecret)" name="clientSecret"/>
+            <property expression="json-eval($.accessToken)" name="accessToken"/>
+            <property expression="json-eval($.apiUrl)" name="apiUrl"/>
+            <property expression="json-eval($.accessTokenRegistryPath)"
+                      name="accessTokenRegistryPath"/>
+            <property expression="json-eval($.fileName)" name="fileName"/>
+            <property expression="json-eval($.contentType)" name="contentType"/>
+            <property expression="json-eval($.filePath)" name="filePath"/>
             <gmail.init>
-                <username>{$ctx:username}</username>
-                <oauthAccessToken>{$ctx:oauthAccessToken}</oauthAccessToken>
+                <userId>{$ctx:userId}</userId>
+                <refreshToken>{$ctx:refreshToken}</refreshToken>
+                <clientSecret>{$ctx:clientSecret}</clientSecret>
+                <clientId>{$ctx:clientId}</clientId>
+                <accessTokenRegistryPath>{$ctx:accessTokenRegistryPath}</accessTokenRegistryPath>
+                <accessToken>{$ctx:accessToken}</accessToken>
+                <apiUrl>{$ctx:apiUrl}</apiUrl>
             </gmail.init>
             <gmail.sendMailWithAttachment>
                 <subject>{$ctx:subject}</subject>
-                <toRecipients>{$ctx:toRecipients}</toRecipients>
-                <ccRecipients>{$ctx:ccRecipients}</ccRecipients>
-                <bccRecipients>{$ctx:bccRecipients}</bccRecipients>
-                <textContent>{$ctx:textContent}</textContent>
-                <attachmentIDs>{$ctx:attachmentIDs}</attachmentIDs>
+                <to>{$ctx:to}</to>
+                <cc>{$ctx:cc}</cc>
+                <bcc>{$ctx:bcc}</bcc>
+                <messageBody>{$ctx:messageBody}</messageBody>
+                <fileName>{$ctx:fileName}</fileName>
+                <filePath>{$ctx:filePath}</filePath>
             </gmail.sendMailWithAttachment>
-            <gmailRest.endSession/>
+            <property name="Status" expression="get-property('Status')"/>
+            <payloadFactory media-type="json">
+                <format>{ "Status":'$ctx:Status'}</format>
+                <args/>
+            </payloadFactory>
             <respond/>
         </inSequence>
         <outSequence>
@@ -64,8 +63,6 @@
             </makefault>
             <send/>
         </faultSequence>
-
     </target>
     <description/>
 </proxy>
-

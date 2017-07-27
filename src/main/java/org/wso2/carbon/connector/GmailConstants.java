@@ -77,53 +77,25 @@ public final class GmailConstants {
      */
     public static final String GMAIL_SMTP_CONNECTION_INSTANCE = "gmail.smtp.session.instance";
     /**
-     * Name of the "label" parameter in synapse configuration.
-     */
-    public static final String GMAIL_PARAM_LABEL = "label";
-    /**
-     * Name of the "labels" parameter in synapse configuration.
-     */
-    public static final String GMAIL_PARAM_LABELS = "labels";
-    /**
-     * Name of the "threadID" parameter in synapse configuration.
-     */
-    public static final String GMAIL_PARAM_THREADID = "threadID";
-    /**
-     * Name of the "messageID" parameter in synapse configuration.
-     */
-    public static final String GMAIL_PARAM_MESSAGEID = "messageID";
-    /**
      * Name of the "subject" parameter in synapse configuration.
      */
     public static final String GMAIL_PARAM_SUBJECT = "subject";
     /**
      * Name of the "toRecipients" parameter in synapse configuration.
      */
-    public static final String GMAIL_PARAM_TO_RECIPIENTS = "toRecipients";
+    public static final String GMAIL_PARAM_TO_RECIPIENTS = "to";
     /**
      * Name of the "ccRecipients" parameter in synapse configuration.
      */
-    public static final String GMAIL_PARAM_CC_RECIPIENTS = "ccRecipients";
+    public static final String GMAIL_PARAM_CC_RECIPIENTS = "cc";
     /**
      * Name of the "bccRecipients" parameter in synapse configuration.
      */
-    public static final String GMAIL_PARAM_BCC_RECIPIENTS = "bccRecipients";
+    public static final String GMAIL_PARAM_BCC_RECIPIENTS = "bcc";
     /**
      * Name of the "textContent" parameter in synapse configuration.
      */
-    public static final String GMAIL_PARAM_TEXT_CONTENT = "textContent";
-    /**
-     * Name of the "attachmentIDs" parameter in synapse configuration.
-     */
-    public static final String GMAIL_PARAM_ATTACHMENTIDS = "attachmentIDs";
-    /**
-     * Name of the "searchTerm" parameter in synapse configuration.
-     */
-    public static final String GMAIL_PARAM_SEARCH_TERM = "gmailSearchTerm";
-    /**
-     * Name of the "batchNumber" parameter in synapse configuration.
-     */
-    public static final String GMAIL_PARAM_BATCH_NUMBER = "batchNumber";
+    public static final String GMAIL_PARAM_TEXT_CONTENT = "messageBody";
     /**
      * Default batch size.
      */
@@ -136,45 +108,7 @@ public final class GmailConstants {
      * Gmail folder name for trash.
      */
     public static final String GMAIL_TRASH = "[Gmail]/Trash";
-    /**
-     * Response node name of the "delete mail message" operation.
-     */
-    public static final String GMAIL_DELETE_MAIL_MESSAGE_RESPONSE =
-            "gmailDeleteMailMessageResponse";
-    /**
-     * Response node name of the "delete mail thread" operation.
-     */
-    public static final String GMAIL_DELETE_MAIL_THREAD_RESPONSE = "gmailDeleteMailThreadResponse";
-    /**
-     * Response node name of the "list all mails" operation.
-     */
-    public static final String GMAIL_LIST_ALL_MAILS_RESPONSE = "gmailListAllMailsResponse";
-    /**
-     * Response node name of the "list all unread mails" operation.
-     */
-    public static final String GMAIL_LIST_ALL_UNREAD_MAILS_RESPONSE =
-            "gmailListAllUnreadMailsResponse";
-    /**
-     * Response node name of the "list all unread mails under label" operation.
-     */
-    public static final String GMAIL_LIST_ALL_UNREAD_MAILS_UNDER_LABEL_RESPONSE =
-            "gmailListAllUnreadMailsUnderLabelResponse";
-    /**
-     * Response node name of the "list read mail message" operation.
-     */
-    public static final String GMAIL_READ_MAIL_MESSAGE_RESPONSE = "gmailReadMailMessageResponse";
-    /**
-     * Response node name of the "search mails" operation.
-     */
-    public static final String GMAIL_SEARCH_MAILS_RESPONSE = "gmailSearchMailsResponse";
-    /**
-     * Response node name of the "send mail" operation.
-     */
-    public static final String GMAIL_SEND_MAIL_RESPONSE = "sendMailResponse";
-    /**
-     * Response node name of the "set labels" operation.
-     */
-    public static final String GMAIL_SET_LABELS_RESPONSE = "gmailSetLabelsResponse";
+
     /**
      * Stores the value, "true".
      */

@@ -46,11 +46,10 @@ import org.apache.synapse.core.axis2.Axis2MessageContext;
 import org.wso2.carbon.connector.core.ConnectException;
 import org.wso2.carbon.connector.core.util.ConnectorUtils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import javax.activation.FileDataSource;
+import java.io.*;
 import java.util.Arrays;
+import java.util.Map;
 
 public final class GmailUtils {
 
@@ -482,7 +481,6 @@ public final class GmailUtils {
     /**
      * Close and remove the already stored IMAP and SMTP connections
      *
-     * @param operationContext where the connections are stored
      * @throws com.google.code.javax.mail.MessagingException
      */
     public static void closeConnection(org.apache.axis2.context.MessageContext axis2MessageContext)
@@ -549,26 +547,20 @@ public final class GmailUtils {
     /**
      * Creates a new {@link com.google.code.javax.mail.Message}.
      *
-     * @param session        Mail {@link com.google.code.javax.mail.Session}.
-     * @param subject        Subject of the mail.
-     * @param textContent    Text content of the mail message.
-     * @param toRecipients   'To' recipients of the mail message.
-     * @param ccRecipients   'CC' recipients of the mail message.
-     * @param bccRecipients  'BCC' recipients of the mail message.
-     * @param attachmentList Array of attachment file names.
-     * @param axis2MsgCtx    Axis2 message context where the attachment files are stored.
+     * @param session       Mail {@link com.google.code.javax.mail.Session}.
+     * @param subject       Subject of the mail.
+     * @param textContent   Text content of the mail message.
+     * @param toRecipients  'To' recipients of the mail message.
+     * @param ccRecipients  'CC' recipients of the mail message.
+     * @param bccRecipients 'BCC' recipients of the mail message.
      * @return returns the created {@link #}
      * @throws org.wso2.carbon.connector.core.ConnectException if invalid attachment IDs are provided.
      * @throws com.google.code.javax.mail.MessagingException
      * @throws java.io.IOException
      */
-    public static Message createNewMessage(Session session, String subject, String textContent,
-                                           String toRecipients, String ccRecipients,
-                                           String bccRecipients, String[] attachmentList,
-                                           org.apache.axis2.context.MessageContext axis2MsgCtx)
-            throws ConnectException,
-            MessagingException,
-            IOException {
+    public static Message createNewMessage(Session session, String subject, String textContent, String toRecipients,
+                                           String ccRecipients, String bccRecipients, Map attachmentMap)
+            throws ConnectException, MessagingException, IOException {
         log.info("Creating the mail message");
         MimeMessage message = new MimeMessage(session);
         if (toRecipients != null) {
@@ -585,25 +577,16 @@ public final class GmailUtils {
         MimeBodyPart mainPart = new MimeBodyPart();
         mainPart.setText(textContent);
         content.addBodyPart(mainPart);
-
-        for (String attachment : attachmentList) {
-            javax.activation.DataHandler handler = axis2MsgCtx.getAttachment(attachment);
-            if (handler != null) {
-                InputStream inStream = handler.getInputStream();
-                byte[] bytes = IOUtils.toByteArray(inStream);
-                ByteArrayDataSource source =
-                        new ByteArrayDataSource(bytes,
-                                handler.getContentType());
-                MimeBodyPart bodyPart = new MimeBodyPart();
-                bodyPart.setDataHandler(new DataHandler(source));
-                bodyPart.setFileName(attachment);
-                content.addBodyPart(bodyPart);
-            } else {
-                String errorLog = "Invalid attachemnt ID, " + attachment;
-                log.error(errorLog);
-                ConnectException connectException = new ConnectException(errorLog);
-                throw (connectException);
-            }
+        for (Object set : attachmentMap.keySet()) {
+            javax.activation.DataHandler handler = new javax.activation
+                    .DataHandler(new FileDataSource((String) attachmentMap.get(set)));
+            InputStream inStream = handler.getInputStream();
+            byte[] bytes = IOUtils.toByteArray(inStream);
+            ByteArrayDataSource source = new ByteArrayDataSource(bytes, handler.getContentType());
+            MimeBodyPart bodyPart = new MimeBodyPart();
+            bodyPart.setDataHandler(new DataHandler(source));
+            bodyPart.setFileName((String) set);
+            content.addBodyPart(bodyPart);
         }
         message.setContent(content);
         return message;
