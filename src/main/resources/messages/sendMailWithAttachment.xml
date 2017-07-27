@@ -18,22 +18,21 @@
 -->
 <template name="sendMailWithAttachment" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="subject" description="(Optional) Subject of the e-mail message"/>
-    <parameter name="toRecipients" description="A comma seperated list of recipients"/>
-    <parameter name="ccRecipients" description="A comma seperated list of cc recipients"/>
-    <parameter name="bccRecipients" description="A comma seperated list of bcc recipients"/>
-    <parameter name="textContent" description="(Optional) Text content of the mail"/>
-    <parameter name="attachmentIDs"
-               description="(Optional) A comma seperated list of content IDs(should be same as the file names) of attachments"/>
+    <parameter name="to" description="A comma seperated list of recipients"/>
+    <parameter name="cc" description="A comma seperated list of cc recipients"/>
+    <parameter name="bcc" description="A comma seperated list of bcc recipients"/>
+    <parameter name="messageBody" description="(Optional) Text content of the mail"/>
+    <parameter name="fileName" description="(Optional) A comma separated list of content IDs(should be same as the file names) of attachments"/>
+    <parameter name="filePath" description="(Optional) A comma separated list of file paths"/>
     <sequence>
-        <log level="custom">
             <property name="Operator Name" value="Gmail : SendMail"/>
             <property name="subject" expression="$func:subject"/>
-            <property name="toRecipients" expression="$func:toRecipients"/>
-            <property name="ccRecipients" expression="$func:ccRecipients"/>
-            <property name="bccRecipients" expression="$func:bccRecipients"/>
-            <property name="textContent" expression="$func:textContent"/>
-            <property name="attachmentIDs" expression="$func:attachmentIDs"/>
-        </log>
+            <property name="toRecipients" expression="$func:to"/>
+            <property name="ccRecipients" expression="$func:cc"/>
+            <property name="bccRecipients" expression="$func:bcc"/>
+            <property name="messageBody" expression="$func:messageBody"/>
+            <property name="fileName" expression="$func:fileName"/>
+            <property name="filePath" expression="$func:filePath"/>
         <class name="org.wso2.carbon.connector.GmailMailSender"/>
     </sequence>
 </template>

@@ -40,7 +40,7 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
      */
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-        init("gmail-connector-3.0.6-SNAPSHOT");
+        init("gmail-connector-3.0.7-SNAPSHOT");
         esbRequestHeadersMap.put("Accept-Charset", "UTF-8");
         esbRequestHeadersMap.put("Content-Type", "application/json");
 
@@ -453,5 +453,17 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
 
         Assert.assertEquals(apiRestResponse.getBody().get("name").toString(), connectorProperties.getProperty("labelNameOptional"));
+    }
+
+    /**
+     * Positive test case for SendMail method with mandatory parameters.
+     */
+    @Test(enabled = true, description = "gmail {gmail_sendMailWithAttachment} integration test with attachment parameter.")
+    public void testSendMailWithAttachment() throws IOException, JSONException {
+        String methodName = "gmail_sendMailWithAttachment";
+        RestResponse<JSONObject> esbRestResponse = sendJsonRestRequest(getProxyServiceURL(methodName),
+                "POST", esbRequestHeadersMap, "sendMailOptional.json");
+        Assert.assertEquals(esbRestResponse.getHttpStatusCode(), 200);
+        Assert.assertEquals(esbRestResponse.getBody().get("Status").toString(), "Success");
     }
 }

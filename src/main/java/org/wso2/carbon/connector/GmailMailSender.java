@@ -22,8 +22,6 @@ import com.google.code.com.sun.mail.smtp.SMTPTransport;
 import com.google.code.javax.mail.Message;
 import com.google.code.javax.mail.MessagingException;
 import com.google.code.javax.mail.Session;
-import com.google.code.javax.mail.internet.InternetAddress;
-import org.apache.axiom.attachments.Attachments;
 import org.apache.commons.lang.StringUtils;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
@@ -31,6 +29,8 @@ import org.wso2.carbon.connector.core.AbstractConnector;
 import org.wso2.carbon.connector.core.ConnectException;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class performs the "send mail" operation.
@@ -44,68 +44,40 @@ public class GmailMailSender extends AbstractConnector {
     public void connect(MessageContext messageContext) {
         try {
             // Reading input parameters from the message context
-            String toRecipients =
-                    this.setRecipients(messageContext,
-                            GmailConstants.GMAIL_PARAM_TO_RECIPIENTS);
-            String ccRecipients =
-                    this.setRecipients(messageContext,
-                            GmailConstants.GMAIL_PARAM_CC_RECIPIENTS);
-            String bccRecipients =
-                    this.setRecipients(messageContext,
-                            GmailConstants.GMAIL_PARAM_BCC_RECIPIENTS);
-
-            // Validating recipients. At least one recipient should have been
-            // given to send the mail
+            String toRecipients = (String) messageContext.getProperty(GmailConstants.GMAIL_PARAM_TO_RECIPIENTS);
+            String ccRecipients = (String) messageContext.getProperty(GmailConstants.GMAIL_PARAM_CC_RECIPIENTS);
+            String bccRecipients = (String) messageContext.getProperty(GmailConstants.GMAIL_PARAM_BCC_RECIPIENTS);
             if (StringUtils.isEmpty(toRecipients) && StringUtils.isEmpty(bccRecipients) && StringUtils.isEmpty(ccRecipients)) {
                 String errorLog = "No recipients are found";
                 log.error(errorLog);
                 ConnectException connectException = new ConnectException(errorLog);
-                GmailUtils.storeErrorResponseStatus(messageContext,
-                        connectException,
+                GmailUtils.storeErrorResponseStatus(messageContext, connectException,
                         GmailErrorCodes.GMAIL_ERROR_CODE_CONNECT_EXCEPTION);
                 handleException(connectException.getMessage(), connectException, messageContext);
             }
-
-            String[] attachmentList = this.setAttachmentList(messageContext);
+            String attachmentList = (String) messageContext.getProperty("fileName");
+            String attachmentName = (String) messageContext.getProperty("filePath");
             String subject = this.setSubject(messageContext);
             String textContent = this.setTextContent(messageContext);
-
             GmailSMTPClientLoader smtpClientLoader = new GmailSMTPClientLoader();
-            log.info("Loading the SMTP connection");
-            GmailSMTPConnection smtpConnectionObject =
-                    (GmailSMTPConnection) smtpClientLoader.loadSMTPSession(messageContext);
+            GmailSMTPConnection smtpConnectionObject = smtpClientLoader.loadSMTPSession(messageContext);
             Session session = smtpConnectionObject.getSession();
             SMTPTransport transport = smtpConnectionObject.getTransport();
-            org.apache.axis2.context.MessageContext axis2MsgCtx =
-                    ((Axis2MessageContext) messageContext).getAxis2MessageContext();
-            Message message =
-                    GmailUtils.createNewMessage(session, subject, textContent,
-                            toRecipients, ccRecipients,
-                            bccRecipients, attachmentList,
-                            axis2MsgCtx);
+            Message message = GmailUtils.createNewMessage(session, subject, textContent, toRecipients, ccRecipients,
+                    bccRecipients, getAttachmentList(attachmentName, attachmentList));
             GmailUtils.sendMessage(message, transport);
-            GmailUtils.storeSentMailResponse(GmailConstants.GMAIL_SEND_MAIL_RESPONSE, subject,
-                    textContent,
-                    InternetAddress.toString(message.getAllRecipients())
-                            .toString(),
-                    StringUtils.join(attachmentList, ','), messageContext);
-            log.info("Successfully completed the \"send mail\" operation");
+            messageContext.setProperty("Status", "Success");
         } catch (ConnectException e) {
-            GmailUtils.storeErrorResponseStatus(messageContext, e,
-                    GmailErrorCodes.GMAIL_ERROR_CODE_CONNECT_EXCEPTION);
+            GmailUtils.storeErrorResponseStatus(messageContext, e, GmailErrorCodes.GMAIL_ERROR_CODE_CONNECT_EXCEPTION);
             handleException(e.getMessage(), e, messageContext);
         } catch (MessagingException e) {
-            GmailUtils.storeErrorResponseStatus(messageContext,
-                    e,
-                    GmailErrorCodes.GMAIL_ERROR_CODE_MESSAGING_EXCEPTION);
+            GmailUtils.storeErrorResponseStatus(messageContext, e, GmailErrorCodes.GMAIL_ERROR_CODE_MESSAGING_EXCEPTION);
             handleException(e.getMessage(), e, messageContext);
         } catch (IOException e) {
-            GmailUtils.storeErrorResponseStatus(messageContext, e,
-                    GmailErrorCodes.GMAIL_ERROR_CODE_IO_EXCEPTION);
+            GmailUtils.storeErrorResponseStatus(messageContext, e, GmailErrorCodes.GMAIL_ERROR_CODE_IO_EXCEPTION);
             handleException(e.getMessage(), e, messageContext);
         } catch (Exception e) {
-            GmailUtils.storeErrorResponseStatus(messageContext, e,
-                    GmailErrorCodes.GMAIL_COMMON_EXCEPTION);
+            GmailUtils.storeErrorResponseStatus(messageContext, e, GmailErrorCodes.GMAIL_COMMON_EXCEPTION);
             handleException(e.getMessage(), e, messageContext);
         }
     }
@@ -127,24 +99,23 @@ public class GmailMailSender extends AbstractConnector {
         return subject;
     }
 
-    /**
-     * Reads attachments' names from the message context.
-     *
-     * @param messageContext from where the attachment list should be read
-     * @return returns an array of file names
-     */
-    private String[] setAttachmentList(MessageContext messageContext) {
-        String attachmentIDs =
-                GmailUtils.lookupFunctionParam(messageContext,
-                        GmailConstants.GMAIL_PARAM_ATTACHMENTIDS);
-        if (attachmentIDs == null || "".equals(attachmentIDs.trim())) {
-            org.apache.axis2.context.MessageContext axis2MsgCtx =
-                    ((Axis2MessageContext) messageContext).getAxis2MessageContext();
-            Attachments attachments = axis2MsgCtx.getAttachmentMap();
-            return attachments.getAllContentIDs();
-        } else {
-            return attachmentIDs.split(",");
+    private Map<String, String> getAttachmentList(String attachment, String attachmentPath) {
+        if (StringUtils.isEmpty(attachment) && StringUtils.isEmpty(attachmentPath)) {
+            return null;
         }
+        String[] attachmentNameList = attachment.split(",");
+        String[] attachmentPathList = attachmentPath.split(",");
+        if (attachmentPathList.length != attachmentNameList.length) {
+            return null;
+        }
+        Map<String, String> attachmentMap = new HashMap<String, String>();
+        for (String attachmentEntry : attachmentNameList) {
+            for (String attachmentPathEntry : attachmentPathList) {
+                attachmentMap.put(attachmentEntry, attachmentPathEntry);
+                break;
+            }
+        }
+        return attachmentMap;
     }
 
     /**
@@ -173,7 +144,6 @@ public class GmailMailSender extends AbstractConnector {
      */
     private String setRecipients(MessageContext messageContext, String paramName) {
         String recipients = GmailUtils.lookupFunctionParam(messageContext, paramName);
-
         if (recipients == null || "".equals(recipients.trim())) {
             return null;
         }
