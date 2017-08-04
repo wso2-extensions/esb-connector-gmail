@@ -577,15 +577,15 @@ public final class GmailUtils {
         MimeBodyPart mainPart = new MimeBodyPart();
         mainPart.setText(textContent);
         content.addBodyPart(mainPart);
-        for (Object set : attachmentMap.keySet()) {
+        for (Object set : attachmentMap.entrySet()) {
             javax.activation.DataHandler handler = new javax.activation
-                    .DataHandler(new FileDataSource((String) attachmentMap.get(set)));
+                    .DataHandler(new FileDataSource((String) ((Map.Entry) set).getValue()));
             InputStream inStream = handler.getInputStream();
             byte[] bytes = IOUtils.toByteArray(inStream);
             ByteArrayDataSource source = new ByteArrayDataSource(bytes, handler.getContentType());
             MimeBodyPart bodyPart = new MimeBodyPart();
             bodyPart.setDataHandler(new DataHandler(source));
-            bodyPart.setFileName((String) set);
+            bodyPart.setFileName((String) ((Map.Entry) set).getKey());
             content.addBodyPart(bodyPart);
         }
         message.setContent(content);
