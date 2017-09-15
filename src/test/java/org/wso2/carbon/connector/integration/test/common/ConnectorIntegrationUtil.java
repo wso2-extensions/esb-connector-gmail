@@ -35,7 +35,7 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.wso2.carbon.automation.core.ProductConstant;
+import org.wso2.carbon.automation.engine.frameworkutils.FrameworkPathUtil;
 import org.wso2.carbon.mediation.library.stub.upload.MediationLibraryUploaderStub;
 import org.wso2.carbon.mediation.library.stub.upload.types.carbon.LibraryFileItem;
 
@@ -261,14 +261,11 @@ public class ConnectorIntegrationUtil {
     }
 
     public static Properties getConnectorConfigProperties(String connectorName) {
-
         String connectorConfigFile = null;
-        ProductConstant.init();
         try {
-            connectorConfigFile =
-                    ProductConstant.SYSTEM_TEST_SETTINGS_LOCATION + File.separator + "artifacts" + File.separator
-                            + "ESB" + File.separator + "connector" + File.separator + "config" + File.separator
-                            + connectorName + ".properties";
+            connectorConfigFile = FrameworkPathUtil.getSystemSettingsLocation() + "artifacts" + File.separator
+                    + "ESB" + File.separator + "connector" + File.separator + "config" + File.separator
+                    + connectorName + ".properties";
             File connectorPropertyFile = new File(connectorConfigFile);
             InputStream inputStream = null;
             if (connectorPropertyFile.exists()) {
@@ -381,8 +378,7 @@ public class ConnectorIntegrationUtil {
      *
      * @param endpoint              The endpoint to configure the client for.
      * @param request               The request to add as a SOAP envelope
-     * @param attachmentDataHandler The attachment to add to the message context.
-     * @param attachmentContentId   The content ID for the attachment.
+     * @param attachmentMap The attachment to add to the message context.
      * @return The built MEP Client
      * @throws AxisFault on failure to initialize the client.
      */
