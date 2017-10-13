@@ -25,9 +25,6 @@
         <listener class-name="org.wso2.carbon.automation.engine.testlisteners.TestReportListener"/>
     </listeners>
     <test name="Gmail-Connector-Test" preserve-order="true" verbose="2">
-        <packages>
-            <package name="org.wso2.carbon.connector.integration.test.gmail"/>
-        </packages>
         <classes>
             <class name="org.wso2.carbon.connector.integration.test.gmail.GmailConnectorIntegrationTest"/>
         </classes>
