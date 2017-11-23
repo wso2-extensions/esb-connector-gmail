@@ -33,6 +33,7 @@
             <property name="accessToken" expression="json-eval($.accessToken)"/>
             <property name="accessTokenRegistryPath" expression="json-eval($.accessTokenRegistryPath)"/>
             <property name="apiUrl" expression="json-eval($.apiUrl)"/>
+            <property name="includeSpamTrash" expression="json-eval($.includeSpamTrash)"/>
             <gmail.init>
                 <userId>{$ctx:userId}</userId>
                 <refreshToken>{$ctx:refreshToken}</refreshToken>
@@ -45,6 +46,7 @@
             <gmail.listDrafts>
                 <maxResults>{$ctx:maxResults}</maxResults>
                 <pageToken>{$ctx:pageToken}</pageToken>
+                <includeSpamTrash>{$ctx:includeSpamTrash}</includeSpamTrash>
             </gmail.listDrafts>
             <respond/>
         </inSequence>

@@ -8,11 +8,11 @@ Pre-requisites:
 Tested Platform: 
 
  -  MAC OS and ubuntu 16.04
- -  WSO2 ESB 5.0.0
+ -  WSO2 EI 6.1.1
 
 STEPS:
 
-1. Copy the ESB 5.0.0 zip to the location "Connector_Home/repository/"
+1. Copy the EI 6.1.1 zip to the location "Connector_Home/repository/"
 
 2. Obtain the authorization credentials following below steps;
 	- Access https://developers.google.com/gmail/api/auth/web-server
