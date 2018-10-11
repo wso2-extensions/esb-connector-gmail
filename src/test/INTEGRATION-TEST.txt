@@ -19,7 +19,6 @@ STEPS:
 3. Update the esb-connector-gmail.properties file at location "{Connector_Home}/repository with following information.
 	- Update the refreshToken, clientId, clientSecret, grantType values.
 	- userId : give your e-mail address
-	- accessToken : obtained access token
 
 4. Update connector properties file "gmail.properties" located in "GMAIL_REST_HOME/src/test/resources/artifacts/ESB/connector/config/",
    If you wanted to change the default value according to your gmail account.

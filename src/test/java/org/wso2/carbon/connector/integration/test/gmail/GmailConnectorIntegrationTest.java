@@ -53,12 +53,12 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
                 + connectorProperties.getProperty("refreshToken");
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndpoint, "POST", apiRequestHeadersMap);
         String accessToken = apiRestResponse.getBody().get("access_token").toString();
-        connectorProperties.put("access_Token", accessToken);
+        connectorProperties.put("accessToken", accessToken);
         connectorProperties.put("labelNameMandatory", connectorProperties.getProperty("labelNameMandatory") +
                 System.currentTimeMillis());
         connectorProperties.put("labelNameOptional", connectorProperties.getProperty("labelNameOptional") +
                 System.currentTimeMillis());
-        String authorization = connectorProperties.getProperty("access_Token");
+        String authorization = connectorProperties.getProperty("accessToken");
         apiRequestHeadersMap.put("Authorization", "Bearer " + authorization);
         apiRequestHeadersMap.putAll(esbRequestHeadersMap);
     }
