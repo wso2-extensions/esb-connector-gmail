@@ -44,10 +44,15 @@
                 <fileName>{$ctx:fileName}</fileName>
                 <filePath>{$ctx:filePath}</filePath>
             </gmail.sendMailWithAttachment>
-            <property name="Status" expression="get-property('Status')"/>
             <payloadFactory media-type="json">
-                <format>{ "Status":'$ctx:Status'}</format>
-                <args/>
+                <format>
+                    {
+                    "Status": "$1"
+                    }
+                </format>
+                <args>
+                    <arg expression="get-property('Status')"/>
+                </args>
             </payloadFactory>
             <respond/>
         </inSequence>
