@@ -8,42 +8,26 @@ Pre-requisites:
 Tested Platform: 
 
  -  MAC OS and ubuntu 16.04
- -  WSO2 EI 6.2.0
+ -  WSO2 EI 6.4.0
 
 STEPS:
-1. Download WSO2 EI 6.2.0 from official website.
+1. Download EI 6.4.0 from official website and copy the EI 6.4.0 zip to the location {EI_Connector_Home}/repositiry.
 
-2.Extract the certificate from browser(Mozilla Firefox) by navigating to url(Eg:- https://mail.google.com/)
-        Add the certificate obtained to "<EI_HOME>/repository/resources/security" folder and "{GMAIL_HOME}/src/test/resources/keystores/products".
-
-               "<GMAIL_HOME>/src/test/resources/keystores/products"
-
-           		Navigate to the above location from command prompt and execute 'keytool -importcert -file CERT_FILE_NAME -keystore wso2carbon.jks -alias "gmail"' in command line to import gmail certificate in to keystore. Give "wso2carbon" as password.
-                    NOTE : CERT_FILE_NAME is the file name which was extracted from gmail with  the extension, change it accordingly. Remove the copied certificate.
-
-           	   "WSO2-EI-6.2.0/repository/resources/security"
-
-           		Navigate to the above location from command prompt and execute 'keytool -importcert -file CERT_FILE_NAME -keystore client-truststore.jks -alias "gmail"' in command line to import gmail certificate in to keystore. Give "wso2carbon" as password.
-                    NOTE : CERT_FILE_NAME is the file name which was extracted from gmail with the extension, change it accordingly. Remove the copied certificate.
-                           CERT_NAME is arbitrary name for the certificate.
-
-3. Copy the EI 6.2.0 zip to the location "Connector_Home/repository/"
-
-4. Obtain the authorization credentials following below steps;
+2. Obtain the authorization credentials following below steps;
 	- Access https://developers.google.com/gmail/api/auth/web-server
-	
-5. Update connector properties file "gmail.properties" located in "GMAIL_REST_HOME/src/test/resources/artifacts/ESB/connector/config/",
-with following information
+
+3. Update the esb-connector-gmail.properties file at location "{Connector_Home}/repository with following information.
 	- Update the refreshToken, clientId, clientSecret, grantType values.
 	- userId : give your e-mail address
-	- accessToken : obtained access token
-	and other values should be updated according to your gmail account(labelId,threadId,draftId..).
 
-6. If there are too many simultaneous connections to your Gmail account, sign out from those. Because Gmail allows only 15 simultaneous connections.
+4. Update connector properties file "gmail.properties" located in "GMAIL_REST_HOME/src/test/resources/artifacts/ESB/connector/config/",
+   If you wanted to change the default value according to your gmail account.
+
+5. If there are too many simultaneous connections to your Gmail account, sign out from those. Because Gmail allows only 15 simultaneous connections.
 (Below steps can be used to sign out from existing Gmail connections)
 	- Log in to the Gmail account in browser
 	- Scroll down and click on the link "Details" which is near the label "Last account activity: xx minutes ago"
 	- Click on "Sign out all other sessions"
 
-7. Navigate to "{GMAIL_HOME}" and run the following command.
+6. Navigate to "{GMAIL_HOME}" and run the following command.
       $ mvn clean install -Dskip-tests=false
