@@ -8,10 +8,10 @@ Pre-requisites:
 Tested Platform: 
 
  -  MAC OS and ubuntu 16.04
- -  WSO2 EI 6.4.0
+ -  WSO2 EI 6.5.0
 
 STEPS:
-1. Download EI 6.4.0 from official website and copy the EI 6.4.0 zip to the location {EI_Connector_Home}/repositiry.
+1. Download EI 6.5.0 from official website and copy the EI 6.5.0 zip to the location {EI_Connector_Home}/repositiry.
 
 2. Obtain the authorization credentials following below steps;
 	- Access https://developers.google.com/gmail/api/auth/web-server

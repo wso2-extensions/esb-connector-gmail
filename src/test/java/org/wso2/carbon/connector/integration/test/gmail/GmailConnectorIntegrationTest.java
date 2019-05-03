@@ -18,6 +18,7 @@
 
 package org.wso2.carbon.connector.integration.test.gmail;
 
+import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.testng.Assert;
@@ -27,6 +28,7 @@ import org.wso2.connector.integration.test.base.ConnectorIntegrationTestBase;
 import org.wso2.connector.integration.test.base.RestResponse;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,6 +60,8 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
                 System.currentTimeMillis());
         connectorProperties.put("labelNameOptional", connectorProperties.getProperty("labelNameOptional") +
                 System.currentTimeMillis());
+        String fileName = getFilePath("smile.png") + "," + getFilePath("test.txt");
+        connectorProperties.put("fileName", fileName);
         String authorization = connectorProperties.getProperty("accessToken");
         apiRequestHeadersMap.put("Authorization", "Bearer " + authorization);
         apiRequestHeadersMap.putAll(esbRequestHeadersMap);
@@ -517,5 +521,19 @@ public class GmailConnectorIntegrationTest extends ConnectorIntegrationTestBase 
                 "POST", esbRequestHeadersMap, "sendMailOptional.json");
         Assert.assertEquals(esbRestResponse.getHttpStatusCode(), 200);
         Assert.assertEquals(esbRestResponse.getBody().get("Status").toString(), "Success");
+    }
+
+    /**
+     * Returns file path.
+     * @param fileName file name.
+     * @return file path.
+     */
+    public static String getFilePath(String fileName) {
+        if (StringUtils.isNotBlank(fileName)) {
+            return Paths
+                    .get(System.getProperty("framework.resource.location"), "artifacts", "ESB", "config",
+                            "resources", "gmail", fileName).toString();
+        }
+        return null;
     }
 }
