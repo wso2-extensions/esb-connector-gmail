@@ -19,6 +19,8 @@
 <template name="unTrashMessages" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="id" description="The ID of the message to retrieve"/>
     <sequence>
+        <header name="Authorization" expression="fn:concat('Bearer ', $ctx:uri.var.gmail.accessToken)"
+                scope="transport"/>
         <property name="uri.var.id" expression="$func:id"/>
         <call>
             <endpoint>

@@ -22,6 +22,8 @@
     <parameter name="removeLabelIds"
                description="A list of IDs of labels to remove from this message"/>
     <sequence>
+        <header name="Authorization" expression="fn:concat('Bearer ', $ctx:uri.var.gmail.accessToken)"
+                scope="transport"/>
         <property name="uri.var.id" expression="$func:id"/>
         <property name="uri.var.addLabelIds" expression="$func:addLabelIds"/>
         <property name="uri.var.removeLabelIds" expression="$func:removeLabelIds"/>

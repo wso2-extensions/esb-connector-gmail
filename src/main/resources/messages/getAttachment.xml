@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- ~  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~  Copyright (c) 2020, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  ~
  ~  WSO2 Inc. licenses this file to you under the Apache License,
  ~  Version 2.0 (the "License"); you may not use this file except
@@ -16,16 +16,18 @@
  ~  specific language governing permissions and limitations
  ~  under the License.
 -->
-<template name="deleteMessages" xmlns="http://ws.apache.org/ns/synapse">
-    <parameter name="id" description="The ID of the message to delete"/>
+<template name="getAttachment" xmlns="http://ws.apache.org/ns/synapse">
+    <parameter name="id" description="The ID of the message to retrieve"/>
+    <parameter name="attachmentId" description="The attachment ID of the attachment to download"/>
     <sequence>
         <header name="Authorization" expression="fn:concat('Bearer ', $ctx:uri.var.gmail.accessToken)"
                 scope="transport"/>
         <property name="uri.var.id" expression="$func:id"/>
+        <property name="uri.var.attachmentId" expression="$func:attachmentId"/>
         <call>
-            <endpoint>
-                <http method="delete"
-                      uri-template="{+uri.var.gmail.apiUrl}/{+uri.var.gmail.apiVersion}/users/{+uri.var.gmail.userId}/messages/{+uri.var.id}"/>
+            <endpoint name="Attachment">
+                <http method="get" uri-template="{+uri.var.gmail.apiUrl}/{+uri.var.gmail.apiVersion}/users/{+uri.var.gmail.userId}/messages/{+uri.var.id}/attachments/{+uri.var.attachmentId}">
+                </http>
             </endpoint>
         </call>
         <!-- Remove response custom header information -->

@@ -25,6 +25,8 @@
     <parameter name="fileName" description="(Optional) A comma separated list of content IDs(should be same as the file names) of attachments"/>
     <parameter name="filePath" description="(Optional) A comma separated list of file paths"/>
     <sequence>
+            <header name="Authorization" expression="fn:concat('Bearer ', $ctx:uri.var.gmail.accessToken)"
+                scope="transport"/>
             <property name="Operator Name" value="Gmail : SendMail"/>
             <property name="subject" expression="$func:subject"/>
             <property name="toRecipients" expression="$func:to"/>

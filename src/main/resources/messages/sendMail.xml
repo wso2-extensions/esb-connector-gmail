@@ -27,6 +27,8 @@
     <parameter name="threadId" description="To whom sender need to bcc the mail"/>
     <parameter name="contentType" description="The Content type of the message Body"/>
     <sequence>
+        <header name="Authorization" expression="fn:concat('Bearer ', $ctx:uri.var.gmail.accessToken)"
+                scope="transport"/>
         <property name="uri.var.to" expression="$func:to"/>
         <property name="uri.var.subject" expression="$func:subject"/>
         <property name="uri.var.from" expression="$func:from"/>

@@ -50,5 +50,9 @@
             <file>deleteMessages.xml</file>
             <description>delete the message</description>
         </component>
+        <component name="getAttachment">
+            <file>getAttachment.xml</file>
+            <description>get the attachment</description>
+        </component>
     </subComponents>
 </component>
