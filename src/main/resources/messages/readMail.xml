@@ -22,6 +22,8 @@
     <parameter name="metadataHeaders"
                description="When given and format is METADATA, only include headers specified"/>
     <sequence>
+        <header name="Authorization" expression="fn:concat('Bearer ', $ctx:uri.var.gmail.accessToken)"
+                scope="transport"/>
         <property name="uri.var.id" expression="$func:id"/>
         <property name="uri.var.format" expression="$func:format"/>
         <property name="uri.var.metadataHeaders" expression="$func:metadataHeaders"/>
