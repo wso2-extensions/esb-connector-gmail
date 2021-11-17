@@ -29,9 +29,9 @@
                 scope="transport"/>
             <property name="Operator Name" value="Gmail : SendMail"/>
             <property name="subject" expression="$func:subject"/>
-            <property name="toRecipients" expression="$func:to"/>
-            <property name="ccRecipients" expression="$func:cc"/>
-            <property name="bccRecipients" expression="$func:bcc"/>
+            <property name="to" expression="$func:to"/>
+            <property name="cc" expression="$func:cc"/>
+            <property name="bcc" expression="$func:bcc"/>
             <property name="messageBody" expression="$func:messageBody"/>
             <property name="fileName" expression="$func:fileName"/>
             <property name="filePath" expression="$func:filePath"/>
