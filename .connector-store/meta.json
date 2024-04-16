@@ -1,0 +1,13 @@
+{
+    "name": "Gmail",
+    "owner": "WSO2",
+    "category": "Communication",
+    "documentationUrl": "https://ei.docs.wso2.com/en/latest/micro-integrator/references/connectors/gmail-connector/gmail-connector-overview/",
+    "description": "Gmail connector allows you to send and access e-mail messages which are in your Gmail mailbox. The connector uses the standard IMAP and SMTP protocols with the extensions provided by Google to provide a more Gmail-like experience.",
+    "status": "Active",
+    "labels": [
+        "Communication",
+        "Application"
+    ],
+    "releases": []
+}
