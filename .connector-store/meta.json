@@ -7,16 +7,17 @@
     "status": "Active",
     "labels": [
         "Communication",
-        "Application"
+        "mail"
     ],
     "releases": [
         {
-            "tagName": "3.0.7",
+            "tagName": "v3.0.8",
             "products": [
-                "EI 6.5.0",
-                "EI 6.4.0",
-                "ESB 5.0.0"
-            ]
+                "EI 7.0.x",
+                "EI 6.6.0",
+                "EI 6.5.0"
+            ],
+            "isHidden": false
         }
     ]
 }
