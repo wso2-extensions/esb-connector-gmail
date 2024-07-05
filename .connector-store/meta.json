@@ -11,7 +11,7 @@
     ],
     "releases": [
         {
-            "tagName": "v3.0.8",
+            "tagName": "org.wso2.carbon.connector.gmail-3.0.8",
             "products": [
                 "EI 7.0.x",
                 "EI 6.6.0",
