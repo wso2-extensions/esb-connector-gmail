@@ -4,8 +4,8 @@
     "product": "MI",
     "category": "Communication",
     "documentationUrl": "https://mi.docs.wso2.com/en/latest/reference/connectors/gmail-connector/gmail-connector-overview/",
-    "mavenGroupId": "org.wso2.carbon.connector",
-    "mavenArtifactId": "org.wso2.carbon.connector.gmail",
+    "mavenGroupId": "org.wso2.integration.connector",
+    "mavenArtifactId": "mi-connector-gmail",
     "description": "Gmail connector allows you to send and access e-mail messages which are in your Gmail mailbox. The connector uses the standard IMAP and SMTP protocols with the extensions provided by Google to provide a more Gmail-like experience.",
     "status": "Active",
     "rank": 94,
@@ -17,7 +17,7 @@
     ],
     "releases": [
         {
-            "tagName": "v3.0.8",
+            "tagName": "org.wso2.carbon.connector.gmail-3.0.8",
             "products": [
                 "MI 4.3.0",
                 "MI 4.2.0",
