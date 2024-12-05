@@ -1,10 +1,15 @@
 {
     "name": "Gmail",
     "owner": "WSO2",
+    "product": "MI",
     "category": "Communication",
     "documentationUrl": "https://mi.docs.wso2.com/en/latest/reference/connectors/gmail-connector/gmail-connector-overview/",
+    "mavenGroupId": "org.wso2.integration.connector",
+    "mavenArtifactId": "mi-connector-gmail",
     "description": "Gmail connector allows you to send and access e-mail messages which are in your Gmail mailbox. The connector uses the standard IMAP and SMTP protocols with the extensions provided by Google to provide a more Gmail-like experience.",
     "status": "Active",
+    "rank": 94,
+    "type": "Connector",
     "labels": [
         "communication",
         "google",
@@ -18,6 +23,159 @@
                 "MI 4.2.0",
                 "MI 4.1.0",
                 "MI 4.0.0"
+            ],
+            "operations": [
+                {
+                    "name":"listAllMails",
+                    "description":"List all mails",
+                    "isHidden":false
+                },
+                {
+                    "name":"readMail",
+                    "description":"Read a mail by it's Id",
+                    "isHidden":false
+                },
+                {
+                    "name":"trashMessages",
+                    "description":"Send messages to trash",
+                    "isHidden":false
+                },
+                {
+                    "name":"unTrashMessages",
+                    "description":"Removed messages from trash",
+                    "isHidden":false
+                },
+                {
+                    "name":"modifyExistingMessages",
+                    "description":"Modify existing messages",
+                    "isHidden":false
+                },
+                {
+                    "name":"sendMail",
+                    "description":"Send a plain mail",
+                    "isHidden":false
+                },
+                {
+                    "name":"sendMailWithAttachment",
+                    "description":"Send a mail with attachment",
+                    "isHidden":false
+                },
+                {
+                    "name":"deleteMessages",
+                    "description":"delete the message",
+                    "isHidden":false
+                },
+                {
+                    "name":"passwordLogin",
+                    "description":"Login to the Gmail account using username and password",
+                    "isHidden":false
+                },
+                {
+                    "name":"endSession",
+                    "description":"Terminate the existing IMAP and SMTP connections with Gmail",
+                    "isHidden":false
+                },
+                {
+                    "name":"init",
+                    "description":"get the basic details of api",
+                    "isHidden":false
+                },
+                {
+                    "name":"getAccessTokenFromRefreshToken",
+                    "description":"get the access token from refresh token",
+                    "isHidden":false
+                },
+                {
+                    "name":"listAllThreads",
+                    "description":"List all threads",
+                    "isHidden":false
+                },
+                {
+                    "name":"readThread",
+                    "description":"get an email thread",
+                    "isHidden":false
+                },
+                {
+                    "name":"trashThreads",
+                    "description":"Send threads to trash",
+                    "isHidden":false
+                },
+                {
+                    "name":"unTrashThreads",
+                    "description":"Removed threads from trash",
+                    "isHidden":false
+                },
+                {
+                    "name":"modifyExistingThreads",
+                    "description":"Modify existing threads",
+                    "isHidden":false
+                },
+                {
+                    "name":"deleteThreads",
+                    "description":"delete an existing thread",
+                    "isHidden":false
+                },
+                {
+                    "name":"listLabels",
+                    "description":"List all labels",
+                    "isHidden":false
+                },
+                {
+                    "name":"readLabel",
+                    "description":"Get a label detail",
+                    "isHidden":false
+                },
+                {
+                    "name":"createLabels",
+                    "description":"create new label",
+                    "isHidden":false
+                },
+                {
+                    "name":"updateLabels",
+                    "description":"Update existing labels",
+                    "isHidden":false
+                },
+                {
+                    "name":"deleteLabel",
+                    "description":"Delete labels",
+                    "isHidden":false
+                },
+                {
+                    "name":"listTheHistory",
+                    "description":"List all user history",
+                    "isHidden":false
+                },
+                {
+                    "name":"getUserProfile",
+                    "description":"Get the user profile",
+                    "isHidden":false
+                },
+                {
+                    "name":"listDrafts",
+                    "description":"list all drafts",
+                    "isHidden":false
+                },
+                {
+                    "name":"readDraft",
+                    "description":"read a particular draft",
+                    "isHidden":false
+                },
+                {
+                    "name":"deleteDraft",
+                    "description":"delete an existing draft",
+                    "isHidden":false
+                },
+                {
+                    "name":"createDraft",
+                    "description":"create a plain draft",
+                    "isHidden":false
+                }
+            ],
+            "connections": [
+                {
+                    "name": "gmail",
+                    "description": "Connection for accessing Gmail accounts."
+                }
             ],
             "isHidden": false
         }
