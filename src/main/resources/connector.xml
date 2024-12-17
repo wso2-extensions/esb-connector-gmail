@@ -30,4 +30,5 @@
             https://docs.wso2.com/display/ESBCONNECTORS/Configuring+Gmail+Operations
         </authenticationInfo>
     </component>
+    <displayName>Gmail</displayName>
 </connector>
