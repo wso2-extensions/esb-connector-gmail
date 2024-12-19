@@ -21,7 +21,7 @@
     <groupId>org.wso2.integration.connector</groupId>
     <artifactId>mi-connector-gmail</artifactId>
     <packaging>jar</packaging>
-    <version>3.0.9</version>
+    <version>3.0.10-SNAPSHOT</version>
     <name>WSO2 Carbon - Mediation Library Connector For Gmail</name>
     <url>http://wso2.org</url>
     <properties>
@@ -208,7 +208,7 @@
         <url>https://github.com/wso2-extensions/esb-connector-gmail.git</url>
         <developerConnection>scm:git:https://github.com/wso2-extensions/esb-connector-gmail
         </developerConnection>
-        <tag>v3.0.9</tag>
+        <tag>HEAD</tag>
     </scm>
     <build>
         <plugins>
