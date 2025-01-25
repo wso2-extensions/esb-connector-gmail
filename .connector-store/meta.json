@@ -171,12 +171,7 @@
                     "isHidden":false
                 }
             ],
-            "connections": [
-                {
-                    "name": "gmail",
-                    "description": "Connection for accessing Gmail accounts."
-                }
-            ],
+            "connections": [],
             "isHidden": false
         },
         {
@@ -334,12 +329,7 @@
                     "isHidden":false
                 }
             ],
-            "connections": [
-                {
-                    "name": "gmail",
-                    "description": "Connection for accessing Gmail accounts."
-                }
-            ],
+            "connections": [],
             "isHidden": false
         }
     ]
