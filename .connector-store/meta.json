@@ -17,7 +17,7 @@
     ],
     "releases": [
         {
-            "tagName": "v3.0.9",
+            "tagName": "v3.0.10",
             "products": [
                 "MI 4.4.0",
                 "MI 4.3.0",
@@ -27,148 +27,153 @@
             ],
             "operations": [
                 {
-                    "name": "listAllMails",
+                    "name": "List All Mails",
                     "description": "List all mails",
                     "isHidden": false
                 },
                 {
-                    "name": "readMail",
+                    "name": "Read Mail",
                     "description": "Read a mail by it's Id",
                     "isHidden": false
                 },
                 {
-                    "name": "trashMessages",
+                    "name": "Trash Messages",
                     "description": "Send messages to trash",
                     "isHidden": false
                 },
                 {
-                    "name": "unTrashMessages",
+                    "name": "Un Trash Messages",
                     "description": "Removed messages from trash",
                     "isHidden": false
                 },
                 {
-                    "name": "modifyExistingMessages",
+                    "name": "Modify Existing Messages",
                     "description": "Modify existing messages",
                     "isHidden": false
                 },
                 {
-                    "name": "sendMail",
+                    "name": "Send Mail",
                     "description": "Send a plain mail",
                     "isHidden": false
                 },
                 {
-                    "name": "sendMailWithAttachment",
+                    "name": "Send Mail With Attachment",
                     "description": "Send a mail with attachment",
                     "isHidden": false
                 },
                 {
-                    "name": "deleteMessages",
+                    "name": "Delete Messages",
                     "description": "delete the message",
                     "isHidden": false
                 },
                 {
-                    "name": "passwordLogin",
+                    "name": "Get Attachment",
+                    "description": "get the attachment",
+                    "isHidden": false
+                },
+                {
+                    "name": "Password Login",
                     "description": "Login to the Gmail account using username and password",
                     "isHidden": false
                 },
                 {
-                    "name": "endSession",
+                    "name": "End Session",
                     "description": "Terminate the existing IMAP and SMTP connections with Gmail",
                     "isHidden": false
                 },
                 {
-                    "name": "init",
+                    "name": "Init",
                     "description": "get the basic details of api",
                     "isHidden": false
                 },
                 {
-                    "name": "getAccessTokenFromRefreshToken",
+                    "name": "Get Access Token From Refresh Token",
                     "description": "get the access token from refresh token",
                     "isHidden": false
                 },
                 {
-                    "name": "listAllThreads",
-                    "description": "List all threads",
-                    "isHidden": false
-                },
-                {
-                    "name": "readThread",
-                    "description": "get an email thread",
-                    "isHidden": false
-                },
-                {
-                    "name": "trashThreads",
-                    "description": "Send threads to trash",
-                    "isHidden": false
-                },
-                {
-                    "name": "unTrashThreads",
-                    "description": "Removed threads from trash",
-                    "isHidden": false
-                },
-                {
-                    "name": "modifyExistingThreads",
-                    "description": "Modify existing threads",
-                    "isHidden": false
-                },
-                {
-                    "name": "deleteThreads",
-                    "description": "delete an existing thread",
-                    "isHidden": false
-                },
-                {
-                    "name": "listLabels",
-                    "description": "List all labels",
-                    "isHidden": false
-                },
-                {
-                    "name": "readLabel",
-                    "description": "Get a label detail",
-                    "isHidden": false
-                },
-                {
-                    "name": "createLabels",
-                    "description": "create new label",
-                    "isHidden": false
-                },
-                {
-                    "name": "updateLabels",
-                    "description": "Update existing labels",
-                    "isHidden": false
-                },
-                {
-                    "name": "deleteLabel",
-                    "description": "Delete labels",
-                    "isHidden": false
-                },
-                {
-                    "name": "listTheHistory",
-                    "description": "List all user history",
-                    "isHidden": false
-                },
-                {
-                    "name": "getUserProfile",
-                    "description": "Get the user profile",
-                    "isHidden": false
-                },
-                {
-                    "name": "listDrafts",
+                    "name": "List Drafts",
                     "description": "list all drafts",
                     "isHidden": false
                 },
                 {
-                    "name": "readDraft",
+                    "name": "Read Draft",
                     "description": "read a particular draft",
                     "isHidden": false
                 },
                 {
-                    "name": "deleteDraft",
+                    "name": "Delete Draft",
                     "description": "delete an existing draft",
                     "isHidden": false
                 },
                 {
-                    "name": "createDraft",
+                    "name": "Create Draft",
                     "description": "create a plain draft",
+                    "isHidden": false
+                },
+                {
+                    "name": "List Labels",
+                    "description": "List all labels",
+                    "isHidden": false
+                },
+                {
+                    "name": "Read Label",
+                    "description": "Get a label detail",
+                    "isHidden": false
+                },
+                {
+                    "name": "Create Labels",
+                    "description": "create new label",
+                    "isHidden": false
+                },
+                {
+                    "name": "Update Labels",
+                    "description": "Update existing labels",
+                    "isHidden": false
+                },
+                {
+                    "name": "Delete Label",
+                    "description": "Delete labels",
+                    "isHidden": false
+                },
+                {
+                    "name": "List All Threads",
+                    "description": "List all threads",
+                    "isHidden": false
+                },
+                {
+                    "name": "Read Thread",
+                    "description": "get an email thread",
+                    "isHidden": false
+                },
+                {
+                    "name": "Trash Threads",
+                    "description": "Send threads to trash",
+                    "isHidden": false
+                },
+                {
+                    "name": "Un Trash Threads",
+                    "description": "Removed threads from trash",
+                    "isHidden": false
+                },
+                {
+                    "name": "Modify Existing Threads",
+                    "description": "Modify existing threads",
+                    "isHidden": false
+                },
+                {
+                    "name": "Delete Threads",
+                    "description": "delete an existing thread",
+                    "isHidden": false
+                },
+                {
+                    "name": "Get User Profile",
+                    "description": "Get the user profile",
+                    "isHidden": false
+                },
+                {
+                    "name": "List The History",
+                    "description": "List all user history",
                     "isHidden": false
                 }
             ],

@@ -19,26 +19,32 @@
 <component name="threads" type="synapse/template">
     <subComponents>
         <component name="listAllThreads">
+            <displayName>List All Threads</displayName>
             <file>listAllThreads.xml</file>
             <description>List all threads</description>
         </component>
         <component name="readThread">
+            <displayName>Read Thread</displayName>
             <file>readThread.xml</file>
             <description>get an email thread</description>
         </component>
         <component name="trashThreads">
+            <displayName>Trash Threads</displayName>
             <file>trashThreads.xml</file>
             <description>Send threads to trash</description>
         </component>
         <component name="unTrashThreads">
+            <displayName>Un Trash Threads</displayName>
             <file>unTrashThreads.xml</file>
             <description>Removed threads from trash</description>
         </component>
         <component name="modifyExistingThreads">
+            <displayName>Modify Existing Threads</displayName>
             <file>modifyExistingThreads.xml</file>
             <description>Modify existing threads</description>
         </component>
         <component name="deleteThreads">
+            <displayName>Delete Threads</displayName>
             <file>deleteThreads.xml</file>
             <description>delete an existing thread</description>
         </component>

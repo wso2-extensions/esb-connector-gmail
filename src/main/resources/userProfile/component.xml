@@ -19,6 +19,7 @@
 <component name="userProfile" type="synapse/template">
     <subComponents>
         <component name="getUserProfile">
+            <displayName>Get User Profile</displayName>
             <file>getUserProfile.xml</file>
             <description>Get the user profile</description>
         </component>
