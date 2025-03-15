@@ -19,18 +19,22 @@
 <component name="drafts" type="synapse/template">
     <subComponents>
         <component name="listDrafts">
+            <displayName>List Drafts</displayName>
             <file>listDrafts.xml</file>
             <description>list all drafts</description>
         </component>
         <component name="readDraft">
+            <displayName>Read Draft</displayName>
             <file>readDraft.xml</file>
             <description>read a particular draft</description>
         </component>
         <component name="deleteDraft">
+            <displayName>Delete Draft</displayName>
             <file>deleteDraft.xml</file>
             <description>delete an existing draft</description>
         </component>
         <component name="createDraft">
+            <displayName>Create Draft</displayName>
             <file>createDraft.xml</file>
             <description>create a plain draft</description>
         </component>

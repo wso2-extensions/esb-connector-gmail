@@ -19,6 +19,7 @@
 <component name="userHistory" type="synapse/template">
     <subComponents>
         <component name="listTheHistory">
+            <displayName>List The History</displayName>
             <file>listTheHistory.xml</file>
             <description>List all user history</description>
         </component>
