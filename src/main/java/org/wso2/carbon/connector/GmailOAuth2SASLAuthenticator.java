@@ -18,12 +18,10 @@
 
 package org.wso2.carbon.connector;
 
-import com.google.code.com.sun.mail.imap.IMAPSSLStore;
-import com.google.code.com.sun.mail.imap.IMAPStore;
 import com.google.code.com.sun.mail.smtp.SMTPTransport;
 import com.google.code.javax.mail.MessagingException;
 import com.google.code.javax.mail.Session;
-import com.google.code.javax.mail.URLName;
+import com.google.code.javax.mail.Transport;
 import com.google.code.samples.oauth2.OAuth2Authenticator;
 import com.google.code.samples.oauth2.OAuth2SaslClientFactory;
 
@@ -49,30 +47,6 @@ public final class GmailOAuth2SASLAuthenticator {
     }
 
     /**
-     * Connects to IMAPStore
-     *
-     * @param username   user name
-     * @param oauthToken user's OAuth access token
-     * @return authenticated IMAPSore instance
-     * @throws com.google.code.javax.mail.MessagingException as a result of authentication failure
-     */
-    public static IMAPStore connectToIMAP(String username, String oauthToken)
-            throws MessagingException {
-        Properties props = new Properties();
-        props.put("mail.imaps.sasl.enable", GmailConstants.GMAIL_TRUE_VALUE);
-        props.put("mail.imaps.sasl.mechanisms", GmailConstants.GMAIL_AUTHENTICATION_MECHANISM);
-        props.put(OAuth2SaslClientFactory.OAUTH_TOKEN_PROP, oauthToken);
-
-        Session session = Session.getInstance(props);
-        final URLName unusedUrlName = null;
-        final String emptyPassword = "";
-        IMAPSSLStore store = new IMAPSSLStore(session, unusedUrlName);
-        store.connect(GmailConstants.GMAIL_IMAP_HOST, GmailConstants.GMAIL_IMAP_PORT, username,
-                emptyPassword);
-        return store;
-    }
-
-    /**
      * Connects to SMTP transport and mail session.
      *
      * @param username    user name
@@ -83,16 +57,23 @@ public final class GmailOAuth2SASLAuthenticator {
     public static GmailSMTPConnection connectToSMTP(String username, String accessToken)
             throws MessagingException {
         Properties props = new Properties();
-        props.put("mail.smtp.starttls.enable", GmailConstants.GMAIL_TRUE_VALUE);
-        props.put("mail.smtp.starttls.required", GmailConstants.GMAIL_TRUE_VALUE);
-        props.put("mail.smtp.sasl.enable", GmailConstants.GMAIL_TRUE_VALUE);
-        props.put("mail.smtp.sasl.mechanisms", GmailConstants.GMAIL_AUTHENTICATION_MECHANISM);
+        props.put(GmailConstants.MAIL_SMTP_AUTH, GmailConstants.GMAIL_TRUE_VALUE);
+        props.put(GmailConstants.MAIL_SMTP_STARTTLS_ENABLE, GmailConstants.GMAIL_TRUE_VALUE);
+        props.put(GmailConstants.MAIL_SMTP_STARTTLS_REQUIRED, GmailConstants.GMAIL_TRUE_VALUE);
+        props.put(GmailConstants.MAIL_SMTP_SSL_PROTOCOLS, GmailConstants.GMAIL_SSL_PROTOCOLS);
+        props.put(GmailConstants.MAIL_SMTP_SSL_TRUST, GmailConstants.GMAIL_SMTP_HOST);
+        props.put(GmailConstants.MAIL_SMTP_HOST, GmailConstants.GMAIL_SMTP_HOST);
+        props.put(GmailConstants.MAIL_SMTP_PORT, String.valueOf(GmailConstants.GMAIL_SMTP_PORT));
+        props.put(GmailConstants.MAIL_SMTP_SASL_ENABLE, GmailConstants.GMAIL_TRUE_VALUE);
+        props.put(GmailConstants.MAIL_SMTP_SASL_MECHANISMS, GmailConstants.GMAIL_AUTHENTICATION_MECHANISM);
         props.put(OAuth2SaslClientFactory.OAUTH_TOKEN_PROP, accessToken);
 
         Session session = Session.getInstance(props);
-        SMTPTransport transport = new SMTPTransport(session, null);
-        transport.connect(GmailConstants.GMAIL_SMTP_HOST, GmailConstants.GMAIL_SMTP_PORT, username,
-                "");
-        return new GmailSMTPConnection(session, transport);
+
+        // Get transport through the session instead of creating it directly
+        Transport transport = session.getTransport(GmailConstants.SMTP_PROTOCOL);
+        transport.connect(GmailConstants.GMAIL_SMTP_HOST, GmailConstants.GMAIL_SMTP_PORT, username, "");
+
+        return new GmailSMTPConnection(session, (SMTPTransport) transport);
     }
 }

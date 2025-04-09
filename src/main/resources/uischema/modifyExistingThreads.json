@@ -1,0 +1,99 @@
+{
+  "type": "object",
+  "connectorName": "gmail",
+  "operationName": "modifyExistingThreads",
+  "title": "Modify Thread",
+  "help": "<h1>Modify Thread</h1> <b>The modifyThread operation modifies the labels of an email thread.</b><br><br>",
+  "elements": [
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "General",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "configRef",
+              "displayName": "Connection",
+              "inputType": "connection",
+              "allowedConnectionTypes": [
+                "STANDARD"
+              ],
+              "defaultType": "connection.STANDARD",
+              "required": "true",
+              "helpTip": "Connection to be used"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "id",
+              "displayName": "Thread ID",
+              "inputType": "stringOrExpression",
+              "required": "true",
+              "helpTip": "ID of the thread to modify"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "Label Modifications",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "addLabelIds",
+              "displayName": "Add Labels",
+              "inputType": "stringOrExpression",
+              "required": "false",
+              "helpTip": "Labels to add to the thread"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "removeLabelIds",
+              "displayName": "Remove Labels",
+              "inputType": "stringOrExpression",
+              "required": "false",
+              "helpTip": "Labels to remove from the thread"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "Output",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "responseVariable",
+              "displayName": "Output Variable Name",
+              "inputType": "string",
+              "deriveResponseVariable": "true",
+              "required": "true",
+              "helpTip": "Name of the variable to which the output of the operation should be assigned"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "overwriteBody",
+              "displayName": "Overwrite Message Body",
+              "inputType": "checkbox",
+              "defaultValue": "false",
+              "helpTip": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable).",
+              "required": "false"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

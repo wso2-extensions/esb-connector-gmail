@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Gmail API Send Message Operation Response Schema",
+  "description": "Schema representing the output of the Send Message operation in Gmail API",
+  "properties": {
+    "payload": {
+      "description": "An email message.",
+      "properties": {
+        "historyId": {
+          "description": "The ID of the last history record that modified this message."
+        },
+        "id": {
+          "description": "The immutable ID of the message."
+        },
+        "internalDate": {
+          "description": "The internal message creation timestamp (epoch ms), which determines ordering in the inbox. For normal SMTP-received email, this represents the time the message was originally accepted by Google, which is more reliable than the `Date` header. However, for API-migrated mail, it can be configured by client to be based on the `Date` header."
+        },
+        "labelIds": {
+          "description": "List of IDs of labels applied to this message."
+        },
+        "payload": {
+          "description": "A single MIME message part.",
+          "properties": {
+            "body": {
+              "description": "The body of a single MIME message part.",
+              "properties": {
+                "attachmentId": {
+                  "description": "When present, contains the ID of an external attachment that can be retrieved in a separate `messages.attachments.get` request. When not present, the entire content of the message part body is contained in the data field."
+                },
+                "data": {
+                  "description": "The body data of a MIME message part as a base64url encoded string. May be empty for MIME container types that have no message body or when the body data is sent as a separate attachment. An attachment ID is present if the body data is contained in a separate attachment."
+                },
+                "size": {
+                  "description": "Number of bytes for the message part data (encoding notwithstanding)."
+                }
+              }
+            },
+            "filename": {
+              "description": "The filename of the attachment. Only present if this message part represents an attachment."
+            },
+            "headers": {
+              "description": "List of headers on this message part. For the top-level message part, representing the entire message payload, it will contain the standard RFC 2822 email headers such as `To`, `From`, and `Subject`."
+            },
+            "mimeType": {
+              "description": "The MIME type of the message part."
+            },
+            "partId": {
+              "description": "The immutable ID of the message part."
+            },
+            "parts": {
+              "description": "The child MIME message parts of this part. This only applies to container MIME message parts, for example `multipart/*`. For non- container MIME message part types, such as `text/plain`, this field is empty. For more information, see RFC 1521."
+            }
+          }
+        },
+        "raw": {
+          "description": "The entire email message in an RFC 2822 formatted and base64url encoded string. Returned in `messages.get` and `drafts.get` responses when the `format=RAW` parameter is supplied."
+        },
+        "sizeEstimate": {
+          "description": "Estimated size in bytes of the message."
+        },
+        "snippet": {
+          "description": "A short part of the message text."
+        },
+        "threadId": {
+          "description": "The ID of the thread the message belongs to. To add a message or draft to a thread, the following criteria must be met: 1. The requested `threadId` must be specified on the `Message` or `Draft.Message` you supply with your request. 2. The `References` and `In-Reply-To` headers must be set in compliance with the [RFC 2822](https://tools.ietf.org/html/rfc2822) standard. 3. The `Subject` headers must match. "
+        }
+      }
+    },
+    "attributes": {
+      "description": "Metadata about the operation.",
+      "properties": {
+        "statusCode": {
+          "description": "HTTP status code of the API response."
+        }
+      }
+    },
+    "headers": {
+      "description": "HTTP headers of the API response.",
+      "properties": {}
+    }
+  }
+}

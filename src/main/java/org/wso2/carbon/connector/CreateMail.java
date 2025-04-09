@@ -20,14 +20,15 @@ package org.wso2.carbon.connector;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.synapse.MessageContext;
-import org.wso2.carbon.connector.core.AbstractConnector;
-import org.wso2.carbon.connector.core.ConnectException;
+import org.wso2.integration.connector.core.AbstractConnector;
+import org.wso2.integration.connector.core.ConnectException;
 
 
 public class CreateMail extends AbstractConnector {
     public static final String parameters = "parameters";
 
-    public void connect(MessageContext messageContext) throws ConnectException {
+    public void connect(MessageContext messageContext)
+            throws ConnectException {
         Object templateParam = getParameter(messageContext, "generated_param");
         try {
             String parameter = messageContext.getProperty("parameters").toString();

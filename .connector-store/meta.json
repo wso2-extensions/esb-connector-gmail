@@ -17,6 +17,161 @@
     ],
     "releases": [
         {
+            "tagName": "v4.0.0",
+            "products": [
+                "MI 4.4.0"
+            ],
+            "operations": [
+                {
+                    "name": "List All Mails",
+                    "description": "List all mails",
+                    "isHidden": false
+                },
+                {
+                    "name": "Read Mail",
+                    "description": "Read a mail by it's Id",
+                    "isHidden": false
+                },
+                {
+                    "name": "Trash Messages",
+                    "description": "Send messages to trash",
+                    "isHidden": false
+                },
+                {
+                    "name": "Un Trash Messages",
+                    "description": "Removed messages from trash",
+                    "isHidden": false
+                },
+                {
+                    "name": "Modify Existing Messages",
+                    "description": "Modify existing messages",
+                    "isHidden": false
+                },
+                {
+                    "name": "Send Mail",
+                    "description": "Send a plain mail",
+                    "isHidden": false
+                },
+                {
+                    "name": "Send Mail With Attachment",
+                    "description": "Send a mail with attachment",
+                    "isHidden": false
+                },
+                {
+                    "name": "Delete Messages",
+                    "description": "delete the message",
+                    "isHidden": false
+                },
+                {
+                    "name": "Get Attachment",
+                    "description": "get the attachment",
+                    "isHidden": false
+                },
+                {
+                    "name": "Password Login",
+                    "description": "Login to the Gmail account using username and password",
+                    "isHidden": false
+                },
+                {
+                    "name": "End Session",
+                    "description": "Terminate the existing IMAP and SMTP connections with Gmail",
+                    "isHidden": false
+                },
+                {
+                    "name": "Get Access Token From Refresh Token",
+                    "description": "get the access token from refresh token",
+                    "isHidden": false
+                },
+                {
+                    "name": "List Drafts",
+                    "description": "list all drafts",
+                    "isHidden": false
+                },
+                {
+                    "name": "Read Draft",
+                    "description": "read a particular draft",
+                    "isHidden": false
+                },
+                {
+                    "name": "Delete Draft",
+                    "description": "delete an existing draft",
+                    "isHidden": false
+                },
+                {
+                    "name": "Create Draft",
+                    "description": "create a plain draft",
+                    "isHidden": false
+                },
+                {
+                    "name": "List Labels",
+                    "description": "List all labels",
+                    "isHidden": false
+                },
+                {
+                    "name": "Read Label",
+                    "description": "Get a label detail",
+                    "isHidden": false
+                },
+                {
+                    "name": "Create Labels",
+                    "description": "create new label",
+                    "isHidden": false
+                },
+                {
+                    "name": "Update Labels",
+                    "description": "Update existing labels",
+                    "isHidden": false
+                },
+                {
+                    "name": "Delete Label",
+                    "description": "Delete labels",
+                    "isHidden": false
+                },
+                {
+                    "name": "List All Threads",
+                    "description": "List all threads",
+                    "isHidden": false
+                },
+                {
+                    "name": "Read Thread",
+                    "description": "get an email thread",
+                    "isHidden": false
+                },
+                {
+                    "name": "Trash Threads",
+                    "description": "Send threads to trash",
+                    "isHidden": false
+                },
+                {
+                    "name": "Un Trash Threads",
+                    "description": "Removed threads from trash",
+                    "isHidden": false
+                },
+                {
+                    "name": "Modify Existing Threads",
+                    "description": "Modify existing threads",
+                    "isHidden": false
+                },
+                {
+                    "name": "Delete Threads",
+                    "description": "delete an existing thread",
+                    "isHidden": false
+                },
+                {
+                    "name": "Get User Profile",
+                    "description": "Get the user profile",
+                    "isHidden": false
+                },
+                {
+                    "name": "List The History",
+                    "description": "List all user history",
+                    "isHidden": false
+                }
+            ],
+            "connections": [],
+            "isHidden": false
+        },
+        {
             "tagName": "v3.0.11",
             "products": [
                 "MI 4.4.0",

@@ -21,7 +21,7 @@
     <groupId>org.wso2.integration.connector</groupId>
     <artifactId>mi-connector-gmail</artifactId>
     <packaging>jar</packaging>
-    <version>3.0.12-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
     <name>WSO2 Carbon - Mediation Library Connector For Gmail</name>
     <url>http://wso2.org</url>
     <properties>
@@ -31,12 +31,13 @@
         <automation.framework.utils.version>4.4.2</automation.framework.utils.version>
         <automation.framework.version>4.4.3</automation.framework.version>
         <emma.version>2.1.5320</emma.version>
-        <synapse.version>2.1.7-wso2v95</synapse.version>
+        <synapse.version>4.0.0-wso2v215</synapse.version>
         <carbon.mediation.version>4.6.123</carbon.mediation.version>
         <json.version>3.0.0.wso2v1</json.version>
         <org.testng.version>6.1.1</org.testng.version>
         <jets3t.version>0.9.4</jets3t.version>
         <skip-tests>true</skip-tests>
+        <connector.core.version>0.9.0-SNAPSHOT</connector.core.version>
     </properties>
     <dependencies>
         <dependency>
@@ -118,21 +119,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.wso2.carbon.mediation</groupId>
-            <artifactId>org.wso2.carbon.connector.core</artifactId>
-            <version>${carbon.mediation.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.mediation</groupId>
-            <artifactId>org.wso2.carbon.mediation.library.stub</artifactId>
-            <version>${carbon.mediation.version}</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>javax.servlet</groupId>
-                    <artifactId>servlet-api</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>org.wso2.integration.connector.core</groupId>
+            <artifactId>mi-connector-core</artifactId>
+            <version>${connector.core.version}</version>
         </dependency>
         <dependency>
             <groupId>emma</groupId>
@@ -351,6 +340,24 @@
                             <includeTypes>aar</includeTypes>
                             <includeArtifactIds>SecVerifier</includeArtifactIds>
                             <stripVersion>true</stripVersion>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-mi-connector-core</id>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.wso2.integration.connector.core</groupId>
+                                    <artifactId>mi-connector-core</artifactId>
+                                    <version>${connector.core.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>false</overWrite>
+                                    <outputDirectory>target/connector/dependencies</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
                         </configuration>
                     </execution>
                 </executions>

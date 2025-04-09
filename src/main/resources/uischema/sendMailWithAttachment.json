@@ -1,0 +1,164 @@
+{
+  "connectorName": "gmail",
+  "operationName": "sendMailWithAttachment",
+  "title": "Send Message with Attachment",
+  "help": "<h1>Send Message with Attachment</h1> <b>The sendMessageWithAttachment operation sends an email message with attachments.</b><br><br>",
+  "elements": [
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "General",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "configRef",
+              "displayName": "Connection",
+              "inputType": "connection",
+              "allowedConnectionTypes": [
+                "STANDARD"
+              ],
+              "defaultType": "connection.STANDARD",
+              "required": "true",
+              "helpTip": "Connection to be used"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "Message Details",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "subject",
+              "displayName": "Subject",
+              "inputType": "stringOrExpression",
+              "required": "false",
+              "helpTip": "(Optional) Subject of the e-mail message"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "messageBody",
+              "displayName": "Message Body",
+              "inputType": "expressionTextArea",
+              "required": "false",
+              "helpTip": "(Optional) Text content of the mail"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "Recipients",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "from",
+              "displayName": "From",
+              "inputType": "stringOrExpression",
+              "required": "true",
+              "helpTip": "Sender's email address."
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "to",
+              "displayName": "To",
+              "inputType": "stringOrExpression",
+              "required": "true",
+              "helpTip": "A comma separated list of recipients"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "cc",
+              "displayName": "CC",
+              "inputType": "stringOrExpression",
+              "required": "false",
+              "helpTip": "A comma separated list of cc recipients"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "bcc",
+              "displayName": "BCC",
+              "inputType": "stringOrExpression",
+              "required": "false",
+              "helpTip": "A comma separated list of bcc recipients"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "Attachments",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "fileName",
+              "displayName": "Attachment Content IDs",
+              "inputType": "stringOrExpression",
+              "required": "false",
+              "helpTip": "(Optional) A comma separated list of content IDs (should be same as the file names) of attachments"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "filePath",
+              "displayName": "Attachment File Paths",
+              "inputType": "stringOrExpression",
+              "required": "false",
+              "helpTip": "(Optional) A comma separated list of file paths"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "Output",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "responseVariable",
+              "displayName": "Output Variable Name",
+              "inputType": "string",
+              "deriveResponseVariable": "true",
+              "required": "true",
+              "helpTip": "The name of the variable to which the response should be stored."
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "overwriteBody",
+              "displayName": "Overwrite Message Body",
+              "inputType": "checkbox",
+              "defaultValue": "false",
+              "helpTip": "Replace the Message Body in Message Context with the response of the operation.",
+              "required": "false"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

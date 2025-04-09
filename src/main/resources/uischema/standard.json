@@ -1,0 +1,122 @@
+{
+  "connectorName": "gmail",
+  "connectionName": "STANDARD",
+  "title": "Standard Connection",
+  "help": "<h1>Gmail Connector</h1> <b>The email connector allows you to connect to Gmail and perform various operations.",
+  "testConnectionEnabled": false,
+  "elements": [
+    {
+      "type": "attribute",
+      "value": {
+        "name": "connectionName",
+        "displayName": "Connection Name",
+        "inputType": "string",
+        "defaultValue": "GMAIL_CONNECTION_1",
+        "required": "true",
+        "helpTip": "The name for the email connection",
+        "validation": "nameWithoutSpecialCharactors"
+      }
+    },
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "General",
+        "elements": [
+          {
+            "type": "attributeGroup",
+            "value": {
+              "groupName": "Basic",
+              "elements": [
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "clientId",
+                    "displayName": "Client ID",
+                    "inputType": "stringOrExpression",
+                    "defaultValue": "",
+                    "required": "true",
+                    "helpTip": "Client ID used to connect with the mail server"
+                  }
+                },
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "clientSecret",
+                    "displayName": "Client Secret",
+                    "inputType": "stringOrExpression",
+                    "defaultValue": "",
+                    "required": "true",
+                    "helpTip": "Client Secret to connect with the mail server"
+                  }
+                },
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "refreshToken",
+                    "displayName": "Refresh Token",
+                    "inputType": "stringOrExpression",
+                    "defaultValue": "",
+                    "required": "true",
+                    "helpTip": "Refresh Token used to connect with the mail server"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "attributeGroup",
+            "value": {
+              "groupName": "API Details",
+              "elements": [
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "apiUrl",
+                    "displayName": "API URL",
+                    "inputType": "stringOrExpression",
+                    "defaultValue": "https://www.googleapis.com/gmail",
+                    "required": "false",
+                    "helpTip": "API URL used to connect with the mail server"
+                  }
+                },
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "apiVersion",
+                    "displayName": "API Version",
+                    "inputType": "stringOrExpression",
+                    "defaultValue": "v1",
+                    "required": "false",
+                    "helpTip": "API Version used to connect with the mail server"
+                  }
+                },
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "userId",
+                    "displayName": "User ID",
+                    "inputType": "stringOrExpression",
+                    "defaultValue": "me",
+                    "required": "false",
+                    "helpTip": "User ID used to connect with the mail server"
+                  }
+                },
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "tokenEndpoint",
+                    "displayName": "Token URL",
+                    "inputType": "stringOrExpression",
+                    "defaultValue": "https://oauth2.googleapis.com/token",
+                    "required": "false",
+                    "helpTip": "Token URL used to connect with the mail server"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
