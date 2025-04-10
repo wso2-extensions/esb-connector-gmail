@@ -23,7 +23,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
-import org.wso2.carbon.connector.core.ConnectException;
+import org.wso2.integration.connector.core.ConnectException;
 
 /**
  * Class which loads the {@link GmailSMTPConnection} according to the
@@ -60,40 +60,16 @@ public class GmailSMTPClientLoader {
             return (GmailSMTPConnection) prestoredInstance;
         }
 
-        // Login mode should have been defined during either "init" or
-        // "passwordLogin" operations.
-        Object loginMode = axis2MsgCtx.getProperty(GmailConstants.GMAIL_LOGIN_MODE);
-        if (loginMode == null) {
-            String errorLog = "Gmail configuration details were not initialized";
-            log.error(errorLog);
-            throw (new ConnectException(errorLog));
-        }
         GmailSMTPConnection smtpConnectionObject = null;
 
-        // Perform SASL authentication if configured using the "Password Login"
-        // operation.
-        if (loginMode.toString().equals(GmailConstants.GMAIL_SASL_LOGIN_MODE)) {
-            log.info("SASL authentication starts");
-            smtpConnectionObject = GmailSASLAuthenticator.connectToSMTPSession(messageContext
-                            .getProperty(GmailConstants.GMAIL_USER_USERNAME).toString(),
-                    messageContext.getProperty(GmailConstants.GMAIL_USER_PASSWORD).toString());
+        if (axis2MsgCtx.getProperty(GmailConstants.GMAIL_OAUTH2_PROVIDER) == null) {
+            GmailOAuth2SASLAuthenticator.initializeOAuth2Provider();
+            axis2MsgCtx.getOperationContext().setProperty(GmailConstants.GMAIL_OAUTH2_PROVIDER, "initialized");
+        }
+        smtpConnectionObject = GmailOAuth2SASLAuthenticator.connectToSMTP(messageContext
+                        .getProperty(GmailConstants.GMAIL_FROM_ADDRESS).toString(),
+                messageContext.getProperty(GmailConstants.GMAIL_ACCESSTOKEN).toString());
 
-        }
-        // Perform OAuth authentication if configured using the "init"
-        // operation.
-        else if (loginMode.toString().equals(GmailConstants.GMAIL_OAUTH_LOGIN_MODE)) {
-            if (axis2MsgCtx.getProperty(GmailConstants.GMAIL_OAUTH2_PROVIDER) == null) {
-                GmailOAuth2SASLAuthenticator.initializeOAuth2Provider();
-                axis2MsgCtx.getOperationContext().setProperty(GmailConstants.GMAIL_OAUTH2_PROVIDER, "initialized");
-            }
-            smtpConnectionObject = GmailOAuth2SASLAuthenticator.connectToSMTP(messageContext
-                            .getProperty(GmailConstants.GMAIL_OAUTH_USERNAME).toString(),
-                    messageContext.getProperty("uri.var.gmail.accessToken.reg").toString());
-        } else {
-            String errorLog = "Gmail configuration details were not initialized";
-            log.error(errorLog);
-            throw new ConnectException(errorLog);
-        }
         // Stores the newly instantiated GmailSMTPConnectionObject in the
         // operation context.
         axis2MsgCtx.getOperationContext().setProperty(GmailConstants.GMAIL_SMTP_CONNECTION_INSTANCE, smtpConnectionObject);

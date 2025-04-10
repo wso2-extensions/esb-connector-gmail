@@ -1,0 +1,46 @@
+<!--
+ ~  Copyright (c) 2025, WSO2 LLC. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~  WSO2 LLC. licenses this file to you under the Apache License,
+ ~  Version 2.0 (the "License"); you may not use this file except
+ ~  in compliance with the License.
+ ~  You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~  Unless required by applicable law or agreed to in writing,
+ ~  software distributed under the License is distributed on an
+ ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~  KIND, either express or implied.  See the License for the
+ ~  specific language governing permissions and limitations
+ ~  under the License.
+-->
+
+<!-- Generated on 10-Tue, 09, 2024 08:13:26+0530 -->
+
+<template xmlns="http://ws.apache.org/ns/synapse" name="testconnection">
+    <sequence>
+        <header name="Authorization" expression="fn:concat('Bearer ', $ctx:_ACTIVE_ACCESS_TOKEN_)"
+                scope="transport"/>
+        <call>
+            <endpoint>
+                <http method="get"
+                      uri-template="{+uri.var.gmail.apiUrl}/{+uri.var.gmail.apiVersion}/users/{+uri.var.gmail.userId}/profile"/>
+            </endpoint>
+        </call>
+        <filter source="get-property('axis2', 'HTTP_SC')" regex="200">
+            <then>
+                <log level="full">
+                    <property name="Test connection successful" value="true"/>
+                </log>
+                <property name="isValidConnection" value="true" scope="default" type="STRING"/>
+            </then>
+            <else>
+                <log level="full">
+                    <property name="Test connection failed" value="false"/>
+                </log>
+                <property name="isValidConnection" value="false" scope="default" type="STRING"/>
+            </else>
+        </filter>
+    </sequence>
+</template>

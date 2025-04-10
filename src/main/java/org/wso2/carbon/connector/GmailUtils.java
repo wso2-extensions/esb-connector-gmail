@@ -18,19 +18,15 @@
 
 package org.wso2.carbon.connector;
 
-import com.google.code.com.sun.mail.imap.IMAPFolder;
-import com.google.code.com.sun.mail.imap.IMAPMessage;
-import com.google.code.com.sun.mail.imap.IMAPStore;
 import com.google.code.com.sun.mail.smtp.SMTPTransport;
 import com.google.code.javax.activation.DataHandler;
-import com.google.code.javax.mail.*;
-import com.google.code.javax.mail.Flags.Flag;
-import com.google.code.javax.mail.Part;
+import com.google.code.javax.mail.Message;
+import com.google.code.javax.mail.MessagingException;
+import com.google.code.javax.mail.Session;
 import com.google.code.javax.mail.internet.InternetAddress;
 import com.google.code.javax.mail.internet.MimeBodyPart;
 import com.google.code.javax.mail.internet.MimeMessage;
 import com.google.code.javax.mail.internet.MimeMultipart;
-import com.google.code.javax.mail.search.SearchTerm;
 import com.google.code.javax.mail.util.ByteArrayDataSource;
 import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
@@ -42,13 +38,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.SynapseConstants;
-import org.apache.synapse.core.axis2.Axis2MessageContext;
-import org.wso2.carbon.connector.core.ConnectException;
-import org.wso2.carbon.connector.core.util.ConnectorUtils;
+import org.wso2.integration.connector.core.ConnectException;
+import org.wso2.integration.connector.core.util.ConnectorUtils;
 
-import javax.activation.FileDataSource;
-import java.io.*;
-import java.util.Arrays;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
 public final class GmailUtils {
@@ -105,380 +100,6 @@ public final class GmailUtils {
     }
 
     /**
-     * Read and list the e-mail messages searched from the IMAP store according
-     * to the given search term
-     *
-     * @param messageContext      Message context where the response should be stored
-     * @param store               IMAPStore
-     * @param term                Search term
-     * @param batchNumber         The batch number to return
-     * @param responseElementName Name of the response element name
-     * @throws com.google.code.javax.mail.MessagingException
-     * @throws org.wso2.carbon.connector.core.ConnectException if the folder does not exist
-     */
-    public static void listMails(MessageContext messageContext, IMAPStore store, SearchTerm term,
-                                 int batchNumber, String responseElementName)
-            throws MessagingException,
-            ConnectException {
-        FetchProfile fetchprofile = getFetchProfile();
-        Message[] messages = null;
-        try {
-            log.info("Started reading messages");
-            IMAPFolder folder = getFolder(GmailConstants.GMAIL_ALL_MAIL, store);
-            folder.open(Folder.READ_ONLY);
-            if (term != null) {
-                messages = GmailUtils.getBatch(folder.search(term), batchNumber);
-            } else {
-                messages = GmailUtils.getBatch(folder.getMessages(), batchNumber);
-            }
-            folder.fetch(messages, fetchprofile);
-            log.info("Number of fetched messages:" + messages.length);
-            storeMailListInResponse(messages, messageContext, responseElementName, false);
-            folder.close(true);
-        } catch (MessagingException e) {
-            log.error("Failure while fetching messages");
-            throw (e);
-        }
-    }
-
-    /**
-     * Deletes the e-mail messages searched from the IMAP store according
-     * to the given search term
-     *
-     * @param messageContext      Message context where the response should be stored
-     * @param store               IMAPStore
-     * @param term                Search term
-     * @param responseElementName Name of the response element name
-     * @return an array of messages fetched from the IMAPStore
-     * @throws com.google.code.javax.mail.MessagingException   if any failure occur while deleting messages
-     * @throws org.wso2.carbon.connector.core.ConnectException if no messages are fetched to delete
-     */
-    public static void deleteMails(IMAPStore store, SearchTerm term, MessageContext messageContext,
-                                   String responseElementName) throws MessagingException,
-            ConnectException {
-        FetchProfile fetchprofile = getFetchProfile();
-        Message[] messages = null;
-        try {
-            log.info("Reading messages");
-            IMAPFolder folder = getFolder(GmailConstants.GMAIL_ALL_MAIL, store);
-            IMAPFolder trash = getFolder(GmailConstants.GMAIL_TRASH, store);
-            folder.open(Folder.READ_WRITE);
-            messages = folder.search(term);
-            if (messages.length == 0) {
-                String errorLog =
-                        "No messages are found to delete. Please make sure the threda ID/ message ID is correct.";
-                log.error(errorLog);
-                ConnectException connectException = new ConnectException(errorLog);
-                throw (connectException);
-            }
-
-            log.info("Fetching messages");
-            folder.fetch(messages, fetchprofile);
-            log.info("Number of fetched messages:" + messages.length);
-            storeMailListInResponse(messages, messageContext, responseElementName, true);
-            folder.copyMessages(messages, trash);
-            folder.close(true);
-        } catch (MessagingException e) {
-            log.error("Error while deleting messages");
-            throw (e);
-        }
-    }
-
-    /**
-     * Read and list the e-mail messages searched from the IMAP store according
-     * to the given search term
-     *
-     * @param messageContext      Message context where the response should be stored
-     * @param store               IMAPStore
-     * @param term                Search term
-     * @param responseElementName Name of the response element name
-     * @throws com.google.code.javax.mail.MessagingException   if any failure occur while reading messages
-     * @throws org.wso2.carbon.connector.core.ConnectException if no messages are fetched to read
-     */
-    public static void readMails(MessageContext messageContext, IMAPStore store, SearchTerm term,
-                                 String responseElementName) throws MessagingException,
-            ConnectException {
-        FetchProfile fetchprofile = getFetchProfile();
-        Message[] messages = null;
-        try {
-//			log.info("Started reading messages");
-//			IMAPFolder folder = getFolder(GmailConstants.GMAIL_ALL_MAIL, store);
-//            log.info( "11111111");
-//			folder.open(Folder.READ_WRITE);
-//            log.info( "22222222");
-//			messages = folder.search(term);
-//            log.info( "33333333");
-
-            log.info("111111");
-            Folder ft = store.getFolder("inbox");
-            log.info("2222222");
-            ft.open(Folder.READ_ONLY);
-            log.info("33333");
-            messages = ft.search(term);
-            log.info("444444");
-
-            if (messages.length == 0) {
-                String errorLog =
-                        "No messages are found to read. Please make sure the threda ID/ message ID is correct.";
-                log.error(errorLog);
-                ConnectException connectException = new ConnectException(errorLog);
-                throw (connectException);
-            }
-            log.info("Fetching messages");
-            //folder.fetch(messages, fetchprofile);
-            log.info("Number of fetched messages:" + messages.length);
-            storeMailListInResponse(messages, messageContext, responseElementName, true);
-            //folder.close(true);
-        } catch (MessagingException e) {
-            log.error("Failure while fetching messages");
-            throw (e);
-        }
-    }
-
-    /**
-     * Set labels to the e-mail messages which are searched from the IMAP store
-     * according to the given search term
-     *
-     * @param messageContext      Message context where the response should be stored
-     * @param store               IMAPStore
-     * @param term                Search term
-     * @param responseElementName Name of the response element
-     * @param labels              comma separated list of label names
-     * @throws com.google.code.javax.mail.MessagingException   if any failure occur while setting labels
-     * @throws org.wso2.carbon.connector.core.ConnectException if no messages are fetched to set labels
-     */
-    public static void setLabels(IMAPStore store, SearchTerm term, MessageContext messageContext,
-                                 String[] labels, String responseElementName)
-            throws MessagingException,
-            ConnectException {
-        FetchProfile fetchprofile = getFetchProfile();
-        IMAPMessage[] messages = null;
-        try {
-            IMAPFolder folder = getFolder(GmailConstants.GMAIL_ALL_MAIL, store);
-            log.info("Reading messages");
-            folder.open(Folder.READ_WRITE);
-            messages = (IMAPMessage[]) folder.search(term);
-            if (messages.length == 0) {
-                String errorLog =
-                        "No messages are found to set labels. Please make sure the threda ID/ message ID is correct.";
-                log.error(errorLog);
-                ConnectException connectException = new ConnectException(errorLog);
-                throw (connectException);
-            }
-            log.info("Fetching messages");
-            folder.fetch(messages, fetchprofile);
-            log.info("Number of fetched messages:" + messages.length);
-            folder.setGoogleMessageLabels(messages, labels, true);
-            GmailUtils.storeMailListInResponse(messages, messageContext, responseElementName, false);
-            folder.close(true);
-        } catch (MessagingException e) {
-            log.error("Error while deleting messages");
-            throw (e);
-        }
-    }
-
-    /**
-     * {@link com.google.code.javax.mail.FetchProfile} is created to fetch Gmail thread ID, Gmail message
-     * ID, Gmail labels, flags and envelop of e-mail messages
-     *
-     * @return the {@link com.google.code.javax.mail.FetchProfile}
-     */
-    public static FetchProfile getFetchProfile() {
-        FetchProfile fetchprofile = new FetchProfile();
-        fetchprofile.add(IMAPFolder.FetchProfileItem.X_GM_THRID);
-        fetchprofile.add(IMAPFolder.FetchProfileItem.X_GM_MSGID);
-        fetchprofile.add(IMAPFolder.FetchProfileItem.X_GM_LABELS);
-        fetchprofile.add(IMAPFolder.FetchProfileItem.ENVELOPE);
-        fetchprofile.add(IMAPFolder.FetchProfileItem.FLAGS);
-        return fetchprofile;
-    }
-
-    /**
-     * Store resulted e-mail messages in the response.
-     *
-     * @param messagesArray     Array of {@link com.google.code.javax.mail.Message}
-     * @param messageContext    Message Context where the messages should be stored
-     * @param resultElementName Name of the result element
-     * @param storeContent      Message context is stored in the response only if this flag is
-     *                          true
-     */
-    public static void storeMailListInResponse(Message[] messagesArray,
-                                               MessageContext messageContext,
-                                               String resultElementName, boolean storeContent) {
-        log.info("Storing the response in the message context");
-        if (messageContext.getEnvelope().getBody().getFirstElement() != null) {
-            messageContext.getEnvelope().getBody().getFirstElement().detach();
-        }
-
-        OMFactory factory = OMAbstractFactory.getOMFactory();
-        OMNamespace ns = factory.createOMNamespace("http://org.wso2.esbconnectors.gmail", "ns");
-        OMElement result = factory.createOMElement(resultElementName, ns);
-
-        OMElement messages = factory.createOMElement("messages", ns);
-        result.addChild(messages);
-
-        for (int i = messagesArray.length - 1; i >= 0; i--) {
-            Message message = messagesArray[i];
-            if (message != null) {
-                OMElement messageElement = factory.createOMElement("message", ns);
-                messages.addChild(messageElement);
-
-                OMElement subject = factory.createOMElement("subject", ns);
-                messageElement.addChild(subject);
-                try {
-                    subject.setText(message.getSubject());
-                } catch (MessagingException me) {
-                    log.info("\"Subject\" cannot be resolved");
-                }
-
-                OMElement from = factory.createOMElement("from", ns);
-                messageElement.addChild(from);
-                try {
-                    from.setText(InternetAddress.toString(message.getFrom()));
-                } catch (MessagingException e) {
-                    log.info("\"From\" cannot be resolved");
-                }
-
-                OMElement to = factory.createOMElement("to", ns);
-                messageElement.addChild(to);
-                try {
-                    to.setText(InternetAddress.toString(message.getAllRecipients()));
-                } catch (MessagingException e) {
-                    log.info("\"To\" cannot be resolved");
-                }
-
-                OMElement date = factory.createOMElement("sentDate", ns);
-                messageElement.addChild(date);
-                try {
-                    date.setText(message.getSentDate().toString());
-                } catch (MessagingException e) {
-                    log.info("\"Sent date\" cannot be resolved");
-                }
-
-                OMElement labelsElement = factory.createOMElement("labels", ns);
-                messageElement.addChild(labelsElement);
-                String[] labels = ((IMAPMessage) message).getGoogleMessageLabels();
-                for (String label : labels) {
-                    OMElement labelElement = factory.createOMElement("label", ns);
-                    labelsElement.addChild(labelElement);
-                    labelElement.setText(label);
-                }
-
-                OMElement msgId = factory.createOMElement("messageID", ns);
-                messageElement.addChild(msgId);
-                String messageID = Long.toString(((IMAPMessage) message).getGoogleMessageId());
-                msgId.setText(messageID);
-
-                OMElement threadId = factory.createOMElement("threadID", ns);
-                messageElement.addChild(threadId);
-                threadId.setText(Long.toString(((IMAPMessage) message).getGoogleMessageThreadId()));
-
-                OMElement status = factory.createOMElement("Status", ns);
-                messageElement.addChild(status);
-                try {
-                    if (message.isSet(Flag.SEEN)) {
-                        status.setText("READ");
-                    } else {
-                        status.setText("UNREAD");
-                    }
-                } catch (MessagingException e) {
-                    log.info("\"Message Status\" cannot be resolved");
-                }
-
-                if (storeContent) {
-                    OMElement content = factory.createOMElement("content", ns);
-                    messageElement.addChild(content);
-                    StringBuilder attachmentContentIDs = new StringBuilder();
-                    try {
-
-                        log.info("Processing message content");
-                        content.setText("\n" +
-                                GmailUtils.processMessageBody(message, messageContext,
-                                        attachmentContentIDs,
-                                        messageID));
-                    } catch (Exception e) {
-                        log.info("Cannot retrive \"Message Content\".");
-                    }
-
-                    if (attachmentContentIDs.length() > 0) {
-                        OMElement attachments = factory.createOMElement("attachemnts", ns);
-                        messageElement.addChild(attachments);
-                        attachmentContentIDs.setLength(attachmentContentIDs.length() - 1);
-                        attachments.setText(attachmentContentIDs.toString());
-                    }
-                }
-            }
-        }
-        messageContext.getEnvelope().getBody().addChild(result);
-    }
-
-    /**
-     * Process message body.
-     *
-     * @param message              Message to be processed.
-     * @param messageContext       Message Context
-     * @param attachmentContentIDs file names as the content IDs of the attachments
-     * @param messageID            ID of the message.
-     * @return
-     * @throws java.io.IOException
-     * @throws com.google.code.javax.mail.MessagingException
-     */
-    private static String processMessageBody(Message message, MessageContext messageContext,
-                                             StringBuilder attachmentContentIDs, String messageID)
-            throws IOException,
-            MessagingException {
-        Object content = message.getContent();
-        if (content instanceof Multipart) {
-            Multipart multiPart = (Multipart) content;
-            StringBuilder builder = new StringBuilder();
-            return procesMultiPart(builder, multiPart, messageContext, attachmentContentIDs,
-                    messageID);
-        } else if (content instanceof String) {
-            return content.toString();
-        } else if (content instanceof InputStream) {
-            InputStream inStream = (InputStream) content;
-            BufferedReader br = new BufferedReader(new InputStreamReader(inStream));
-            String line;
-            StringBuilder builder = new StringBuilder();
-            while ((line = br.readLine()) != null) {
-                builder.append(line);
-            }
-            br.close();
-            inStream.close();
-            return builder.toString();
-        }
-        log.error("invalid message content");
-        return null;
-    }
-
-    /**
-     * Reads the batch number from the input string.
-     *
-     * @param batchString input string
-     * @return batch number
-     * @throws NumberFormatException                           if the batch number is not an integer
-     * @throws org.wso2.carbon.connector.core.ConnectException if the batch number is not a positive integer
-     */
-    public static int getBatchNumber(String batchString) throws NumberFormatException,
-            ConnectException {
-        int batchNumber;
-        if (batchString != null && !"".equals(batchString.trim())) {
-            batchNumber = Integer.parseInt(batchString);
-            if (batchNumber <= 0) {
-                String errorLog = "Batch number should be a positive integer";
-                log.error(errorLog);
-                ConnectException connectException = new ConnectException(errorLog);
-                throw (connectException);
-            }
-        } else {
-            // Use first batch as the default batch.
-            batchNumber = 1;
-        }
-
-        return batchNumber;
-    }
-
-    /**
      * Close and remove the already stored IMAP and SMTP connections
      *
      * @throws com.google.code.javax.mail.MessagingException
@@ -490,11 +111,6 @@ public final class GmailUtils {
         }
 
         OperationContext operationContext = axis2MessageContext.getOperationContext();
-        if (operationContext.getProperty(GmailConstants.GMAIL_IMAP_STORE_INSTANCE) != null) {
-            log.info("Closing the previously opened IMAP Store");
-            ((IMAPStore) operationContext.getProperty(GmailConstants.GMAIL_IMAP_STORE_INSTANCE)).close();
-            operationContext.removeProperty(GmailConstants.GMAIL_IMAP_STORE_INSTANCE);
-        }
 
         if (operationContext.getProperty(GmailConstants.GMAIL_SMTP_CONNECTION_INSTANCE) != null) {
             log.info("Closing the previously opened SMTP transport");
@@ -507,44 +123,6 @@ public final class GmailUtils {
     }
 
     /**
-     * Store the response for send mail operations.
-     *
-     * @param responseElementName Response element's name
-     * @param subject             Subject of the mail
-     * @param textContent         Text content of the mail
-     * @param recipients          A comma separated list of recipients
-     * @param attachmentIDs       A comma separated list of attachmentIDs
-     * @param messageContext      Message context where the response should be stored
-     */
-    public static void storeSentMailResponse(String responseElementName, String subject,
-                                             String textContent, String recipients,
-                                             String attachmentIDs, MessageContext messageContext) {
-        log.info("Storing the response in the message context");
-        if (messageContext.getEnvelope().getBody().getFirstElement() != null) {
-            messageContext.getEnvelope().getBody().getFirstElement().detach();
-        }
-        OMFactory factory = OMAbstractFactory.getOMFactory();
-        OMNamespace ns = factory.createOMNamespace("http://org.wso2.esbconnectors.gmail", "ns");
-        OMElement result = factory.createOMElement(responseElementName, ns);
-
-        OMElement messageElement = factory.createOMElement("message", ns);
-        result.addChild(messageElement);
-        OMElement subjectElement = factory.createOMElement("subject", ns);
-        subjectElement.setText(subject);
-        messageElement.addChild(subjectElement);
-        OMElement contentElement = factory.createOMElement("content", ns);
-        contentElement.setText(textContent);
-        messageElement.addChild(contentElement);
-        OMElement attachmentElement = factory.createOMElement("attachments", ns);
-        attachmentElement.setText(attachmentIDs);
-        messageElement.addChild(attachmentElement);
-        OMElement recipientsElement = factory.createOMElement("recipients", ns);
-        recipientsElement.setText(recipients);
-        messageElement.addChild(recipientsElement);
-        messageContext.getEnvelope().getBody().addChild(result);
-    }
-
-    /**
      * Creates a new {@link com.google.code.javax.mail.Message}.
      *
      * @param session       Mail {@link com.google.code.javax.mail.Session}.
@@ -554,7 +132,6 @@ public final class GmailUtils {
      * @param ccRecipients  'CC' recipients of the mail message.
      * @param bccRecipients 'BCC' recipients of the mail message.
      * @return returns the created {@link #}
-     * @throws org.wso2.carbon.connector.core.ConnectException if invalid attachment IDs are provided.
      * @throws com.google.code.javax.mail.MessagingException
      * @throws java.io.IOException
      */
@@ -577,17 +154,38 @@ public final class GmailUtils {
         MimeBodyPart mainPart = new MimeBodyPart();
         mainPart.setText(textContent);
         content.addBodyPart(mainPart);
-        for (Object set : attachmentMap.entrySet()) {
-            javax.activation.DataHandler handler = new javax.activation
-                    .DataHandler(new FileDataSource((String) ((Map.Entry) set).getValue()));
-            InputStream inStream = handler.getInputStream();
-            byte[] bytes = IOUtils.toByteArray(inStream);
-            ByteArrayDataSource source = new ByteArrayDataSource(bytes, handler.getContentType());
-            MimeBodyPart bodyPart = new MimeBodyPart();
-            bodyPart.setDataHandler(new DataHandler(source));
-            bodyPart.setFileName((String) ((Map.Entry) set).getKey());
-            content.addBodyPart(bodyPart);
+
+        // Use the current thread's context classloader
+        ClassLoader originalClassLoader = Thread.currentThread().getContextClassLoader();
+
+        try {
+            Thread.currentThread().setContextClassLoader(javax.activation.DataHandler.class.getClassLoader());
+
+            for (Object set : attachmentMap.entrySet()) {
+                Map.Entry entry = (Map.Entry) set;
+                String fileName = (String) entry.getValue();
+                String filePath = (String) entry.getKey();
+
+                // Use URLDataSource instead of FileDataSource
+                File file = new File(filePath);
+                javax.activation.URLDataSource urlDataSource = new javax.activation.URLDataSource(file.toURI().toURL());
+                javax.activation.DataHandler handler = new javax.activation.DataHandler(urlDataSource);
+
+                // Read the data
+                InputStream inStream = handler.getInputStream();
+                byte[] bytes = IOUtils.toByteArray(inStream);
+
+                // Use handler.getContentType() to determine the content type
+                ByteArrayDataSource source = new ByteArrayDataSource(bytes, handler.getContentType());
+                MimeBodyPart bodyPart = new MimeBodyPart();
+                bodyPart.setDataHandler(new DataHandler(source));
+                bodyPart.setFileName(fileName);
+                content.addBodyPart(bodyPart);
+            }
+        } finally {
+            Thread.currentThread().setContextClassLoader(originalClassLoader);
         }
+
         message.setContent(content);
         return message;
     }
@@ -605,122 +203,5 @@ public final class GmailUtils {
         log.info("Sending the mail...");
         transport.sendMessage(message, message.getAllRecipients());
         log.info("The mail is succesfully sent");
-    }
-
-    private static Message[] getBatch(Message[] messages, int batchNumber) {
-        Message[] newMessages;
-        if (messages.length > GmailConstants.GMAIL_BATCH_SIZE * batchNumber) {
-            newMessages =
-                    Arrays.copyOfRange(messages, messages.length -
-                                    GmailConstants.GMAIL_BATCH_SIZE *
-                                            batchNumber,
-                            messages.length - GmailConstants.GMAIL_BATCH_SIZE *
-                                    (batchNumber - 1));
-        } else if (messages.length > GmailConstants.GMAIL_BATCH_SIZE * (batchNumber - 1)) {
-            newMessages =
-                    Arrays.copyOfRange(messages, 0, messages.length -
-                            GmailConstants.GMAIL_BATCH_SIZE *
-                                    (batchNumber - 1));
-        } else {
-            newMessages = new Message[0];
-        }
-        return newMessages;
-    }
-
-
-    /**
-     * Gets {@link com.google.code.com.sun.mail.imap.IMAPFolder} when the folder name and the {@link com.google.code.com.sun.mail.imap.IMAPStore} is
-     * given.
-     *
-     * @param folderName name of the {@link com.google.code.com.sun.mail.imap.IMAPFolder}
-     * @param store      {@link com.google.code.com.sun.mail.imap.IMAPStore} instance where the folder is located
-     * @return the folder
-     * @throws com.google.code.javax.mail.MessagingException   as a result of the failures occur while getting the folder
-     * @throws org.wso2.carbon.connector.core.ConnectException if the folder is null
-     */
-    private static IMAPFolder getFolder(String folderName, IMAPStore store)
-            throws MessagingException,
-            ConnectException {
-        IMAPFolder folder = (IMAPFolder) store.getFolder(folderName);
-        if (folder == null) {
-            String errorLog = "Invalid label/ folder name";
-            log.error(errorLog);
-            ConnectException connectException = new ConnectException(errorLog);
-            throw (connectException);
-        }
-        return folder;
-    }
-
-
-    /**
-     * Process {@link com.google.code.javax.mail.Multipart} content.
-     *
-     * @param contentBuilder       String builder to store the content
-     * @param multipart            input {@link com.google.code.javax.mail.Multipart} to process
-     * @param messageContext       Message context from where the attachments should be taken
-     * @param attachmentContentIDs String builder to store content IDs of the attachments
-     * @param messageID            ID of the message
-     * @return the {@link com.google.code.javax.mail.Multipart} content as a {@link String}
-     * @throws com.google.code.javax.mail.MessagingException
-     * @throws java.io.IOException
-     */
-    private static String procesMultiPart(StringBuilder contentBuilder, Multipart multipart,
-                                          MessageContext messageContext,
-                                          StringBuilder attachmentContentIDs, String messageID)
-            throws MessagingException,
-            IOException {
-        int multiPartCount = multipart.getCount();
-        for (int i = 0; i < multiPartCount; i++) {
-            BodyPart bodyPart = multipart.getBodyPart(i);
-
-            if (bodyPart.isMimeType("text/plain")) {
-                contentBuilder.append("Text:\n" + bodyPart.getContent() + "\n");
-            } else if (bodyPart.getContent() instanceof Multipart) {
-                procesMultiPart(contentBuilder, (Multipart) bodyPart.getContent(), messageContext,
-                        attachmentContentIDs, messageID);
-            } else if (null != bodyPart.getDisposition() &&
-                    bodyPart.getDisposition().equalsIgnoreCase(Part.ATTACHMENT)) {
-                String fileName = bodyPart.getFileName();
-                String attachmentID = messageID + fileName;
-                contentBuilder.append("Attachment:" + fileName + "\n");
-                attachmentContentIDs.append(attachmentID);
-                attachmentContentIDs.append(',');
-                addAttachmentToMessageContext(attachmentID, bodyPart.getInputStream(),
-                        bodyPart.getContentType(), messageContext);
-            } else if (null != bodyPart.getDisposition() &&
-                    bodyPart.getDisposition().equalsIgnoreCase(Part.INLINE)) {
-                String fileName = bodyPart.getFileName();
-                contentBuilder.append("INLINE:" + fileName + "\n");
-            }
-
-        }
-        return contentBuilder.toString();
-    }
-
-    /**
-     * Add attachments to the message context.
-     *
-     * @param attachmentContentID Content ID (file name) of the attachment
-     * @param inputStream         Input stream to attach
-     * @param type                Content type of the attachment
-     * @param messageContext      Message context to where the attachments should be added
-     * @throws java.io.IOException as a result of the failures occur while getting the byte
-     *                             array from the input stream
-     */
-    private static void addAttachmentToMessageContext(String attachmentContentID,
-                                                      InputStream inputStream, String type,
-                                                      MessageContext messageContext)
-            throws IOException {
-        org.apache.axis2.context.MessageContext axis2mc =
-                ((Axis2MessageContext) messageContext).getAxis2MessageContext();
-        byte[] bytes = IOUtils.toByteArray(inputStream);
-        javax.mail.util.ByteArrayDataSource source =
-                new javax.mail.util.ByteArrayDataSource(bytes,
-                        type);
-        javax.activation.DataHandler handler =
-                new javax.activation.DataHandler(
-                        (javax.activation.DataSource) source);
-        axis2mc.addAttachment(attachmentContentID, handler);
-        log.info("Added an attachemnt named \"" + attachmentContentID + "\" to message context");
     }
 }

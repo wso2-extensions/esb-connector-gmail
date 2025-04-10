@@ -21,8 +21,8 @@ package org.wso2.carbon.connector;
 import com.google.code.javax.mail.MessagingException;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
-import org.wso2.carbon.connector.core.AbstractConnector;
-import org.wso2.carbon.connector.core.ConnectException;
+import org.wso2.integration.connector.core.AbstractConnector;
+import org.wso2.integration.connector.core.ConnectException;
 
 /**
  * Class which reads OAuth access token and user name parameters from the
@@ -37,7 +37,7 @@ public class GmailConfig extends AbstractConnector {
     @Override
     public void connect(MessageContext messageContext) throws ConnectException {
         try {
-            // Reading OAuth access token and user name from the message context
+            // Reading OAuth access token and username from the message context
             String accessToken = (String) messageContext.getProperty(GmailConstants.GMAIL_ACCESSTOKEN);
             String userId = GmailUtils.lookupFunctionParam(messageContext, GmailConstants.GMAIL_PARAM_USERNAME);
             // Storing OAuth user login details in the message context

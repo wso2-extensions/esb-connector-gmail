@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Gmail API Send Message Operation Response Schema",
+  "description": "Schema representing the output of the Send Message operation in Gmail API",
+  "properties": {
+    "payload": {
+      "description": "An email message resource."
+    },
+    "attributes": {
+      "description": "Metadata about the operation."
+    },
+    "headers": {
+      "description": "HTTP headers of the API response."
+    }
+  }
+}

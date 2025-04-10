@@ -1,0 +1,108 @@
+{
+  "connectorName": "gmail",
+  "operationName": "listHistory",
+  "title": "List History",
+  "help": "<h1>List History</h1> <b>Lists the history of all changes to the user's mailbox.</b><br><br>",
+  "elements": [
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "General",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "configRef",
+              "displayName": "Connection",
+              "inputType": "connection",
+              "allowedConnectionTypes": [
+                "GMAIL"
+              ],
+              "defaultType": "connection.GMAIL",
+              "required": "true",
+              "helpTip": "Connection to be used"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "startHistoryId",
+              "displayName": "Start History ID",
+              "inputType": "stringOrExpression",
+              "required": "true",
+              "helpTip": "Returns history records after this history ID"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "labelId",
+              "displayName": "Label ID",
+              "inputType": "stringOrExpression",
+              "required": "false",
+              "helpTip": "Only return messages with the specified label"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "Pagination",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "pageToken",
+              "displayName": "Page Token",
+              "inputType": "stringOrExpression",
+              "required": "false",
+              "helpTip": "Page token for pagination"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "maxResults",
+              "displayName": "Max Results",
+              "inputType": "stringOrExpression",
+              "required": "false",
+              "helpTip": "Maximum number of history records to return"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "Output",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "responseVariable",
+              "displayName": "Output Variable Name",
+              "inputType": "string",
+              "deriveResponseVariable": "true",
+              "required": "true",
+              "helpTip": "Name of the variable to which the output of the operation should be assigned"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "overwriteBody",
+              "displayName": "Overwrite Message Body",
+              "inputType": "checkbox",
+              "defaultValue": "false",
+              "helpTip": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable).",
+              "required": "false"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

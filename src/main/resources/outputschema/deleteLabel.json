@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "title": "Gmail API Delete Label Operation Response Schema",
+    "description": "Schema representing the output of the Delete Label operation in Gmail API",
+    "properties": {
+      "payload": {
+        "description": "Payload of the API response."
+      },
+      "attributes": {
+        "description": "Metadata about the operation.",
+        "properties": {
+          "statusCode": {
+            "description": "HTTP status code of the API response."
+          }
+        }
+      },
+      "headers": {
+        "description": "HTTP headers of the API response.",
+        "properties": {}
+      }
+    }
+  }

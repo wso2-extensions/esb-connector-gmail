@@ -32,17 +32,9 @@ public final class GmailConstants {
      */
     public static final String GMAIL_OAUTH_LOGIN_MODE = "OAUTH";
     /**
-     * Gmail "SASL" login mode.
-     */
-    public static final String GMAIL_SASL_LOGIN_MODE = "SASL";
-    /**
      * Name of the "username" parameter in synapse configuration.
      */
     public static final String GMAIL_PARAM_USERNAME = "userId";
-    /**
-     * Name of the "password" parameter in synapse configuration.
-     */
-    public static final String GMAIL_PARAM_PASSWORD = "password";
     /**
      * Name of the "OAuth access token" parameter in synapse configuration.
      */
@@ -60,6 +52,11 @@ public final class GmailConstants {
      */
     public static final String GMAIL_OAUTH_USERNAME = "gmail.oauth.username";
     /**
+     * Property name to store the OAuth2 client ID of the user for SASL
+     * authentication.
+     */
+    public static final String GMAIL_FROM_ADDRESS = "gmail.from.address";
+    /**
      * Property name to store the OAuth2 access token of the user for SASL
      * authentication.
      */
@@ -76,6 +73,12 @@ public final class GmailConstants {
      * Property name to store the SMTP connection information
      */
     public static final String GMAIL_SMTP_CONNECTION_INSTANCE = "gmail.smtp.session.instance";
+
+    /**
+     * Property name to store the SMTP
+     */
+    public static final String SMTP_PROTOCOL = "smtp";
+
     /**
      * Name of the "subject" parameter in synapse configuration.
      */
@@ -113,6 +116,11 @@ public final class GmailConstants {
      * Stores the value, "true".
      */
     public static final boolean GMAIL_TRUE_VALUE = true;
+
+    /**
+     * Stores the value, "TLSv1.2".
+     */
+    public static final String GMAIL_SSL_PROTOCOLS = "TLSv1.2";
     /**
      * Gmail authentication mechanism, "XOAUTH2".
      */
@@ -136,7 +144,44 @@ public final class GmailConstants {
     /**
      * Access Token to access the GMAIL REST api
      */
-    public static final String GMAIL_ACCESSTOKEN = "uri.var.accessToken";
+    public static final String GMAIL_ACCESSTOKEN = "_ACTIVE_ACCESS_TOKEN_";
+
+    /**
+     * Property name for enabling SMTP authentication.
+     */
+    public static final String MAIL_SMTP_AUTH = "mail.smtp.auth";
+    /**
+     * Property name for enabling STARTTLS.
+     */
+    public static final String MAIL_SMTP_STARTTLS_ENABLE = "mail.smtp.starttls.enable";
+    /**
+     * Property name for requiring STARTTLS.
+     */
+    public static final String MAIL_SMTP_STARTTLS_REQUIRED = "mail.smtp.starttls.required";
+    /**
+     * Property name for specifying SSL protocols.
+     */
+    public static final String MAIL_SMTP_SSL_PROTOCOLS = "mail.smtp.ssl.protocols";
+    /**
+     * Property name for trusting the SMTP server.
+     */
+    public static final String MAIL_SMTP_SSL_TRUST = "mail.smtp.ssl.trust";
+    /**
+     * Property name for specifying the SMTP host.
+     */
+    public static final String MAIL_SMTP_HOST = "mail.smtp.host";
+    /**
+     * Property name for specifying the SMTP port.
+     */
+    public static final String MAIL_SMTP_PORT = "mail.smtp.port";
+    /**
+     * Property name for enabling SASL.
+     */
+    public static final String MAIL_SMTP_SASL_ENABLE = "mail.smtp.sasl.enable";
+    /**
+     * Property name for specifying SASL mechanisms.
+     */
+    public static final String MAIL_SMTP_SASL_MECHANISMS = "mail.smtp.sasl.mechanisms";
 
     /**
      * Making the default constructor private since Utility classes should not

@@ -1,0 +1,136 @@
+{
+  "connectorName": "gmail",
+  "operationName": "createDraft",
+  "title": "Create Draft",
+  "help": "<h1>Create Draft</h1> <b>The createDraft operation creates an email draft.</b><br><br>",
+  "elements": [
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "General",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "configRef",
+              "displayName": "Connection",
+              "inputType": "connection",
+              "allowedConnectionTypes": [
+                "GMAIL"
+              ],
+              "defaultType": "connection.GMAIL",
+              "required": "true",
+              "helpTip": "Connection to be used"
+            }
+          },
+          {
+            "type": "attributeGroup",
+            "value": {
+              "groupName": "Message Details",
+              "elements": [
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "subject",
+                    "displayName": "Subject",
+                    "inputType": "stringOrExpression",
+                    "required": "false",
+                    "helpTip": "Subject of the email draft"
+                  }
+                },
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "messageBody",
+                    "displayName": "Message Body",
+                    "inputType": "expressionTextArea",
+                    "required": "false",
+                    "helpTip": "Content of the email draft"
+                  }
+                },
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "threadId",
+                    "displayName": "Thread ID",
+                    "inputType": "stringOrExpression",
+                    "required": "false",
+                    "helpTip": "Thread ID to associate with this draft"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "attributeGroup",
+            "value": {
+              "groupName": "Recipients",
+              "elements": [
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "to",
+                    "displayName": "To",
+                    "inputType": "stringOrExpression",
+                    "required": "false",
+                    "helpTip": "Primary recipients"
+                  }
+                },
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "cc",
+                    "displayName": "CC",
+                    "inputType": "stringOrExpression",
+                    "required": "false",
+                    "helpTip": "Carbon copy recipients"
+                  }
+                },
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "bcc",
+                    "displayName": "BCC",
+                    "inputType": "stringOrExpression",
+                    "required": "false",
+                    "helpTip": "Blind carbon copy recipients"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "Output",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "responseVariable",
+              "displayName": "Output Variable Name",
+              "inputType": "string",
+              "deriveResponseVariable": "true",
+              "required": "true",
+              "helpTip": "Name of the variable to which the output of the operation should be assigned"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "overwriteBody",
+              "displayName": "Overwrite Message Body",
+              "inputType": "checkbox",
+              "defaultValue": "false",
+              "helpTip": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable).",
+              "required": "false"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

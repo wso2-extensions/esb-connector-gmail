@@ -21,8 +21,8 @@ package org.wso2.carbon.connector;
 import com.google.code.javax.mail.MessagingException;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
-import org.wso2.carbon.connector.core.AbstractConnector;
-import org.wso2.carbon.connector.core.ConnectException;
+import org.wso2.integration.connector.core.AbstractConnector;
+import org.wso2.integration.connector.core.ConnectException;
 
 /**
  * Class which terminates the authenticated IMAP and SMTP connections
