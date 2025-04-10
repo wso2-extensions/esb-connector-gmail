@@ -1,6 +1,6 @@
 {
   "connectorName": "gmail",
-  "operationName": "updateLabels",
+  "operationName": "updateLabel",
   "title": "Update Label",
   "help": "<h1>Update Label</h1> <b>The updateLabel operation updates an existing label.</b><br><br>",
   "elements": [
@@ -16,9 +16,9 @@
               "displayName": "Connection",
               "inputType": "connection",
               "allowedConnectionTypes": [
-                "STANDARD"
+                "GMAIL"
               ],
-              "defaultType": "connection.STANDARD",
+              "defaultType": "connection.GMAIL",
               "required": "true",
               "helpTip": "Connection to be used"
             }

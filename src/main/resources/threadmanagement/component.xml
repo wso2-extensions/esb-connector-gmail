@@ -28,25 +28,25 @@
             <file>readThread.xml</file>
             <description>get an email thread</description>
         </component>
-        <component name="trashThreads">
-            <displayName>Trash Threads</displayName>
-            <file>trashThreads.xml</file>
-            <description>Send threads to trash</description>
+        <component name="trashThread">
+            <displayName>Trash Thread</displayName>
+            <file>trashThread.xml</file>
+            <description>Send thread to trash</description>
         </component>
-        <component name="unTrashThreads">
-            <displayName>Un Trash Threads</displayName>
-            <file>unTrashThreads.xml</file>
-            <description>Removed threads from trash</description>
+        <component name="unTrashThread">
+            <displayName>Un Trash Thread</displayName>
+            <file>unTrashThread.xml</file>
+            <description>Removed thread from trash</description>
         </component>
-        <component name="modifyExistingThreads">
-            <displayName>Modify Existing Threads</displayName>
-            <file>modifyExistingThreads.xml</file>
-            <description>Modify existing threads</description>
+        <component name="modifyExistingThread">
+            <displayName>Modify Existing Thread</displayName>
+            <file>modifyExistingThread.xml</file>
+            <description>Modify existing thread</description>
         </component>
-        <component name="deleteThreads">
-            <displayName>Delete Threads</displayName>
-            <file>deleteThreads.xml</file>
-            <description>delete an existing thread</description>
+        <component name="deleteThread">
+            <displayName>Delete Thread</displayName>
+            <file>deleteThread.xml</file>
+            <description>Delete an existing thread</description>
         </component>
     </subComponents>
 </component>

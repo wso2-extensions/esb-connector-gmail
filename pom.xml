@@ -37,7 +37,7 @@
         <org.testng.version>6.1.1</org.testng.version>
         <jets3t.version>0.9.4</jets3t.version>
         <skip-tests>true</skip-tests>
-        <connector.core.version>0.9.0-SNAPSHOT</connector.core.version>
+        <connector.core.version>0.9.0</connector.core.version>
     </properties>
     <dependencies>
         <dependency>

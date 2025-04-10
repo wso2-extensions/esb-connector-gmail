@@ -1,7 +1,7 @@
 {
   "connectorName": "gmail",
-  "connectionName": "STANDARD",
-  "title": "Standard Connection",
+  "connectionName": "GMAIL",
+  "title": "GMAIL Connection",
   "help": "<h1>Gmail Connector</h1> <b>The email connector allows you to connect to Gmail and perform various operations.",
   "testConnectionEnabled": false,
   "elements": [

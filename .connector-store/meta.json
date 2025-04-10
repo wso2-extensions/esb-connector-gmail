@@ -33,17 +33,17 @@
                     "isHidden": false
                 },
                 {
-                    "name": "Trash Messages",
-                    "description": "Send messages to trash",
+                    "name": "Trash Message",
+                    "description": "Moves the email to Trash. It can be recovered within 30 days.",
                     "isHidden": false
                 },
                 {
-                    "name": "Un Trash Messages",
-                    "description": "Removed messages from trash",
+                    "name": "Un Trash Message",
+                    "description": "Restores messages from Trash.",
                     "isHidden": false
                 },
                 {
-                    "name": "Modify Existing Messages",
+                    "name": "Modify Existing Message",
                     "description": "Modify existing messages",
                     "isHidden": false
                 },
@@ -58,8 +58,8 @@
                     "isHidden": false
                 },
                 {
-                    "name": "Delete Messages",
-                    "description": "delete the message",
+                    "name": "Delete Message",
+                    "description": "Permanently deletes the email. This cannot be undone.",
                     "isHidden": false
                 },
                 {
@@ -68,18 +68,8 @@
                     "isHidden": false
                 },
                 {
-                    "name": "Password Login",
-                    "description": "Login to the Gmail account using username and password",
-                    "isHidden": false
-                },
-                {
                     "name": "End Session",
                     "description": "Terminate the existing IMAP and SMTP connections with Gmail",
-                    "isHidden": false
-                },
-                {
-                    "name": "Get Access Token From Refresh Token",
-                    "description": "get the access token from refresh token",
                     "isHidden": false
                 },
                 {
@@ -113,18 +103,18 @@
                     "isHidden": false
                 },
                 {
-                    "name": "Create Labels",
+                    "name": "Create Label",
                     "description": "create new label",
                     "isHidden": false
                 },
                 {
-                    "name": "Update Labels",
+                    "name": "Update Label",
                     "description": "Update existing labels",
                     "isHidden": false
                 },
                 {
                     "name": "Delete Label",
-                    "description": "Delete labels",
+                    "description": "Permanently deletes the label. This cannot be undone.",
                     "isHidden": false
                 },
                 {
@@ -138,22 +128,22 @@
                     "isHidden": false
                 },
                 {
-                    "name": "Trash Threads",
-                    "description": "Send threads to trash",
+                    "name": "Trash Thread",
+                    "description": "Moves the email thread to Trash. It can be recovered within 30 days.",
                     "isHidden": false
                 },
                 {
-                    "name": "Un Trash Threads",
-                    "description": "Removed threads from trash",
+                    "name": "Un Trash Thread",
+                    "description": "Removed thread from trash",
                     "isHidden": false
                 },
                 {
-                    "name": "Modify Existing Threads",
-                    "description": "Modify existing threads",
+                    "name": "Modify Existing Thread",
+                    "description": "Modify existing thread",
                     "isHidden": false
                 },
                 {
-                    "name": "Delete Threads",
+                    "name": "Delete Thread",
                     "description": "delete an existing thread",
                     "isHidden": false
                 },

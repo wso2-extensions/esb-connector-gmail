@@ -1,8 +1,8 @@
 {
     "connectorName": "gmail",
-    "operationName": "listLabels",
-    "title": "List Labels",
-    "help": "<h1>List Labels</h1> <b>The listLabels operation retrieves a list of labels.</b><br><br>",
+    "operationName": "endSession",
+    "title": "End Session",
+    "help": "<h1>End Session</h1> <b>The endSession operation ends the current session.</b><br><br>",
     "elements": [
       {
         "type": "attributeGroup",
@@ -58,4 +58,3 @@
       }
     ]
   }
-  

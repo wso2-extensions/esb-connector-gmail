@@ -1,8 +1,8 @@
 {
     "connectorName": "gmail",
-    "operationName": "listLabels",
-    "title": "List Labels",
-    "help": "<h1>List Labels</h1> <b>The listLabels operation retrieves a list of labels.</b><br><br>",
+    "operationName": "deleteDraft",
+    "title": "Delete Draft",
+    "help": "<h1>Delete Draft</h1> <b>Permanently deletes the draft. This cannot be undone.</b><br><br>",
     "elements": [
       {
         "type": "attributeGroup",
@@ -21,6 +21,16 @@
                 "defaultType": "connection.GMAIL",
                 "required": "true",
                 "helpTip": "Connection to be used"
+              }
+            },
+            {
+              "type": "attribute",
+              "value": {
+                "name": "id",
+                "displayName": "Draft ID",
+                "inputType": "stringOrExpression",
+                "required": "true",
+                "helpTip": "ID of the draft to move to trash"
               }
             }
           ]

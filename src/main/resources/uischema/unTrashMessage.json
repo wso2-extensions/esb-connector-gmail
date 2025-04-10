@@ -1,8 +1,8 @@
 {
   "connectorName": "gmail",
-  "operationName": "trashThreads",
-  "title": "Trash Thread",
-  "help": "<h1>Trash Thread</h1> <b>The trashThread operation moves a thread to trash.</b><br><br>",
+  "operationName": "untrashMessage",
+  "title": "Untrash Message",
+  "help": "<h1>Untrash Message</h1> <b>The untrashMessage operation removes a message from the trash.</b><br><br>",
   "elements": [
     {
       "type": "attributeGroup",
@@ -16,9 +16,9 @@
               "displayName": "Connection",
               "inputType": "connection",
               "allowedConnectionTypes": [
-                "STANDARD"
+                "GMAIL"
               ],
-              "defaultType": "connection.STANDARD",
+              "defaultType": "connection.GMAIL",
               "required": "true",
               "helpTip": "Connection to be used"
             }
@@ -27,10 +27,10 @@
             "type": "attribute",
             "value": {
               "name": "id",
-              "displayName": "Thread ID",
+              "displayName": "Message ID",
               "inputType": "stringOrExpression",
               "required": "true",
-              "helpTip": "ID of the thread to move to trash"
+              "helpTip": "ID of the message to remove from trash"
             }
           }
         ]

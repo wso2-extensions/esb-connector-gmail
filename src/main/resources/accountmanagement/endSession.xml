@@ -17,9 +17,9 @@
  ~  under the License.
 -->
 <template name="endSession" xmlns="http://ws.apache.org/ns/synapse">
-    <parameter name="responseVariable" description="The name of the variable to which the response should be stored."/>
+    <parameter name="responseVariable" description="Name of the variable to which the output of the operation should be assigned."/>
     <parameter name="overwriteBody"
-               description="Replace the Message Body in Message Context with the response of the operation."/>
+               description="Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."/>
     <sequence>
         <class name="org.wso2.carbon.connector.GmailEndSession"/>
     </sequence>

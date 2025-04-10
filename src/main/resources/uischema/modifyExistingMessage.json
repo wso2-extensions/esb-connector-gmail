@@ -1,8 +1,8 @@
 {
   "connectorName": "gmail",
-  "operationName": "trashMessages",
-  "title": "Trash Message",
-  "help": "<h1>Trash Message</h1> <b>The trashMessage operation moves a message to trash.</b><br><br>",
+  "operationName": "modifyExistingMessage",
+  "title": "Modify Message",
+  "help": "<h1>Modify Message</h1> <b>The modifyMessage operation modifies the labels of a message.</b><br><br>",
   "elements": [
     {
       "type": "attributeGroup",
@@ -16,21 +16,39 @@
               "displayName": "Connection",
               "inputType": "connection",
               "allowedConnectionTypes": [
-                "STANDARD"
+                "GMAIL"
               ],
-              "defaultType": "connection.STANDARD",
+              "defaultType": "connection.GMAIL",
               "required": "true",
               "helpTip": "Connection to be used"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "Label Modifications",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "addLabelIds",
+              "displayName": "Add Labels",
+              "inputType": "stringOrExpression",
+              "required": "false",
+              "helpTip": "Labels to add to the message"
             }
           },
           {
             "type": "attribute",
             "value": {
-              "name": "id",
-              "displayName": "Message ID",
+              "name": "removeLabelIds",
+              "displayName": "Remove Labels",
               "inputType": "stringOrExpression",
-              "required": "true",
-              "helpTip": "ID of the message to move to trash"
+              "required": "false",
+              "helpTip": "Labels to remove from the message"
             }
           }
         ]

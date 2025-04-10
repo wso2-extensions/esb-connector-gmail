@@ -28,15 +28,15 @@
             <file>readLabel.xml</file>
             <description>Get a label detail</description>
         </component>
-        <component name="createLabels">
-            <displayName>Create Labels</displayName>
-            <file>createLabels.xml</file>
+        <component name="createLabel">
+            <displayName>Create Label</displayName>
+            <file>createLabel.xml</file>
             <description>create new label</description>
         </component>
-        <component name="updateLabels">
-            <displayName>Update Labels</displayName>
-            <file>updateLabels.xml</file>
-            <description>Update existing labels</description>
+        <component name="updateLabel">
+            <displayName>Update Label</displayName>
+            <file>updateLabel.xml</file>
+            <description>Update existing label</description>
         </component>
         <component name="deleteLabel">
             <displayName>Delete Label</displayName>

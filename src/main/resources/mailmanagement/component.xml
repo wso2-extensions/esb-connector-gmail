@@ -43,24 +43,24 @@
             <file>getAttachment.xml</file>
             <description>get the attachment</description>
         </component>
-        <component name="deleteMessages">
-            <displayName>Delete Messages</displayName>
-            <file>deleteMessages.xml</file>
-            <description>delete the message</description>
+        <component name="deleteMessage">
+            <displayName>Delete Message</displayName>
+            <file>deleteMessage.xml</file>
+            <description>Permanently deletes the email. This cannot be undone.</description>
         </component>
-        <component name="trashMessages">
-            <displayName>Trash Messages</displayName>
-            <file>trashMessages.xml</file>
-            <description>Send messages to trash</description>
+        <component name="trashMessage">
+            <displayName>Trash Message</displayName>
+            <file>trashMessage.xml</file>
+            <description>Moves the email to Trash. It can be recovered within 30 days.</description>
         </component>
-        <component name="unTrashMessages">
-            <displayName>Un Trash Messages</displayName>
-            <file>unTrashMessages.xml</file>
+        <component name="unTrashMessage">
+            <displayName>Un Trash Message</displayName>
+            <file>unTrashMessage.xml</file>
             <description>Removed messages from trash</description>
         </component>
-        <component name="modifyExistingMessages">
-            <displayName>Modify Existing Messages</displayName>
-            <file>modifyExistingMessages.xml</file>
+        <component name="modifyExistingMessage">
+            <displayName>Modify Existing Message</displayName>
+            <file>modifyExistingMessage.xml</file>
             <description>Modify existing messages</description>
         </component>
     </subComponents>

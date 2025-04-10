@@ -16,9 +16,9 @@
                 "displayName": "Connection",
                 "inputType": "connection",
                 "allowedConnectionTypes": [
-                  "STANDARD"
+                  "GMAIL"
                 ],
-                "defaultType": "connection.STANDARD",
+                "defaultType": "connection.GMAIL",
                 "required": "true",
                 "helpTip": "Connection to be used"
               }

@@ -1,8 +1,9 @@
 {
+  "type": "object",
   "connectorName": "gmail",
-  "operationName": "untrashThreads",
-  "title": "Untrash Thread",
-  "help": "<h1>Untrash Thread</h1> <b>The untrashThread operation removes a thread from the trash.</b><br><br>",
+  "operationName": "modifyExistingThread",
+  "title": "Modify Thread",
+  "help": "<h1>Modify Thread</h1> <b>The modifyThread operation modifies the labels of an email thread.</b><br><br>",
   "elements": [
     {
       "type": "attributeGroup",
@@ -16,9 +17,9 @@
               "displayName": "Connection",
               "inputType": "connection",
               "allowedConnectionTypes": [
-                "STANDARD"
+                "GMAIL"
               ],
-              "defaultType": "connection.STANDARD",
+              "defaultType": "connection.GMAIL",
               "required": "true",
               "helpTip": "Connection to be used"
             }
@@ -30,7 +31,35 @@
               "displayName": "Thread ID",
               "inputType": "stringOrExpression",
               "required": "true",
-              "helpTip": "ID of the thread to remove from trash"
+              "helpTip": "ID of the thread to modify"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "Label Modifications",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "addLabelIds",
+              "displayName": "Add Labels",
+              "inputType": "stringOrExpression",
+              "required": "false",
+              "helpTip": "Labels to add to the thread"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "removeLabelIds",
+              "displayName": "Remove Labels",
+              "inputType": "stringOrExpression",
+              "required": "false",
+              "helpTip": "Labels to remove from the thread"
             }
           }
         ]

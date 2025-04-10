@@ -23,9 +23,9 @@
     <parameter name="maxResults" description="The maximum number of history records to return"/>
     <parameter name="pageToken"
                description="Page token to retrieve a specific page of results in the list"/>
-    <parameter name="responseVariable" description="The name of the variable to which the response should be stored."/>
+    <parameter name="responseVariable" description="Name of the variable to which the output of the operation should be assigned."/>
     <parameter name="overwriteBody"
-               description="Replace the Message Body in Message Context with the response of the operation."/>
+               description="Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."/>
     <sequence>
         <header name="Authorization" expression="fn:concat('Bearer ', $ctx:_ACTIVE_ACCESS_TOKEN_)" scope="transport"/>
         <property name="uri.var.startHistoryId" expression="$func:startHistoryId"/>
