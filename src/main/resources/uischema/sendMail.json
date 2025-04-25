@@ -1,0 +1,164 @@
+{
+  "connectorName": "gmail",
+  "operationName": "sendMail",
+  "title": "Send Message",
+  "help": "<h1>Send Message</h1> <b>The sendMessage operation sends an email message.</b><br><br>",
+  "elements": [
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "General",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "configRef",
+              "displayName": "Connection",
+              "inputType": "connection",
+              "allowedConnectionTypes": [
+                "GMAIL"
+              ],
+              "defaultType": "connection.GMAIL",
+              "required": "true",
+              "helpTip": "Connection to be used"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "id",
+              "displayName": "ID",
+              "inputType": "stringOrExpression",
+              "defaultValue": "",
+              "required": "true",
+              "helpTip": "Unique identifier for the message"
+            }
+          },
+          {
+            "type": "attributeGroup",
+            "value": {
+              "groupName": "Sender & Receiver Information",
+              "elements": [
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "from",
+                    "displayName": "From",
+                    "inputType": "stringOrExpression",
+                    "defaultValue": "",
+                    "required": "false",
+                    "helpTip": "The 'From' address of the message sender"
+                  }
+                },
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "to",
+                    "displayName": "To",
+                    "inputType": "stringOrExpression",
+                    "defaultValue": "",
+                    "required": "true",
+                    "helpTip": "The recipient addresses of 'To' (primary) type"
+                  }
+                },
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "cc",
+                    "displayName": "CC",
+                    "inputType": "stringOrExpression",
+                    "defaultValue": "",
+                    "required": "false",
+                    "helpTip": "The recipient addresses of 'CC' (carbon copy) type"
+                  }
+                },
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "bcc",
+                    "displayName": "BCC",
+                    "inputType": "stringOrExpression",
+                    "defaultValue": "",
+                    "required": "false",
+                    "helpTip": "The recipient addresses of 'BCC' (blind carbon copy) type"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "attributeGroup",
+            "value": {
+              "groupName": "Message Details",
+              "elements": [
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "subject",
+                    "displayName": "Subject",
+                    "inputType": "expressionTextArea",
+                    "defaultValue": "",
+                    "required": "false",
+                    "helpTip": "The subject of the email"
+                  }
+                },
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "messageBody",
+                    "displayName": "Message Body",
+                    "inputType": "expressionTextArea",
+                    "defaultValue": "",
+                    "required": "false",
+                    "helpTip": "Body of the message in any format"
+                  }
+                },
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "threadId",
+                    "displayName": "Thread ID",
+                    "inputType": "stringOrExpression",
+                    "defaultValue": "",
+                    "required": "false",
+                    "helpTip": "The ID of the thread this message belongs to"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "Output",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "responseVariable",
+              "displayName": "Output Variable Name",
+              "inputType": "string",
+              "deriveResponseVariable": "true",
+              "required": "true",
+              "helpTip": "Name of the variable to which the output of the operation should be assigned"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "overwriteBody",
+              "displayName": "Overwrite Message Body",
+              "inputType": "checkbox",
+              "defaultValue": "false",
+              "helpTip": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable).",
+              "required": "false"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "connectorName": "gmail",
+  "operationName": "readThread",
+  "title": "Read Thread",
+  "help": "<h1>Read Thread</h1> <b>The readThread operation reads an email thread.</b><br><br>",
+  "elements": [
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "General",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "configRef",
+              "displayName": "Connection",
+              "inputType": "connection",
+              "allowedConnectionTypes": [
+                "GMAIL"
+              ],
+              "defaultType": "connection.GMAIL",
+              "required": "true",
+              "helpTip": "Connection to be used"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "id",
+              "displayName": "Thread ID",
+              "inputType": "stringOrExpression",
+              "required": "true",
+              "helpTip": "ID of the thread to read"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "Options",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "metadataHeaders",
+              "displayName": "Metadata Headers",
+              "inputType": "stringOrExpression",
+              "required": "false",
+              "helpTip": "Metadata headers to include in the response"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "format",
+              "displayName": "Format",
+              "inputType": "stringOrExpression",
+              "required": "false",
+              "helpTip": "The format of the thread messages"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "Output",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "responseVariable",
+              "displayName": "Output Variable Name",
+              "inputType": "string",
+              "deriveResponseVariable": "true",
+              "required": "true",
+              "helpTip": "Name of the variable to which the output of the operation should be assigned"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "overwriteBody",
+              "displayName": "Overwrite Message Body",
+              "inputType": "checkbox",
+              "defaultValue": "false",
+              "helpTip": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable).",
+              "required": "false"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template name="listAllMails" xmlns="http://ws.apache.org/ns/synapse">
+    <parameter name="includeSpamTrash" description="Include SPAM and TRASH in results (true/false)"/>
+    <parameter name="labelIds" description="Comma-separated list of label IDs"/>
+    <parameter name="maxResults" description="Max messages to return"/>
+    <parameter name="pageToken" description="Page token for pagination"/>
+    <parameter name="q" description="Search query (e.g., from:xyz)"/>
+    <parameter name="responseVariable" description="Variable name for storing the response"/>
+    <parameter name="overwriteBody" description="Replace body with response (true/false)"/>
+
+    <sequence>
+        <header name="Authorization" expression="fn:concat('Bearer ', $ctx:_ACTIVE_ACCESS_TOKEN_)" scope="transport"/>
+
+        <!-- Set all query parameters -->
+        <property name="uri.var.includeSpamTrash" expression="$func:includeSpamTrash"/>
+        <property name="uri.var.labelIds" expression="$func:labelIds"/>
+        <property name="uri.var.maxResults" expression="$func:maxResults"/>
+        <property name="uri.var.pageToken" expression="$func:pageToken"/>
+        <property name="uri.var.q" expression="$func:q"/>
+        <property name="gmailParameters" value=""/>
+
+        <!-- Encode 'q' parameter if present -->
+        <filter xpath="boolean($ctx:uri.var.q)">
+            <then>
+                <script language="js">
+                    <![CDATA[
+                        var query = mc.getProperty('uri.var.q');
+                        if (query !== null) {
+                            var encoded = encodeURIComponent(query);
+                            mc.setProperty('uri.var.q', encoded);
+                        }
+                    ]]>
+                </script>
+            </then>
+        </filter>
+
+        <!-- Dynamically build Gmail API query parameters -->
+        <filter xpath="boolean($ctx:uri.var.includeSpamTrash)">
+            <then>
+                <property name="gmailParameters"
+                          expression="fn:concat($ctx:gmailParameters, '&amp;includeSpamTrash=', $ctx:uri.var.includeSpamTrash)"/>
+            </then>
+        </filter>
+        <filter xpath="boolean($ctx:uri.var.labelIds)">
+            <then>
+                <property name="gmailParameters"
+                          expression="fn:concat($ctx:gmailParameters, '&amp;labelIds=', $ctx:uri.var.labelIds)"/>
+            </then>
+        </filter>
+        <filter xpath="boolean($ctx:uri.var.maxResults)">
+            <then>
+                <property name="gmailParameters"
+                          expression="fn:concat($ctx:gmailParameters, '&amp;maxResults=', $ctx:uri.var.maxResults)"/>
+            </then>
+        </filter>
+        <filter xpath="boolean($ctx:uri.var.pageToken)">
+            <then>
+                <property name="gmailParameters"
+                          expression="fn:concat($ctx:gmailParameters, '&amp;pageToken=', $ctx:uri.var.pageToken)"/>
+            </then>
+        </filter>
+        <filter xpath="boolean($ctx:uri.var.q)">
+            <then>
+                <property name="gmailParameters"
+                          expression="fn:concat($ctx:gmailParameters, '&amp;q=', $ctx:uri.var.q)"/>
+            </then>
+        </filter>
+
+        <property name="uri.var.parameters" expression="substring-after($ctx:gmailParameters, '&amp;')"/>
+
+        <call>
+            <endpoint>
+                <http method="get"
+                      uri-template="legacy-encoding:{+uri.var.gmail.apiUrl}/{+uri.var.gmail.apiVersion}/users/{+uri.var.gmail.userId}/messages?{uri.var.parameters}"/>
+            </endpoint>
+        </call>
+
+        <!-- Cleanup headers -->
+        <header name="x-li-format" scope="transport" action="remove"/>
+        <header name="X-LI-UUID" scope="transport" action="remove"/>
+        <header name="X-Li-Pop" scope="transport" action="remove"/>
+        <header name="X-Li-Fabric" scope="transport" action="remove"/>
+        <header name="x-li-request-id" scope="transport" action="remove"/>
+    </sequence>
+</template>

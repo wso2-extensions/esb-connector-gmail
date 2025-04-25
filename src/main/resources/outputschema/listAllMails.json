@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Gmail API List Messages Operation Response Schema",
+  "description": "Schema representing the output of the List Messages operation in Gmail API",
+  "properties": {
+    "payload": {
+      "description": "Payload of the API response.",
+      "properties": {
+        "messages": {
+          "description": "List of messages. Note that each message resource contains only an `id` and a `threadId`. Additional message details can be fetched using the messages.get method."
+        },
+        "nextPageToken": {
+          "description": "Token to retrieve the next page of results in the list."
+        },
+        "resultSizeEstimate": {
+          "description": "Estimated total number of results."
+        }
+      }
+    },
+    "attributes": {
+      "description": "Metadata about the operation.",
+      "properties": {
+        "statusCode": {
+          "description": "HTTP status code of the API response."
+        }
+      }
+    },
+    "headers": {
+      "description": "HTTP headers of the API response.",
+      "properties": {}
+    }
+  }
+}

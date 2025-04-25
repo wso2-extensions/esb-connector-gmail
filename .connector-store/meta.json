@@ -17,6 +17,151 @@
     ],
     "releases": [
         {
+            "tagName": "v4.0.0",
+            "products": [
+                "MI 4.4.0"
+            ],
+            "operations": [
+                {
+                    "name": "List All Mails",
+                    "description": "List all mails",
+                    "isHidden": false
+                },
+                {
+                    "name": "Read Mail",
+                    "description": "Read a mail by it's Id",
+                    "isHidden": false
+                },
+                {
+                    "name": "Trash Message",
+                    "description": "Moves the email to Trash. It can be recovered within 30 days.",
+                    "isHidden": false
+                },
+                {
+                    "name": "Un Trash Message",
+                    "description": "Restores messages from Trash.",
+                    "isHidden": false
+                },
+                {
+                    "name": "Modify Existing Message",
+                    "description": "Modify existing messages",
+                    "isHidden": false
+                },
+                {
+                    "name": "Send Mail",
+                    "description": "Send a plain mail",
+                    "isHidden": false
+                },
+                {
+                    "name": "Send Mail With Attachment",
+                    "description": "Send a mail with attachment",
+                    "isHidden": false
+                },
+                {
+                    "name": "Delete Message",
+                    "description": "Permanently deletes the email. This cannot be undone.",
+                    "isHidden": false
+                },
+                {
+                    "name": "Get Attachment",
+                    "description": "get the attachment",
+                    "isHidden": false
+                },
+                {
+                    "name": "End Session",
+                    "description": "Terminate the existing IMAP and SMTP connections with Gmail",
+                    "isHidden": false
+                },
+                {
+                    "name": "List Drafts",
+                    "description": "list all drafts",
+                    "isHidden": false
+                },
+                {
+                    "name": "Read Draft",
+                    "description": "read a particular draft",
+                    "isHidden": false
+                },
+                {
+                    "name": "Delete Draft",
+                    "description": "delete an existing draft",
+                    "isHidden": false
+                },
+                {
+                    "name": "Create Draft",
+                    "description": "create a plain draft",
+                    "isHidden": false
+                },
+                {
+                    "name": "List Labels",
+                    "description": "List all labels",
+                    "isHidden": false
+                },
+                {
+                    "name": "Read Label",
+                    "description": "Get a label detail",
+                    "isHidden": false
+                },
+                {
+                    "name": "Create Label",
+                    "description": "create new label",
+                    "isHidden": false
+                },
+                {
+                    "name": "Update Label",
+                    "description": "Update existing labels",
+                    "isHidden": false
+                },
+                {
+                    "name": "Delete Label",
+                    "description": "Permanently deletes the label. This cannot be undone.",
+                    "isHidden": false
+                },
+                {
+                    "name": "List All Threads",
+                    "description": "List all threads",
+                    "isHidden": false
+                },
+                {
+                    "name": "Read Thread",
+                    "description": "get an email thread",
+                    "isHidden": false
+                },
+                {
+                    "name": "Trash Thread",
+                    "description": "Moves the email thread to Trash. It can be recovered within 30 days.",
+                    "isHidden": false
+                },
+                {
+                    "name": "Un Trash Thread",
+                    "description": "Removed thread from trash",
+                    "isHidden": false
+                },
+                {
+                    "name": "Modify Existing Thread",
+                    "description": "Modify existing thread",
+                    "isHidden": false
+                },
+                {
+                    "name": "Delete Thread",
+                    "description": "delete an existing thread",
+                    "isHidden": false
+                },
+                {
+                    "name": "Get User Profile",
+                    "description": "Get the user profile",
+                    "isHidden": false
+                },
+                {
+                    "name": "List The History",
+                    "description": "List all user history",
+                    "isHidden": false
+                }
+            ],
+            "connections": [],
+            "isHidden": false
+        },
+        {
             "tagName": "v3.0.11",
             "products": [
                 "MI 4.4.0",

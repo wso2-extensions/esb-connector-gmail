@@ -1,0 +1,132 @@
+{
+  "connectorName": "gmail",
+  "operationName": "listAllMails",
+  "title": "List Messages",
+  "help": "<h1>List Messages</h1> <b>The listMessages operation lists all messages in the user's mailbox.</b><br><br>",
+  "elements": [
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "General",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "configRef",
+              "displayName": "Connection",
+              "inputType": "connection",
+              "allowedConnectionTypes": [
+                "GMAIL"
+              ],
+              "defaultType": "connection.GMAIL",
+              "defaultValue": "",
+              "required": "true",
+              "helpTip": "Connection to be used"
+            }
+          },
+          {
+            "type": "attributeGroup",
+            "value": {
+              "groupName": "Search Parameters",
+              "elements": [
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "labelIds",
+                    "displayName": "Label IDs",
+                    "inputType": "stringOrExpression",
+                    "defaultValue": "",
+                    "required": "false",
+                    "helpTip": "Only return messages with labels that match these IDs"
+                  }
+                },
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "q",
+                    "displayName": "Query",
+                    "inputType": "stringOrExpression",
+                    "defaultValue": "",
+                    "required": "false",
+                    "helpTip": "Only return messages matching the specified query"
+                  }
+                },
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "includeSpamTrash",
+                    "displayName": "Include Spam/Trash",
+                    "inputType": "stringOrExpression",
+                    "defaultValue": "false",
+                    "required": "false",
+                    "helpTip": "Include messages from SPAM and TRASH in the results"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "attributeGroup",
+            "value": {
+              "groupName": "Pagination",
+              "elements": [
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "pageToken",
+                    "displayName": "Page Token",
+                    "inputType": "stringOrExpression",
+                    "defaultValue": "",
+                    "required": "false",
+                    "helpTip": "Page token for pagination"
+                  }
+                },
+                {
+                  "type": "attribute",
+                  "value": {
+                    "name": "maxResults",
+                    "displayName": "Max Results",
+                    "inputType": "stringOrExpression",
+                    "defaultValue": "",
+                    "required": "false",
+                    "helpTip": "Maximum number of results to return"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "Output",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "responseVariable",
+              "displayName": "Output Variable Name",
+              "inputType": "string",
+              "deriveResponseVariable": "true",
+              "required": "true",
+              "helpTip": "Name of the variable to which the output of the operation should be assigned"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "overwriteBody",
+              "displayName": "Overwrite Message Body",
+              "inputType": "checkbox",
+              "defaultValue": "false",
+              "helpTip": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable).",
+              "required": "false"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

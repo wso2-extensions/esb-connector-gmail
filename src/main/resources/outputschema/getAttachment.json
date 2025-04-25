@@ -1,0 +1,35 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "title": "Gmail API Get Attachment Operation Response Schema",
+    "description": "Schema representing the output of the Get Message Attachment operation in Gmail API",
+    "properties": {
+      "payload": {
+        "description": "The body of a single MIME message part.",
+        "properties": {
+          "attachmentId": {
+            "description": "When present, contains the ID of an external attachment that can be retrieved in a separate `messages.attachments.get` request. When not present, the entire content of the message part body is contained in the data field."
+          },
+          "data": {
+            "description": "The body data of a MIME message part as a base64url encoded string. May be empty for MIME container types that have no message body or when the body data is sent as a separate attachment. An attachment ID is present if the body data is contained in a separate attachment."
+          },
+          "size": {
+            "description": "Number of bytes for the message part data (encoding notwithstanding)."
+          }
+        }
+      },
+      "attributes": {
+        "description": "Metadata about the operation.",
+        "properties": {
+          "statusCode": {
+            "description": "HTTP status code of the API response."
+          }
+        }
+      },
+      "headers": {
+        "description": "HTTP headers of the API response.",
+        "properties": {}
+      }
+    }
+  }
+  

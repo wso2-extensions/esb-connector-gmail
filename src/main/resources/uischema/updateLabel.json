@@ -1,0 +1,156 @@
+{
+  "connectorName": "gmail",
+  "operationName": "updateLabel",
+  "title": "Update Label",
+  "help": "<h1>Update Label</h1> <b>The updateLabel operation updates an existing label.</b><br><br>",
+  "elements": [
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "General",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "configRef",
+              "displayName": "Connection",
+              "inputType": "connection",
+              "allowedConnectionTypes": [
+                "GMAIL"
+              ],
+              "defaultType": "connection.GMAIL",
+              "required": "true",
+              "helpTip": "Connection to be used"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "id",
+              "displayName": "Label ID",
+              "inputType": "stringOrExpression",
+              "required": "true",
+              "helpTip": "ID of the label to update"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "name",
+              "displayName": "Label Name",
+              "inputType": "stringOrExpression",
+              "required": "true",
+              "helpTip": "The display name of the label"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "Label Settings",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "labelListVisibility",
+              "displayName": "Label List Visibility",
+              "inputType": "stringOrExpression",
+              "required": "true",
+              "helpTip": "The visibility of the label in the label list"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "messageListVisibility",
+              "displayName": "Message List Visibility",
+              "inputType": "stringOrExpression",
+              "required": "true",
+              "helpTip": "The visibility of messages with this label"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "Statistics",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "messagesTotal",
+              "displayName": "Total Messages",
+              "inputType": "stringOrExpression",
+              "required": "false",
+              "helpTip": "Total number of messages with this label"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "messagesUnread",
+              "displayName": "Unread Messages",
+              "inputType": "stringOrExpression",
+              "required": "false",
+              "helpTip": "Number of unread messages with this label"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "threadsTotal",
+              "displayName": "Total Threads",
+              "inputType": "stringOrExpression",
+              "required": "false",
+              "helpTip": "Total number of threads with this label"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "threadsUnread",
+              "displayName": "Unread Threads",
+              "inputType": "stringOrExpression",
+              "required": "false",
+              "helpTip": "Number of unread threads with this label"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "attributeGroup",
+      "value": {
+        "groupName": "Output",
+        "elements": [
+          {
+            "type": "attribute",
+            "value": {
+              "name": "responseVariable",
+              "displayName": "Output Variable Name",
+              "inputType": "string",
+              "deriveResponseVariable": "true",
+              "required": "true",
+              "helpTip": "Name of the variable to which the output of the operation should be assigned"
+            }
+          },
+          {
+            "type": "attribute",
+            "value": {
+              "name": "overwriteBody",
+              "displayName": "Overwrite Message Body",
+              "inputType": "checkbox",
+              "defaultValue": "false",
+              "helpTip": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable).",
+              "required": "false"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

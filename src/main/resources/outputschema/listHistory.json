@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Gmail API List History Operation Response Schema",
+  "description": "Schema representing the output of the List History operation in Gmail API",
+  "properties": {
+    "payload": {
+      "description": "Payload of the API response.",
+      "properties": {
+        "history": {
+          "description": "List of history records. Any `messages` contained in the response will typically only have `id` and `threadId` fields populated."
+        },
+        "historyId": {
+          "description": "The ID of the mailbox's current history record."
+        },
+        "nextPageToken": {
+          "description": "Page token to retrieve the next page of results in the list."
+        }
+      }
+    },
+    "attributes": {
+      "description": "Metadata about the operation.",
+      "properties": {
+        "statusCode": {
+          "description": "HTTP status code of the API response."
+        }
+      }
+    },
+    "headers": {
+      "description": "HTTP headers of the API response.",
+      "properties": {}
+    }
+  }
+}

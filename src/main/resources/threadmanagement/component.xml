@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Copyright (c) 2025, WSO2 LLC. (http://www.wso2.org) All Rights Reserved.
+
+   WSO2 LLC. licenses this file to you under the Apache License,
+   Version 2.0 (the "License"); you may not use this file except
+   in compliance with the License.
+   You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied. See the License for the
+   specific language governing permissions and limitations
+   under the License.
+-->
+<component name="threadmanagement" type="synapse/template" displayName="Thread Management">
+    <subComponents>
+        <component name="listAllThreads">
+            <displayName>List All Threads</displayName>
+            <file>listAllThreads.xml</file>
+            <description>List all threads</description>
+        </component>
+        <component name="readThread">
+            <displayName>Read Thread</displayName>
+            <file>readThread.xml</file>
+            <description>get an email thread</description>
+        </component>
+        <component name="trashThread">
+            <displayName>Trash Thread</displayName>
+            <file>trashThread.xml</file>
+            <description>Send thread to trash</description>
+        </component>
+        <component name="unTrashThread">
+            <displayName>Un Trash Thread</displayName>
+            <file>unTrashThread.xml</file>
+            <description>Removed thread from trash</description>
+        </component>
+        <component name="modifyExistingThread">
+            <displayName>Modify Existing Thread</displayName>
+            <file>modifyExistingThread.xml</file>
+            <description>Modify existing thread</description>
+        </component>
+        <component name="deleteThread">
+            <displayName>Delete Thread</displayName>
+            <file>deleteThread.xml</file>
+            <description>Delete an existing thread</description>
+        </component>
+    </subComponents>
+</component>

@@ -24,9 +24,8 @@ import com.google.code.javax.mail.MessagingException;
 import com.google.code.javax.mail.Session;
 import org.apache.commons.lang.StringUtils;
 import org.apache.synapse.MessageContext;
-import org.apache.synapse.core.axis2.Axis2MessageContext;
-import org.wso2.carbon.connector.core.AbstractConnector;
-import org.wso2.carbon.connector.core.ConnectException;
+import org.wso2.integration.connector.core.AbstractConnector;
+import org.wso2.integration.connector.core.ConnectException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -67,9 +66,6 @@ public class GmailMailSender extends AbstractConnector {
                     bccRecipients, getAttachmentList(attachmentName, attachmentList));
             GmailUtils.sendMessage(message, transport);
             messageContext.setProperty("Status", "Success");
-        } catch (ConnectException e) {
-            GmailUtils.storeErrorResponseStatus(messageContext, e, GmailErrorCodes.GMAIL_ERROR_CODE_CONNECT_EXCEPTION);
-            handleException(e.getMessage(), e, messageContext);
         } catch (MessagingException e) {
             GmailUtils.storeErrorResponseStatus(messageContext, e, GmailErrorCodes.GMAIL_ERROR_CODE_MESSAGING_EXCEPTION);
             handleException(e.getMessage(), e, messageContext);

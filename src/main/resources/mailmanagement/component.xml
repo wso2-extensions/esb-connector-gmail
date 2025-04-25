@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Copyright (c) 2025, WSO2 LLC. (http://www.wso2.org) All Rights Reserved.
+
+   WSO2 LLC. licenses this file to you under the Apache License,
+   Version 2.0 (the "License"); you may not use this file except
+   in compliance with the License.
+   You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied. See the License for the
+   specific language governing permissions and limitations
+   under the License.
+-->
+<component name="mailmanagement" type="synapse/template" displayName="Mail Management">
+    <subComponents>
+        <component name="sendMail">
+            <displayName>Send Mail</displayName>
+            <file>sendMail.xml</file>
+            <description>Send a plain mail</description>
+        </component>
+        <component name="listAllMails">
+            <displayName>List All Mails</displayName>
+            <file>listAllMails.xml</file>
+            <description>List all mails</description>
+        </component>
+        <component name="readMail">
+            <displayName>Read Mail</displayName>
+            <file>readMail.xml</file>
+            <description>Read a mail by it's Id</description>
+        </component>
+        <component name="sendMailWithAttachment">
+            <displayName>Send Mail With Attachment</displayName>
+            <file>sendMailWithAttachment.xml</file>
+            <description>Send a mail with attachment</description>
+        </component>
+        <component name="getAttachment">
+            <displayName>Get Attachment</displayName>
+            <file>getAttachment.xml</file>
+            <description>get the attachment</description>
+        </component>
+        <component name="deleteMessage">
+            <displayName>Delete Message</displayName>
+            <file>deleteMessage.xml</file>
+            <description>Permanently deletes the email. This cannot be undone.</description>
+        </component>
+        <component name="trashMessage">
+            <displayName>Trash Message</displayName>
+            <file>trashMessage.xml</file>
+            <description>Moves the email to Trash. It can be recovered within 30 days.</description>
+        </component>
+        <component name="unTrashMessage">
+            <displayName>Un Trash Message</displayName>
+            <file>unTrashMessage.xml</file>
+            <description>Removed messages from trash</description>
+        </component>
+        <component name="modifyExistingMessage">
+            <displayName>Modify Existing Message</displayName>
+            <file>modifyExistingMessage.xml</file>
+            <description>Modify existing messages</description>
+        </component>
+    </subComponents>
+</component>
