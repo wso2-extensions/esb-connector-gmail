@@ -290,13 +290,7 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          # Get the current branch name (should be the default branch)
-          CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-          echo "Current branch: $CURRENT_BRANCH"
           
-          # Get the current tag
-          TAG_NAME=${{ github.ref_name }}
-          echo "Current tag: $TAG_NAME"
           
           # Configure git with token-based authentication for push
           git config --global user.name ${{ secrets.WSO2_INTEGRATION_BOT_USERNAME }}
@@ -307,10 +301,13 @@ jobs:
             echo "No changes to commit"
             exit 0
           fi
+
+          git checkout ${{ steps.get-default-branch.outputs.default_branch }}
+          git pull --rebase
           
           # Add and commit changes
           git add .connector-store/meta.json
           git commit -m "[Workflow] Update meta.json with operation and connection parameters for version $TAG_NAME"
-          
+
           # Push directly to the current branch
           git push https://${{ github.actor }}:${{ secrets.WSO2_INTEGRATION_BOT_TOKEN }}@github.com/${{ github.repository }}.git HEAD:refs/heads/${{ steps.get-default-branch.outputs.default_branch }}
