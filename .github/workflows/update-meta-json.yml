@@ -1,0 +1,316 @@
+name: Update meta.json
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  update-meta:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Get default branch
+        id: get-default-branch
+        run: |
+            DEFAULT_BRANCH=$(gh repo view --json defaultBranchRef -q ".defaultBranchRef.name")
+            echo "default_branch=$DEFAULT_BRANCH" >> "$GITHUB_OUTPUT"
+        env:
+            GH_TOKEN: ${{ secrets.WSO2_INTEGRATION_BOT_TOKEN }}
+
+      - name: Update meta.json with parameters
+        run: |
+          python3 - <<'EOF'
+          import json
+          import os
+          import glob
+          import sys
+
+          def extract_operation_params(file_path):
+              """Extract parameters from operation files"""
+              try:
+                  with open(file_path, 'r') as f:
+                      data = json.load(f)
+                  
+                  # Skip if not an operation file
+                  if 'operationName' not in data:
+                      return None
+                  
+                  operation_name = data.get('operationName')
+                  operation_title = data.get('title', '')
+                  
+                  print(f"Processing operation: {operation_name}")
+                  
+                  params = []
+                  
+                  # Check if the necessary structure exists
+                  if 'elements' in data and len(data['elements']) > 0:
+                      # Get the first element's value elements
+                      if 'value' in data['elements'][0] and 'elements' in data['elements'][0]['value']:
+                          elements = data['elements'][0]['value']['elements']
+                          
+                          # Extract top-level attributes
+                          for element in elements:
+                              if element.get('type') == 'attribute' and 'value' in element:
+                                  value = element['value']
+                                  params.append({
+                                      'name': value.get('name', ''),
+                                      'type': value.get('inputType', ''),
+                                      'required': value.get('required', ''),
+                                      'description': value.get('helpTip', '')
+                                  })
+                              
+                              # Extract nested attributes in attributeGroups
+                              elif element.get('type') == 'attributeGroup' and 'value' in element and 'elements' in element['value']:
+                                  nested_elements = element['value']['elements']
+                                  for nested in nested_elements:
+                                      if nested.get('type') == 'attribute' and 'value' in nested:
+                                          value = nested['value']
+                                          params.append({
+                                              'name': value.get('name', ''),
+                                              'type': value.get('inputType', ''),
+                                              'required': value.get('required', ''),
+                                              'description': value.get('helpTip', '')
+                                          })
+                  
+                  print(f"Found {len(params)} parameters for operation {operation_name}")
+                  return {
+                      'operation': operation_name,
+                      'title': operation_title,
+                      'params': params
+                  }
+              except Exception as e:
+                  print(f"Error processing operation file {file_path}: {e}")
+                  return None
+
+          def extract_connection_params(file_path):
+              """Extract parameters from connection files"""
+              try:
+                  with open(file_path, 'r') as f:
+                      data = json.load(f)
+                  
+                  # Skip if not a connection file
+                  if 'connectionName' not in data:
+                      return None
+                  
+                  connection_name = data.get('connectionName')
+                  connection_title = data.get('title', '')
+                  
+                  print(f"Processing connection: {connection_name}")
+                  
+                  params = []
+                  
+                  # Check if elements exist
+                  if 'elements' in data:
+                      elements = data['elements']
+                      
+                      # Process top-level attributes
+                      for element in elements:
+                          if element.get('type') == 'attribute' and 'value' in element:
+                              value = element['value']
+                              params.append({
+                                  'name': value.get('name', ''),
+                                  'type': value.get('inputType', ''),
+                                  'required': value.get('required', ''),
+                                  'description': value.get('helpTip', '')
+                              })
+                          
+                          # Process first level attribute groups
+                          elif element.get('type') == 'attributeGroup' and 'value' in element and 'elements' in element['value']:
+                              group_elements = element['value']['elements']
+                              
+                              for group_element in group_elements:
+                                  # Direct attributes in the group
+                                  if group_element.get('type') == 'attribute' and 'value' in group_element:
+                                      value = group_element['value']
+                                      params.append({
+                                          'name': value.get('name', ''),
+                                          'type': value.get('inputType', ''),
+                                          'required': value.get('required', ''),
+                                          'description': value.get('helpTip', '')
+                                      })
+                                  
+                                  # Nested attribute groups
+                                  elif group_element.get('type') == 'attributeGroup' and 'value' in group_element and 'elements' in group_element['value']:
+                                      nested_elements = group_element['value']['elements']
+                                      
+                                      for nested in nested_elements:
+                                          if nested.get('type') == 'attribute' and 'value' in nested:
+                                              value = nested['value']
+                                              params.append({
+                                                  'name': value.get('name', ''),
+                                                  'type': value.get('inputType', ''),
+                                                  'required': value.get('required', ''),
+                                                  'description': value.get('helpTip', '')
+                                              })
+                  
+                  print(f"Found {len(params)} parameters for connection {connection_name}")
+                  return {
+                      'connection': connection_name,
+                      'title': connection_title,
+                      'params': params
+                  }
+              except Exception as e:
+                  print(f"Error processing connection file {file_path}: {e}")
+                  return None
+
+          def update_meta_json():
+              """Main function to update meta.json with parameters"""
+              try:
+                  # Get version from GitHub release
+                  version = os.environ.get('GITHUB_REF', '').replace('refs/tags/', '')
+                  print(f"Current version from release: {version}")
+                  
+                  # Process all uischema files
+                  uischema_files = glob.glob('src/main/resources/uischema/*.json')
+                  operation_params = []
+                  connection_params = []
+                  
+                  for file_path in uischema_files:
+                      print(f"Processing file: {file_path}")
+                      op_data = extract_operation_params(file_path)
+                      conn_data = extract_connection_params(file_path)
+                      
+                      if op_data:
+                          operation_params.append(op_data)
+                      if conn_data:
+                          connection_params.append(conn_data)
+                  
+                  print(f"Found {len(operation_params)} operations and {len(connection_params)} connections")
+                  
+                  # Read meta.json
+                  with open('.connector-store/meta.json', 'r') as f:
+                      meta_json = json.load(f)
+                  
+                  # Check if version exists in meta.json
+                  version_exists = False
+                  version_index = -1
+                  
+                  for i, release in enumerate(meta_json.get('releases', [])):
+                      if release.get('tagName') == version:
+                          version_exists = True
+                          version_index = i
+                          break
+                  
+                  if version_exists:
+                      print(f"Version {version} exists in meta.json, updating parameters...")
+                      
+                      # Update operations with parameters
+                      if operation_params:
+                          print("Updating operations...")
+                          existing_ops = {op['name']: op for op in meta_json['releases'][version_index]['operations']}
+                          
+                          # Update existing operations
+                          for op_data in operation_params:
+                              op_name = op_data['operation']
+                              if op_name in existing_ops:
+                                  print(f"Updating parameters for operation: {op_name}")
+                                  existing_ops[op_name]['params'] = op_data['params']
+                              else:
+                                  print(f"Adding new operation: {op_name}")
+                                  meta_json['releases'][version_index]['operations'].append({
+                                      'name': op_name,
+                                      'description': op_data['title'],
+                                      'params': op_data['params'],
+                                      'isHidden': False
+                                  })
+                      
+                      # Update connections with parameters
+                      if connection_params:
+                          print("Updating connections...")
+                          existing_conns = {conn['name']: conn for conn in meta_json['releases'][version_index]['connections']}
+                          
+                          # Update existing connections
+                          for conn_data in connection_params:
+                              conn_name = conn_data['connection']
+                              if conn_name in existing_conns:
+                                  print(f"Updating parameters for connection: {conn_name}")
+                                  existing_conns[conn_name]['params'] = conn_data['params']
+                              else:
+                                  print(f"Adding new connection: {conn_name}")
+                                  meta_json['releases'][version_index]['connections'].append({
+                                      'name': conn_name,
+                                      'description': conn_data['title'],
+                                      'params': conn_data['params']
+                                  })
+                  else:
+                      print(f"Version {version} does not exist in meta.json, creating new release entry...")
+                      
+                      # Get the latest release as template
+                      if meta_json.get('releases'):
+                          latest_release = meta_json['releases'][0].copy()
+                          
+                          # Update the version
+                          latest_release['tagName'] = version
+                          
+                          # Create operations array
+                          if operation_params:
+                              latest_release['operations'] = []
+                              for op_data in operation_params:
+                                  latest_release['operations'].append({
+                                      'name': op_data['operation'],
+                                      'description': op_data['title'],
+                                      'params': op_data['params'],
+                                      'isHidden': False
+                                  })
+                          
+                          # Create connections array
+                          if connection_params:
+                              latest_release['connections'] = []
+                              for conn_data in connection_params:
+                                  latest_release['connections'].append({
+                                      'name': conn_data['connection'],
+                                      'description': conn_data['title'],
+                                      'params': conn_data['params']
+                                  })
+                          
+                          # Add new release to meta.json
+                          meta_json['releases'].insert(0, latest_release)
+                  
+                  # Write back to meta.json
+                  with open('.connector-store/meta.json', 'w') as f:
+                      json.dump(meta_json, f, indent=4)
+                  
+                  print("Successfully updated meta.json")
+                  return 0
+              except Exception as e:
+                  print(f"Error updating meta.json: {e}")
+                  return 1
+
+          # Execute the main function
+          sys.exit(update_meta_json())
+          EOF
+
+      - name: Commit and push changes
+        run: |
+          # Get the current branch name (should be the default branch)
+          CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          echo "Current branch: $CURRENT_BRANCH"
+          
+          # Get the current tag
+          TAG_NAME=${{ github.ref_name }}
+          echo "Current tag: $TAG_NAME"
+          
+          # Configure git with token-based authentication for push
+          git config --global user.name ${{ secrets.WSO2_INTEGRATION_BOT_USERNAME }}
+          git config --global user.email ${{ secrets.WSO2_INTEGRATION_BOT_EMAIL }}
+          
+          # Check if there are changes to commit
+          if git diff --quiet .connector-store/meta.json; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          
+          # Add and commit changes
+          git add .connector-store/meta.json
+          git commit -m "[Workflow] Update meta.json with operation and connection parameters for version $TAG_NAME"
+          
+          # Push directly to the current branch
+          git push https://${{ github.actor }}:${{ secrets.WSO2_INTEGRATION_BOT_TOKEN }}@github.com/${{ github.repository }}.git HEAD:refs/heads/${{ steps.get-default-branch.outputs.default_branch }}
