@@ -24,6 +24,10 @@ jobs:
             echo "default_branch=$DEFAULT_BRANCH" >> "$GITHUB_OUTPUT"
         env:
             GH_TOKEN: ${{ secrets.WSO2_INTEGRATION_BOT_TOKEN }}
+            
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ steps.get-default-branch.outputs.default_branch }}
 
       - name: Update meta.json with parameters
         run: |
@@ -291,7 +295,6 @@ jobs:
       - name: Commit and push changes
         run: |
           
-          
           # Configure git with token-based authentication for push
           git config --global user.name ${{ secrets.WSO2_INTEGRATION_BOT_USERNAME }}
           git config --global user.email ${{ secrets.WSO2_INTEGRATION_BOT_EMAIL }}
@@ -301,9 +304,6 @@ jobs:
             echo "No changes to commit"
             exit 0
           fi
-
-          git checkout ${{ steps.get-default-branch.outputs.default_branch }}
-          git pull --rebase
           
           # Add and commit changes
           git add .connector-store/meta.json
