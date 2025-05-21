@@ -3,7 +3,7 @@ name: Publish Release
 on:
   workflow_dispatch:
     inputs: 
-      version:
+      update_preference:
         description: 'Metadata update preference'
         required: true
         default: 'overwrite'
@@ -80,6 +80,9 @@ jobs:
             target/*.zip
 
       - name: Update meta.json with parameters
+        env:
+          VERSION_TAG: ${{ env.VERSION_TAG }}
+          UPDATE_PREFERENCE: ${{ github.event.inputs.update_preference }}
         run: |
           python3 - <<'EOF'
           import json
@@ -222,6 +225,10 @@ jobs:
                   version = os.environ.get('VERSION_TAG', '').replace('v', '')
                   print(f"Current version from release: {version}")
                   
+                  # Get update preference
+                  update_preference = os.environ.get('UPDATE_PREFERENCE', 'overwrite')
+                  print(f"Update preference: {update_preference}")
+                  
                   # Process all uischema files
                   uischema_files = glob.glob('src/main/resources/uischema/*.json')
                   operation_params = []
@@ -253,7 +260,7 @@ jobs:
                           version_index = i
                           break
                   
-                  if version_exists:
+                  if version_exists and update_preference == 'overwrite':
                       print(f"Version {version} exists in meta.json, updating parameters...")
                       
                       # Update operations with parameters
@@ -295,7 +302,8 @@ jobs:
                                       'params': conn_data['params']
                                   })
                   else:
-                      print(f"Version {version} does not exist in meta.json, creating new release entry...")
+                      # Either version doesn't exist or we want to add a new entry
+                      print(f"Adding a new entry for version {version} to meta.json...")
                       
                       # Get the latest release as template
                       if meta_json.get('releases'):
