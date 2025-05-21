@@ -108,41 +108,9 @@ jobs:
                   
                   params = []
                   
-                  # Check if the necessary structure exists
-                  if 'elements' in data and len(data['elements']) > 0:
-                      # Get the first element's value elements
-                      if 'value' in data['elements'][0] and 'elements' in data['elements'][0]['value']:
-                          elements = data['elements'][0]['value']['elements']
-                          
-                          # Extract top-level attributes
-                          for element in elements:
-                              if element.get('type') == 'attribute' and 'value' in element:
-                                  value = element['value']
-                                  # Skip configRef parameter
-                                  if value.get('name') == 'configRef':
-                                      continue
-                                  params.append({
-                                      'name': value.get('name', ''),
-                                      'type': value.get('inputType', ''),
-                                      'required': value.get('required', ''),
-                                      'description': value.get('helpTip', '')
-                                  })
-                              
-                              # Extract nested attributes in attributeGroups
-                              elif element.get('type') == 'attributeGroup' and 'value' in element and 'elements' in element['value']:
-                                  nested_elements = element['value']['elements']
-                                  for nested in nested_elements:
-                                      if nested.get('type') == 'attribute' and 'value' in nested:
-                                          value = nested['value']
-                                          # Skip configRef parameter
-                                          if value.get('name') == 'configRef':
-                                              continue
-                                          params.append({
-                                              'name': value.get('name', ''),
-                                              'type': value.get('inputType', ''),
-                                              'required': value.get('required', ''),
-                                              'description': value.get('helpTip', '')
-                                          })
+                  # Process all elements recursively
+                  if 'elements' in data:
+                      process_elements(data['elements'], params)
                   
                   print(f"Found {len(params)} parameters for operation {operation_name}")
                   return {
@@ -171,58 +139,9 @@ jobs:
                   
                   params = []
                   
-                  # Check if elements exist
+                  # Process all elements recursively
                   if 'elements' in data:
-                      elements = data['elements']
-                      
-                      # Process top-level attributes
-                      for element in elements:
-                          if element.get('type') == 'attribute' and 'value' in element:
-                              value = element['value']
-                              # Skip configRef parameter
-                              if value.get('name') == 'configRef':
-                                  continue
-                              params.append({
-                                  'name': value.get('name', ''),
-                                  'type': value.get('inputType', ''),
-                                  'required': value.get('required', ''),
-                                  'description': value.get('helpTip', '')
-                              })
-                          
-                          # Process first level attribute groups
-                          elif element.get('type') == 'attributeGroup' and 'value' in element and 'elements' in element['value']:
-                              group_elements = element['value']['elements']
-                              
-                              for group_element in group_elements:
-                                  # Direct attributes in the group
-                                  if group_element.get('type') == 'attribute' and 'value' in group_element:
-                                      value = group_element['value']
-                                      # Skip configRef parameter
-                                      if value.get('name') == 'configRef':
-                                          continue
-                                      params.append({
-                                          'name': value.get('name', ''),
-                                          'type': value.get('inputType', ''),
-                                          'required': value.get('required', ''),
-                                          'description': value.get('helpTip', '')
-                                      })
-                                  
-                                  # Nested attribute groups
-                                  elif group_element.get('type') == 'attributeGroup' and 'value' in group_element and 'elements' in group_element['value']:
-                                      nested_elements = group_element['value']['elements']
-                                      
-                                      for nested in nested_elements:
-                                          if nested.get('type') == 'attribute' and 'value' in nested:
-                                              value = nested['value']
-                                              # Skip configRef parameter
-                                              if value.get('name') == 'configRef':
-                                                  continue
-                                              params.append({
-                                                  'name': value.get('name', ''),
-                                                  'type': value.get('inputType', ''),
-                                                  'required': value.get('required', ''),
-                                                  'description': value.get('helpTip', '')
-                                              })
+                      process_elements(data['elements'], params)
                   
                   print(f"Found {len(params)} parameters for connection {connection_name}")
                   return {
@@ -233,6 +152,28 @@ jobs:
               except Exception as e:
                   print(f"Error processing connection file {file_path}: {e}")
                   return None
+
+          def process_elements(elements, params):
+              """Process elements recursively to extract parameters"""
+              for element in elements:
+                  # Process direct attribute
+                  if element.get('type') == 'attribute' and 'value' in element:
+                      value = element['value']
+                      # Skip configRef parameter
+                      if value.get('name') == 'configRef':
+                          continue
+                      params.append({
+                          'name': value.get('name', ''),
+                          'type': value.get('inputType', ''),
+                          'required': value.get('required', ''),
+                          'description': value.get('helpTip', '')
+                      })
+                  
+                  # Process attribute group
+                  elif element.get('type') == 'attributeGroup' and 'value' in element:
+                      # Process elements in the attribute group
+                      if 'elements' in element['value']:
+                          process_elements(element['value']['elements'], params)
 
           def update_meta_json():
               """Main function to update meta.json with parameters"""
