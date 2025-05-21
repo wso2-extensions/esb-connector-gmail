@@ -117,6 +117,9 @@ jobs:
                           for element in elements:
                               if element.get('type') == 'attribute' and 'value' in element:
                                   value = element['value']
+                                  # Skip configRef parameter
+                                  if value.get('name') == 'configRef':
+                                      continue
                                   params.append({
                                       'name': value.get('name', ''),
                                       'type': value.get('inputType', ''),
@@ -130,6 +133,9 @@ jobs:
                                   for nested in nested_elements:
                                       if nested.get('type') == 'attribute' and 'value' in nested:
                                           value = nested['value']
+                                          # Skip configRef parameter
+                                          if value.get('name') == 'configRef':
+                                              continue
                                           params.append({
                                               'name': value.get('name', ''),
                                               'type': value.get('inputType', ''),
@@ -172,6 +178,9 @@ jobs:
                       for element in elements:
                           if element.get('type') == 'attribute' and 'value' in element:
                               value = element['value']
+                              # Skip configRef parameter
+                              if value.get('name') == 'configRef':
+                                  continue
                               params.append({
                                   'name': value.get('name', ''),
                                   'type': value.get('inputType', ''),
@@ -187,6 +196,9 @@ jobs:
                                   # Direct attributes in the group
                                   if group_element.get('type') == 'attribute' and 'value' in group_element:
                                       value = group_element['value']
+                                      # Skip configRef parameter
+                                      if value.get('name') == 'configRef':
+                                          continue
                                       params.append({
                                           'name': value.get('name', ''),
                                           'type': value.get('inputType', ''),
@@ -201,6 +213,9 @@ jobs:
                                       for nested in nested_elements:
                                           if nested.get('type') == 'attribute' and 'value' in nested:
                                               value = nested['value']
+                                              # Skip configRef parameter
+                                              if value.get('name') == 'configRef':
+                                                  continue
                                               params.append({
                                                   'name': value.get('name', ''),
                                                   'type': value.get('inputType', ''),
@@ -362,9 +377,20 @@ jobs:
           # Get current branch name
           CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
           
+          # Create a new branch for the PR
+          PR_BRANCH="meta-update-${{ env.VERSION_TAG }}"
+          git checkout -b $PR_BRANCH
+          
           # Add and commit changes
           git add .connector-store/meta.json
           git commit -m "[Workflow] Update meta.json with operation and connection parameters for version $VERSION_TAG"
           
-          # Push directly to the current branch
-          git push https://${{ github.actor }}:${{ secrets.WSO2_INTEGRATION_BOT_TOKEN }}@github.com/${{ github.repository }}.git HEAD:refs/heads/$CURRENT_BRANCH
+          # Push to the new branch
+          git push https://${{ github.actor }}:${{ secrets.WSO2_INTEGRATION_BOT_TOKEN }}@github.com/${{ github.repository }}.git $PR_BRANCH
+          
+          # Create PR using GitHub CLI
+          GITHUB_TOKEN=${{ secrets.WSO2_INTEGRATION_BOT_TOKEN }} gh pr create \
+                      --title "Update meta.json for ${{ env.VERSION_TAG }}" \
+                      --body "This PR updates the meta.json file with operation and connection parameters for version ${{ env.VERSION_TAG }}. The configRef parameter has been excluded from the parameter list." \
+                      --base $CURRENT_BRANCH \
+                      --head $PR_BRANCH
