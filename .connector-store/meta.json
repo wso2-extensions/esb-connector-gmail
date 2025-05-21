@@ -17,6 +17,528 @@
     ],
     "releases": [
         {
+            "tagName": "v4.0.3",
+            "products": [
+                "MI 4.4.0"
+            ],
+            "operations": [
+                {
+                    "name": "trashMessage",
+                    "description": "Trash Message",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "ID of the message to move to trash"
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "createDraft",
+                    "description": "Create Draft",
+                    "params": [
+                        {
+                            "name": "subject",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "Subject of the email draft"
+                        },
+                        {
+                            "name": "messageBody",
+                            "type": "expressionTextArea",
+                            "required": "false",
+                            "description": "Content of the email draft"
+                        },
+                        {
+                            "name": "threadId",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "Thread ID to associate with this draft"
+                        },
+                        {
+                            "name": "to",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "Primary recipients"
+                        },
+                        {
+                            "name": "cc",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "Carbon copy recipients"
+                        },
+                        {
+                            "name": "bcc",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "Blind carbon copy recipients"
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "untrashMessage",
+                    "description": "Untrash Message",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "ID of the message to remove from trash"
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "listLabels",
+                    "description": "List Labels",
+                    "params": [],
+                    "isHidden": false
+                },
+                {
+                    "name": "listHistory",
+                    "description": "List History",
+                    "params": [
+                        {
+                            "name": "startHistoryId",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "Returns history records after this history ID"
+                        },
+                        {
+                            "name": "labelId",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "Only return messages with the specified label"
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "untrashThread",
+                    "description": "Untrash Thread",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "ID of the thread to remove from trash"
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "sendMail",
+                    "description": "Send Message",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "Unique identifier for the message"
+                        },
+                        {
+                            "name": "from",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "The 'From' address of the message sender"
+                        },
+                        {
+                            "name": "to",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "The recipient addresses of 'To' (primary) type"
+                        },
+                        {
+                            "name": "cc",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "The recipient addresses of 'CC' (carbon copy) type"
+                        },
+                        {
+                            "name": "bcc",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "The recipient addresses of 'BCC' (blind carbon copy) type"
+                        },
+                        {
+                            "name": "subject",
+                            "type": "expressionTextArea",
+                            "required": "false",
+                            "description": "The subject of the email"
+                        },
+                        {
+                            "name": "messageBody",
+                            "type": "expressionTextArea",
+                            "required": "false",
+                            "description": "Body of the message in any format"
+                        },
+                        {
+                            "name": "threadId",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "The ID of the thread this message belongs to"
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "listAllThreads",
+                    "description": "List Threads",
+                    "params": [],
+                    "isHidden": false
+                },
+                {
+                    "name": "modifyExistingThread",
+                    "description": "Modify Thread",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "ID of the thread to modify"
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "readThread",
+                    "description": "Read Thread",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "ID of the thread to read"
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "updateLabel",
+                    "description": "Update Label",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "ID of the label to update"
+                        },
+                        {
+                            "name": "name",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "The display name of the label"
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "getUserProfile",
+                    "description": "Get User Profile",
+                    "params": [],
+                    "isHidden": false
+                },
+                {
+                    "name": "readLabel",
+                    "description": "",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "ID of the label to read"
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "modifyExistingMessage",
+                    "description": "Modify Message",
+                    "params": [],
+                    "isHidden": false
+                },
+                {
+                    "name": "deleteDraft",
+                    "description": "Delete Draft",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "ID of the draft to move to trash"
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "createLabel",
+                    "description": "Create Label",
+                    "params": [
+                        {
+                            "name": "name",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "The display name of the label"
+                        },
+                        {
+                            "name": "labelListVisibility",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "The visibility of the label in the label list"
+                        },
+                        {
+                            "name": "messageListVisibility",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "The visibility of messages with this label"
+                        },
+                        {
+                            "name": "messagesTotal",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "Total number of messages with this label"
+                        },
+                        {
+                            "name": "messagesUnread",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "Number of unread messages with this label"
+                        },
+                        {
+                            "name": "threadsTotal",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "Total number of threads with this label"
+                        },
+                        {
+                            "name": "threadsUnread",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "Number of unread threads with this label"
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "getUserProfile",
+                    "description": "Get User Profile",
+                    "params": [],
+                    "isHidden": false
+                },
+                {
+                    "name": "sendMailWithAttachment",
+                    "description": "Send Message with Attachment",
+                    "params": [],
+                    "isHidden": false
+                },
+                {
+                    "name": "readDraft",
+                    "description": "Read Draft",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "ID of the draft to read"
+                        },
+                        {
+                            "name": "format",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "The format of the draft message"
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "deleteMessage",
+                    "description": "Delete Message",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "ID of the message to move to trash"
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "listDrafts",
+                    "description": "List Drafts",
+                    "params": [],
+                    "isHidden": false
+                },
+                {
+                    "name": "endSession",
+                    "description": "End Session",
+                    "params": [],
+                    "isHidden": false
+                },
+                {
+                    "name": "trashThread",
+                    "description": "Trash Thread",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "ID of the thread to move to trash"
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "listAllMails",
+                    "description": "List Messages",
+                    "params": [
+                        {
+                            "name": "labelIds",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "Only return messages with labels that match these IDs"
+                        },
+                        {
+                            "name": "q",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "Only return messages matching the specified query"
+                        },
+                        {
+                            "name": "includeSpamTrash",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "Include messages from SPAM and TRASH in the results"
+                        },
+                        {
+                            "name": "pageToken",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "Page token for pagination"
+                        },
+                        {
+                            "name": "maxResults",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "Maximum number of results to return"
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "deleteThread",
+                    "description": "Delete Thread",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "ID of the thread to move to trash"
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "readMail",
+                    "description": "Read Message",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "ID of the message to read"
+                        },
+                        {
+                            "name": "metadataHeaders",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "Metadata headers to include in the response"
+                        },
+                        {
+                            "name": "format",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "The format of the message"
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "deleteLabel",
+                    "description": "Delete Label",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "ID of the label to delete"
+                        }
+                    ],
+                    "isHidden": false
+                }
+            ],
+            "connections": [
+                {
+                    "name": "GMAIL",
+                    "description": "GMAIL Connection",
+                    "params": [
+                        {
+                            "name": "connectionName",
+                            "type": "string",
+                            "required": "true",
+                            "description": "The name for the email connection"
+                        },
+                        {
+                            "name": "clientId",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "Client ID used to connect with the mail server"
+                        },
+                        {
+                            "name": "clientSecret",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "Client Secret to connect with the mail server"
+                        },
+                        {
+                            "name": "refreshToken",
+                            "type": "stringOrExpression",
+                            "required": "true",
+                            "description": "Refresh Token used to connect with the mail server"
+                        },
+                        {
+                            "name": "apiUrl",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "API URL used to connect with the mail server"
+                        },
+                        {
+                            "name": "apiVersion",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "API Version used to connect with the mail server"
+                        },
+                        {
+                            "name": "userId",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "User ID used to connect with the mail server"
+                        },
+                        {
+                            "name": "tokenEndpoint",
+                            "type": "stringOrExpression",
+                            "required": "false",
+                            "description": "Token URL used to connect with the mail server"
+                        }
+                    ]
+                }
+            ],
+            "isHidden": false
+        },
+        {
             "tagName": "v4.0.0",
             "products": [
                 "MI 4.4.0"
