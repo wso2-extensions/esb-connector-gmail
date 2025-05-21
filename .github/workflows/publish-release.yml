@@ -7,6 +7,7 @@ on:
         description: 'Metadata update preference'
         required: true
         default: 'overwrite'
+        type: choice
         options:
           - overwrite
           - add_new_entry
@@ -265,59 +266,76 @@ jobs:
                   with open('.connector-store/meta.json', 'r') as f:
                       meta_json = json.load(f)
                   
-                  # Check if version exists in meta.json
-                  version_exists = False
-                  version_index = -1
-                  
-                  for i, release in enumerate(meta_json.get('releases', [])):
-                      if release.get('tagName') == version:
-                          version_exists = True
-                          version_index = i
-                          break
-                  
-                  if version_exists and update_preference == 'overwrite':
-                      print(f"Version {version} exists in meta.json, updating parameters...")
+                  if update_preference == 'overwrite':
+                      print(f"Overwrite preference selected. Replacing the latest version in meta.json...")
                       
-                      # Update operations with parameters
-                      if operation_params:
-                          print("Updating operations...")
-                          existing_ops = {op['name']: op for op in meta_json['releases'][version_index]['operations']}
+                      if meta_json.get('releases'):
+                          # Create a new release entry based on the latest one
+                          latest_release = meta_json['releases'][0].copy()
                           
-                          # Update existing operations
-                          for op_data in operation_params:
-                              op_name = op_data['operation']
-                              if op_name in existing_ops:
-                                  print(f"Updating parameters for operation: {op_name}")
-                                  existing_ops[op_name]['params'] = op_data['params']
-                              else:
-                                  print(f"Adding new operation: {op_name}")
-                                  meta_json['releases'][version_index]['operations'].append({
-                                      'name': op_name,
+                          # Update the version
+                          latest_release['tagName'] = version
+                          
+                          # Update operations with parameters
+                          if operation_params:
+                              print("Updating operations...")
+                              latest_release['operations'] = []
+                              for op_data in operation_params:
+                                  latest_release['operations'].append({
+                                      'name': op_data['operation'],
                                       'description': op_data['title'],
                                       'params': op_data['params'],
                                       'isHidden': False
                                   })
-                      
-                      # Update connections with parameters
-                      if connection_params:
-                          print("Updating connections...")
-                          existing_conns = {conn['name']: conn for conn in meta_json['releases'][version_index]['connections']}
                           
-                          # Update existing connections
-                          for conn_data in connection_params:
-                              conn_name = conn_data['connection']
-                              if conn_name in existing_conns:
-                                  print(f"Updating parameters for connection: {conn_name}")
-                                  existing_conns[conn_name]['params'] = conn_data['params']
-                              else:
-                                  print(f"Adding new connection: {conn_name}")
-                                  meta_json['releases'][version_index]['connections'].append({
-                                      'name': conn_name,
+                          # Update connections with parameters
+                          if connection_params:
+                              print("Updating connections...")
+                              latest_release['connections'] = []
+                              for conn_data in connection_params:
+                                  latest_release['connections'].append({
+                                      'name': conn_data['connection'],
                                       'description': conn_data['title'],
                                       'params': conn_data['params']
                                   })
+                          
+                          # Replace the first entry with our updated one
+                          meta_json['releases'][0] = latest_release
+                      else:
+                          print("No releases found in meta.json, creating a new entry...")
+                          # Create a new releases array
+                          meta_json['releases'] = []
+                          
+                          # Create a new release entry
+                          new_release = {
+                              'tagName': version
+                          }
+                          
+                          # Add operations
+                          if operation_params:
+                              new_release['operations'] = []
+                              for op_data in operation_params:
+                                  new_release['operations'].append({
+                                      'name': op_data['operation'],
+                                      'description': op_data['title'],
+                                      'params': op_data['params'],
+                                      'isHidden': False
+                                  })
+                          
+                          # Add connections
+                          if connection_params:
+                              new_release['connections'] = []
+                              for conn_data in connection_params:
+                                  new_release['connections'].append({
+                                      'name': conn_data['connection'],
+                                      'description': conn_data['title'],
+                                      'params': conn_data['params']
+                                  })
+                          
+                          # Add new release to meta.json
+                          meta_json['releases'].append(new_release)
                   else:
-                      # Either version doesn't exist or we want to add a new entry
+                      # Add a new entry
                       print(f"Adding a new entry for version {version} to meta.json...")
                       
                       # Get the latest release as template
