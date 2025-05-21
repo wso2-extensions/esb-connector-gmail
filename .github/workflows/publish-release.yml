@@ -222,7 +222,7 @@ jobs:
               """Main function to update meta.json with parameters"""
               try:
                   # Get version from GitHub release
-                  version = os.environ.get('VERSION_TAG', '').replace('v', '')
+                  version = os.environ.get('VERSION_TAG', '')
                   print(f"Current version from release: {version}")
                   
                   # Get update preference
