@@ -91,6 +91,28 @@ jobs:
           import glob
           import sys
 
+          def process_elements(elements, params):
+              """Process elements recursively to extract parameters"""
+              for element in elements:
+                  # Process direct attribute
+                  if element.get('type') == 'attribute' and 'value' in element:
+                      value = element['value']
+                      # Skip configRef parameter
+                      if value.get('name') == 'configRef':
+                          continue
+                      params.append({
+                          'name': value.get('name', ''),
+                          'type': value.get('inputType', ''),
+                          'required': value.get('required', ''),
+                          'description': value.get('helpTip', '')
+                      })
+                  
+                  # Process attribute group
+                  elif element.get('type') == 'attributeGroup' and 'value' in element:
+                      # Process elements in the attribute group
+                      if 'elements' in element['value']:
+                          process_elements(element['value']['elements'], params)
+
           def extract_operation_params(file_path):
               """Extract parameters from operation files"""
               try:
@@ -108,41 +130,9 @@ jobs:
                   
                   params = []
                   
-                  # Check if the necessary structure exists
-                  if 'elements' in data and len(data['elements']) > 0:
-                      # Get the first element's value elements
-                      if 'value' in data['elements'][0] and 'elements' in data['elements'][0]['value']:
-                          elements = data['elements'][0]['value']['elements']
-                          
-                          # Extract top-level attributes
-                          for element in elements:
-                              if element.get('type') == 'attribute' and 'value' in element:
-                                  value = element['value']
-                                  # Skip configRef parameter
-                                  if value.get('name') == 'configRef':
-                                      continue
-                                  params.append({
-                                      'name': value.get('name', ''),
-                                      'type': value.get('inputType', ''),
-                                      'required': value.get('required', ''),
-                                      'description': value.get('helpTip', '')
-                                  })
-                              
-                              # Extract nested attributes in attributeGroups
-                              elif element.get('type') == 'attributeGroup' and 'value' in element and 'elements' in element['value']:
-                                  nested_elements = element['value']['elements']
-                                  for nested in nested_elements:
-                                      if nested.get('type') == 'attribute' and 'value' in nested:
-                                          value = nested['value']
-                                          # Skip configRef parameter
-                                          if value.get('name') == 'configRef':
-                                              continue
-                                          params.append({
-                                              'name': value.get('name', ''),
-                                              'type': value.get('inputType', ''),
-                                              'required': value.get('required', ''),
-                                              'description': value.get('helpTip', '')
-                                          })
+                  # Process all elements recursively
+                  if 'elements' in data:
+                      process_elements(data['elements'], params)
                   
                   print(f"Found {len(params)} parameters for operation {operation_name}")
                   return {
@@ -171,58 +161,9 @@ jobs:
                   
                   params = []
                   
-                  # Check if elements exist
+                  # Process all elements recursively
                   if 'elements' in data:
-                      elements = data['elements']
-                      
-                      # Process top-level attributes
-                      for element in elements:
-                          if element.get('type') == 'attribute' and 'value' in element:
-                              value = element['value']
-                              # Skip configRef parameter
-                              if value.get('name') == 'configRef':
-                                  continue
-                              params.append({
-                                  'name': value.get('name', ''),
-                                  'type': value.get('inputType', ''),
-                                  'required': value.get('required', ''),
-                                  'description': value.get('helpTip', '')
-                              })
-                          
-                          # Process first level attribute groups
-                          elif element.get('type') == 'attributeGroup' and 'value' in element and 'elements' in element['value']:
-                              group_elements = element['value']['elements']
-                              
-                              for group_element in group_elements:
-                                  # Direct attributes in the group
-                                  if group_element.get('type') == 'attribute' and 'value' in group_element:
-                                      value = group_element['value']
-                                      # Skip configRef parameter
-                                      if value.get('name') == 'configRef':
-                                          continue
-                                      params.append({
-                                          'name': value.get('name', ''),
-                                          'type': value.get('inputType', ''),
-                                          'required': value.get('required', ''),
-                                          'description': value.get('helpTip', '')
-                                      })
-                                  
-                                  # Nested attribute groups
-                                  elif group_element.get('type') == 'attributeGroup' and 'value' in group_element and 'elements' in group_element['value']:
-                                      nested_elements = group_element['value']['elements']
-                                      
-                                      for nested in nested_elements:
-                                          if nested.get('type') == 'attribute' and 'value' in nested:
-                                              value = nested['value']
-                                              # Skip configRef parameter
-                                              if value.get('name') == 'configRef':
-                                                  continue
-                                              params.append({
-                                                  'name': value.get('name', ''),
-                                                  'type': value.get('inputType', ''),
-                                                  'required': value.get('required', ''),
-                                                  'description': value.get('helpTip', '')
-                                              })
+                      process_elements(data['elements'], params)
                   
                   print(f"Found {len(params)} parameters for connection {connection_name}")
                   return {
@@ -233,6 +174,36 @@ jobs:
               except Exception as e:
                   print(f"Error processing connection file {file_path}: {e}")
                   return None
+
+          def create_release_entry(version, operation_params, connection_params):
+              """Create a release entry with operations and connections"""
+              # Create base release entry
+              release_entry = {
+                  'tagName': version
+              }
+              
+              # Add operations
+              if operation_params:
+                  release_entry['operations'] = []
+                  for op_data in operation_params:
+                      release_entry['operations'].append({
+                          'name': op_data['operation'],
+                          'description': op_data['title'],
+                          'params': op_data['params'],
+                          'isHidden': False
+                      })
+              
+              # Add connections
+              if connection_params:
+                  release_entry['connections'] = []
+                  for conn_data in connection_params:
+                      release_entry['connections'].append({
+                          'name': conn_data['connection'],
+                          'description': conn_data['title'],
+                          'params': conn_data['params']
+                      })
+                      
+              return release_entry
 
           def update_meta_json():
               """Main function to update meta.json with parameters"""
@@ -266,108 +237,24 @@ jobs:
                   with open('.connector-store/meta.json', 'r') as f:
                       meta_json = json.load(f)
                   
+                  # Create or update release entry
+                  release_entry = create_release_entry(version, operation_params, connection_params)
+                  
+                  # Update meta.json based on preference
                   if update_preference == 'overwrite':
                       print(f"Overwrite preference selected. Replacing the latest version in meta.json...")
-                      
                       if meta_json.get('releases'):
-                          # Create a new release entry based on the latest one
-                          latest_release = meta_json['releases'][0].copy()
-                          
-                          # Update the version
-                          latest_release['tagName'] = version
-                          
-                          # Update operations with parameters
-                          if operation_params:
-                              print("Updating operations...")
-                              latest_release['operations'] = []
-                              for op_data in operation_params:
-                                  latest_release['operations'].append({
-                                      'name': op_data['operation'],
-                                      'description': op_data['title'],
-                                      'params': op_data['params'],
-                                      'isHidden': False
-                                  })
-                          
-                          # Update connections with parameters
-                          if connection_params:
-                              print("Updating connections...")
-                              latest_release['connections'] = []
-                              for conn_data in connection_params:
-                                  latest_release['connections'].append({
-                                      'name': conn_data['connection'],
-                                      'description': conn_data['title'],
-                                      'params': conn_data['params']
-                                  })
-                          
-                          # Replace the first entry with our updated one
-                          meta_json['releases'][0] = latest_release
+                          # Replace the first entry
+                          meta_json['releases'][0] = release_entry
                       else:
-                          print("No releases found in meta.json, creating a new entry...")
-                          # Create a new releases array
-                          meta_json['releases'] = []
-                          
-                          # Create a new release entry
-                          new_release = {
-                              'tagName': version
-                          }
-                          
-                          # Add operations
-                          if operation_params:
-                              new_release['operations'] = []
-                              for op_data in operation_params:
-                                  new_release['operations'].append({
-                                      'name': op_data['operation'],
-                                      'description': op_data['title'],
-                                      'params': op_data['params'],
-                                      'isHidden': False
-                                  })
-                          
-                          # Add connections
-                          if connection_params:
-                              new_release['connections'] = []
-                              for conn_data in connection_params:
-                                  new_release['connections'].append({
-                                      'name': conn_data['connection'],
-                                      'description': conn_data['title'],
-                                      'params': conn_data['params']
-                                  })
-                          
-                          # Add new release to meta.json
-                          meta_json['releases'].append(new_release)
+                          # Create new releases array
+                          meta_json['releases'] = [release_entry]
                   else:
                       # Add a new entry
                       print(f"Adding a new entry for version {version} to meta.json...")
-                      
-                      # Get the latest release as template
-                      if meta_json.get('releases'):
-                          latest_release = meta_json['releases'][0].copy()
-                          
-                          # Update the version
-                          latest_release['tagName'] = version
-                          
-                          # Create operations array
-                          if operation_params:
-                              latest_release['operations'] = []
-                              for op_data in operation_params:
-                                  latest_release['operations'].append({
-                                      'name': op_data['operation'],
-                                      'description': op_data['title'],
-                                      'params': op_data['params'],
-                                      'isHidden': False
-                                  })
-                          
-                          # Create connections array
-                          if connection_params:
-                              latest_release['connections'] = []
-                              for conn_data in connection_params:
-                                  latest_release['connections'].append({
-                                      'name': conn_data['connection'],
-                                      'description': conn_data['title'],
-                                      'params': conn_data['params']
-                                  })
-                          
-                          # Add new release to meta.json
-                          meta_json['releases'].insert(0, latest_release)
+                      if not meta_json.get('releases'):
+                          meta_json['releases'] = []
+                      meta_json['releases'].insert(0, release_entry)
                   
                   # Write back to meta.json
                   with open('.connector-store/meta.json', 'w') as f:
@@ -407,7 +294,7 @@ jobs:
           git push https://${{ github.actor }}:${{ secrets.WSO2_INTEGRATION_BOT_TOKEN }}@github.com/${{ github.repository }}.git $PR_BRANCH
           
           # Create PR using GitHub CLI
-          GITHUB_TOKEN=${{ secrets.WSO2_INTEGRATION_BOT_TOKEN }} gh pr create \
+          GITHUB_TOKEN=${{ secrets.WSO2_INTEGRATION_BOT_TOKEN }} && gh pr create \
                       --title "Update meta.json for ${{ env.VERSION_TAG }}" \
                       --body "This PR updates the meta.json file with operation and connection parameters for version ${{ env.VERSION_TAG }}. The configRef parameter has been excluded from the parameter list." \
                       --base $CURRENT_BRANCH \
