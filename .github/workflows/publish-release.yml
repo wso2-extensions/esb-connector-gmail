@@ -184,11 +184,12 @@ jobs:
                   logger.error(f"Error processing connection file {file_path}: {e}")
                   return None
 
-          def create_release_entry(version, operation_params, connection_params):
+          def create_release_entry(version, products, operation_params, connection_params):
               """Create a release entry with operations and connections"""
               # Create base release entry
               release_entry = {
-                  'tagName': version
+                  'tagName': version,
+                  'products': products
               }
               
               # Add operations
@@ -245,9 +246,17 @@ jobs:
                   # Read meta.json
                   with open('.connector-store/meta.json', 'r') as f:
                       meta_json = json.load(f)
+
+                  products = []
+                  if meta_json.get('releases') and len(meta_json['releases']) > 0:
+                      products = meta_json['releases'][0].get('products', ['MI 4.4.0'])
+                      logger.info(f"Copied products from latest release: {products}")
+                  else:
+                      products = ['MI 4.4.0']
+                      logger.info("No previous releases found, using default product: MI 4.4.0")
                   
                   # Create or update release entry
-                  release_entry = create_release_entry(version, operation_params, connection_params)
+                  release_entry = create_release_entry(version, products, operation_params, connection_params)
                   
                   # Update meta.json based on preference
                   if update_preference == 'overwrite':
@@ -307,6 +316,6 @@ jobs:
           # Create PR using GitHub CLI
           gh pr create \
             --title "Update meta.json for ${{ env.VERSION_TAG }}" \
-            --body "This PR updates the meta.json file with operation and connection parameters for version ${{ env.VERSION_TAG }}. The configRef parameter has been excluded from the parameter list." \
+            --body "This PR updates the meta.json file with operation and connection parameters for version ${{ env.VERSION_TAG }}. The configRef parameter has been excluded from the parameter list. The products array has been copied from the previous release." \
             --base $CURRENT_BRANCH \
             --head $PR_BRANCH
