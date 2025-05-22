@@ -80,7 +80,7 @@ jobs:
             --generate-notes \
             target/*.zip
 
-      - name: Update meta.json with parameters
+      - name: Update meta.json
         env:
           VERSION_TAG: ${{ env.VERSION_TAG }}
           UPDATE_PREFERENCE: ${{ github.event.inputs.update_preference }}
@@ -270,7 +270,7 @@ jobs:
           sys.exit(update_meta_json())
           EOF
       
-      - name: Commit and push change to meta.json
+      - name: Create a PR for updated meta.json
         env:
           GH_TOKEN: ${{ secrets.WSO2_INTEGRATION_BOT_TOKEN }}
         run: |
