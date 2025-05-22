@@ -271,6 +271,8 @@ jobs:
           EOF
       
       - name: Commit and push change to meta.json
+        env:
+          GH_TOKEN: ${{ secrets.WSO2_INTEGRATION_BOT_TOKEN }}
         run: |
           
           # Check if there are changes to commit
@@ -294,8 +296,8 @@ jobs:
           git push https://${{ github.actor }}:${{ secrets.WSO2_INTEGRATION_BOT_TOKEN }}@github.com/${{ github.repository }}.git $PR_BRANCH
           
           # Create PR using GitHub CLI
-          GITHUB_TOKEN=${{ secrets.WSO2_INTEGRATION_BOT_TOKEN }} gh pr create \
-                      --title "Update meta.json for ${{ env.VERSION_TAG }}" \
-                      --body "This PR updates the meta.json file with operation and connection parameters for version ${{ env.VERSION_TAG }}. The configRef parameter has been excluded from the parameter list." \
-                      --base $CURRENT_BRANCH \
-                      --head $PR_BRANCH
+          gh pr create \
+              --title "Update meta.json for ${{ env.VERSION_TAG }}" \
+              --body "This PR updates the meta.json file with operation and connection parameters for version ${{ env.VERSION_TAG }}. The configRef parameter has been excluded from the parameter list." \
+              --base $CURRENT_BRANCH \
+              --head $PR_BRANCH
