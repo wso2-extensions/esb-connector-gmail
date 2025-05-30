@@ -17,7 +17,7 @@
     ],
     "releases": [
         {
-            "tagName": "v4.0.3",
+            "tagName": "v4.0.9",
             "products": [
                 "MI 4.4.0"
             ],
@@ -29,8 +29,23 @@
                         {
                             "name": "id",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "ID of the message to move to trash"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
                         }
                     ],
                     "isHidden": false
@@ -42,38 +57,58 @@
                         {
                             "name": "subject",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "Subject of the email draft"
                         },
                         {
                             "name": "messageBody",
                             "type": "expressionTextArea",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "Content of the email draft"
                         },
                         {
                             "name": "threadId",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "Thread ID to associate with this draft"
                         },
                         {
                             "name": "to",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "Primary recipients"
                         },
                         {
                             "name": "cc",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "Carbon copy recipients"
                         },
                         {
                             "name": "bcc",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "Blind carbon copy recipients"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
                         }
                     ],
                     "isHidden": false
@@ -85,8 +120,23 @@
                         {
                             "name": "id",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "ID of the message to remove from trash"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
                         }
                     ],
                     "isHidden": false
@@ -94,7 +144,22 @@
                 {
                     "name": "listLabels",
                     "description": "List Labels",
-                    "params": [],
+                    "params": [
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
+                        }
+                    ],
                     "isHidden": false
                 },
                 {
@@ -104,14 +169,44 @@
                         {
                             "name": "startHistoryId",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "Returns history records after this history ID"
                         },
                         {
                             "name": "labelId",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "Only return messages with the specified label"
+                        },
+                        {
+                            "name": "pageToken",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Page token for pagination"
+                        },
+                        {
+                            "name": "maxResults",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Maximum number of history records to return"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
                         }
                     ],
                     "isHidden": false
@@ -123,8 +218,23 @@
                         {
                             "name": "id",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "ID of the thread to remove from trash"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
                         }
                     ],
                     "isHidden": false
@@ -136,50 +246,72 @@
                         {
                             "name": "id",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "Unique identifier for the message"
                         },
                         {
                             "name": "from",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "The 'From' address of the message sender"
                         },
                         {
                             "name": "to",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "The recipient addresses of 'To' (primary) type"
                         },
                         {
                             "name": "cc",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "The recipient addresses of 'CC' (carbon copy) type"
                         },
                         {
                             "name": "bcc",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "The recipient addresses of 'BCC' (blind carbon copy) type"
                         },
                         {
                             "name": "subject",
                             "type": "expressionTextArea",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "The subject of the email"
                         },
                         {
                             "name": "messageBody",
                             "type": "expressionTextArea",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "Body of the message in any format"
                         },
                         {
                             "name": "threadId",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "The ID of the thread this message belongs to"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
                         }
                     ],
                     "isHidden": false
@@ -187,7 +319,57 @@
                 {
                     "name": "listAllThreads",
                     "description": "List Threads",
-                    "params": [],
+                    "params": [
+                        {
+                            "name": "labelIds",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Only return threads with labels that match these IDs"
+                        },
+                        {
+                            "name": "q",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Only return threads matching the specified query"
+                        },
+                        {
+                            "name": "includeSpamTrash",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Include threads from SPAM and TRASH in the results"
+                        },
+                        {
+                            "name": "pageToken",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Page token for pagination"
+                        },
+                        {
+                            "name": "maxResults",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Maximum number of results to return"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
+                        }
+                    ],
                     "isHidden": false
                 },
                 {
@@ -197,8 +379,37 @@
                         {
                             "name": "id",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "ID of the thread to modify"
+                        },
+                        {
+                            "name": "addLabelIds",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Labels to add to the thread"
+                        },
+                        {
+                            "name": "removeLabelIds",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Labels to remove from the thread"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
                         }
                     ],
                     "isHidden": false
@@ -210,8 +421,37 @@
                         {
                             "name": "id",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "ID of the thread to read"
+                        },
+                        {
+                            "name": "metadataHeaders",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Metadata headers to include in the response"
+                        },
+                        {
+                            "name": "format",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "The format of the thread messages"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
                         }
                     ],
                     "isHidden": false
@@ -223,14 +463,72 @@
                         {
                             "name": "id",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "ID of the label to update"
                         },
                         {
                             "name": "name",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "The display name of the label"
+                        },
+                        {
+                            "name": "labelListVisibility",
+                            "type": "stringOrExpression",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "The visibility of the label in the label list"
+                        },
+                        {
+                            "name": "messageListVisibility",
+                            "type": "stringOrExpression",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "The visibility of messages with this label"
+                        },
+                        {
+                            "name": "messagesTotal",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Total number of messages with this label"
+                        },
+                        {
+                            "name": "messagesUnread",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Number of unread messages with this label"
+                        },
+                        {
+                            "name": "threadsTotal",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Total number of threads with this label"
+                        },
+                        {
+                            "name": "threadsUnread",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Number of unread threads with this label"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
                         }
                     ],
                     "isHidden": false
@@ -238,7 +536,36 @@
                 {
                     "name": "getUserProfile",
                     "description": "Get User Profile",
-                    "params": [],
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Unique identifier for the email"
+                        },
+                        {
+                            "name": "attachmentId",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Unique identifier for the attachment"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
+                        }
+                    ],
                     "isHidden": false
                 },
                 {
@@ -248,8 +575,23 @@
                         {
                             "name": "id",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "ID of the label to read"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
                         }
                     ],
                     "isHidden": false
@@ -257,7 +599,36 @@
                 {
                     "name": "modifyExistingMessage",
                     "description": "Modify Message",
-                    "params": [],
+                    "params": [
+                        {
+                            "name": "addLabelIds",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Labels to add to the message"
+                        },
+                        {
+                            "name": "removeLabelIds",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Labels to remove from the message"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
+                        }
+                    ],
                     "isHidden": false
                 },
                 {
@@ -267,8 +638,23 @@
                         {
                             "name": "id",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "ID of the draft to move to trash"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
                         }
                     ],
                     "isHidden": false
@@ -280,44 +666,65 @@
                         {
                             "name": "name",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "The display name of the label"
                         },
                         {
                             "name": "labelListVisibility",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "The visibility of the label in the label list"
                         },
                         {
                             "name": "messageListVisibility",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "The visibility of messages with this label"
                         },
                         {
                             "name": "messagesTotal",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "Total number of messages with this label"
                         },
                         {
                             "name": "messagesUnread",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "Number of unread messages with this label"
                         },
                         {
                             "name": "threadsTotal",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "Total number of threads with this label"
                         },
                         {
                             "name": "threadsUnread",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "Number of unread threads with this label"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
                         }
                     ],
                     "isHidden": false
@@ -325,13 +732,99 @@
                 {
                     "name": "getUserProfile",
                     "description": "Get User Profile",
-                    "params": [],
+                    "params": [
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
+                        }
+                    ],
                     "isHidden": false
                 },
                 {
                     "name": "sendMailWithAttachment",
                     "description": "Send Message with Attachment",
-                    "params": [],
+                    "params": [
+                        {
+                            "name": "subject",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "(Optional) Subject of the e-mail message"
+                        },
+                        {
+                            "name": "messageBody",
+                            "type": "expressionTextArea",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "(Optional) Text content of the mail"
+                        },
+                        {
+                            "name": "from",
+                            "type": "stringOrExpression",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Sender's email address."
+                        },
+                        {
+                            "name": "to",
+                            "type": "stringOrExpression",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "A comma separated list of recipients"
+                        },
+                        {
+                            "name": "cc",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "A comma separated list of cc recipients"
+                        },
+                        {
+                            "name": "bcc",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "A comma separated list of bcc recipients"
+                        },
+                        {
+                            "name": "fileName",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "(Optional) A comma separated list of content IDs (should be same as the file names) of attachments"
+                        },
+                        {
+                            "name": "filePath",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "(Optional) A comma separated list of file paths"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned."
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
+                        }
+                    ],
                     "isHidden": false
                 },
                 {
@@ -341,14 +834,30 @@
                         {
                             "name": "id",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "ID of the draft to read"
                         },
                         {
                             "name": "format",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "The format of the draft message"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
                         }
                     ],
                     "isHidden": false
@@ -360,8 +869,23 @@
                         {
                             "name": "id",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "ID of the message to move to trash"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
                         }
                     ],
                     "isHidden": false
@@ -369,13 +893,64 @@
                 {
                     "name": "listDrafts",
                     "description": "List Drafts",
-                    "params": [],
+                    "params": [
+                        {
+                            "name": "includeSpamTrash",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Include drafts from SPAM and TRASH in the results"
+                        },
+                        {
+                            "name": "pageToken",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Page token for pagination"
+                        },
+                        {
+                            "name": "maxResults",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Maximum number of results to return"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
+                        }
+                    ],
                     "isHidden": false
                 },
                 {
                     "name": "endSession",
                     "description": "End Session",
-                    "params": [],
+                    "params": [
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
+                        }
+                    ],
                     "isHidden": false
                 },
                 {
@@ -385,8 +960,23 @@
                         {
                             "name": "id",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "ID of the thread to move to trash"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
                         }
                     ],
                     "isHidden": false
@@ -398,32 +988,51 @@
                         {
                             "name": "labelIds",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "Only return messages with labels that match these IDs"
                         },
                         {
                             "name": "q",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "Only return messages matching the specified query"
                         },
                         {
                             "name": "includeSpamTrash",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "false",
                             "description": "Include messages from SPAM and TRASH in the results"
                         },
                         {
                             "name": "pageToken",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "Page token for pagination"
                         },
                         {
                             "name": "maxResults",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "Maximum number of results to return"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
                         }
                     ],
                     "isHidden": false
@@ -435,8 +1044,23 @@
                         {
                             "name": "id",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "ID of the thread to move to trash"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
                         }
                     ],
                     "isHidden": false
@@ -448,20 +1072,37 @@
                         {
                             "name": "id",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "ID of the message to read"
                         },
                         {
                             "name": "metadataHeaders",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "Metadata headers to include in the response"
                         },
                         {
                             "name": "format",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "",
                             "description": "The format of the message"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
                         }
                     ],
                     "isHidden": false
@@ -473,8 +1114,23 @@
                         {
                             "name": "id",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "ID of the label to delete"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
                         }
                     ],
                     "isHidden": false
@@ -488,55 +1144,62 @@
                         {
                             "name": "connectionName",
                             "type": "string",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "GMAIL_CONNECTION_1",
                             "description": "The name for the email connection"
                         },
                         {
                             "name": "clientId",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "Client ID used to connect with the mail server"
                         },
                         {
                             "name": "clientSecret",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "Client Secret to connect with the mail server"
                         },
                         {
                             "name": "refreshToken",
                             "type": "stringOrExpression",
-                            "required": "true",
+                            "required": true,
+                            "defaultValue": "",
                             "description": "Refresh Token used to connect with the mail server"
                         },
                         {
                             "name": "apiUrl",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "https://www.googleapis.com/gmail",
                             "description": "API URL used to connect with the mail server"
                         },
                         {
                             "name": "apiVersion",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "v1",
                             "description": "API Version used to connect with the mail server"
                         },
                         {
                             "name": "userId",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "me",
                             "description": "User ID used to connect with the mail server"
                         },
                         {
                             "name": "tokenEndpoint",
                             "type": "stringOrExpression",
-                            "required": "false",
+                            "required": false,
+                            "defaultValue": "https://oauth2.googleapis.com/token",
                             "description": "Token URL used to connect with the mail server"
                         }
                     ]
                 }
-            ],
-            "isHidden": false
+            ]
         },
         {
             "tagName": "v4.0.0",
