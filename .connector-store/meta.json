@@ -17,84 +17,98 @@
     ],
     "releases": [
         {
-            "tagName": "v4.0.9",
+            "tagName": "v4.0.10",
             "products": [
                 "MI 4.4.0"
             ],
             "operations": [
                 {
-                    "name": "trashMessage",
-                    "description": "Trash Message",
-                    "params": [
-                        {
-                            "name": "id",
-                            "type": "stringOrExpression",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "ID of the message to move to trash"
-                        },
-                        {
-                            "name": "responseVariable",
-                            "type": "string",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "Name of the variable to which the output of the operation should be assigned"
-                        },
-                        {
-                            "name": "overwriteBody",
-                            "type": "checkbox",
-                            "required": false,
-                            "defaultValue": "false",
-                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
-                        }
-                    ],
-                    "isHidden": false
-                },
-                {
-                    "name": "createDraft",
-                    "description": "Create Draft",
+                    "name": "sendMailWithAttachment",
+                    "description": "Send Message with Attachment",
                     "params": [
                         {
                             "name": "subject",
                             "type": "stringOrExpression",
                             "required": false,
                             "defaultValue": "",
-                            "description": "Subject of the email draft"
+                            "description": "(Optional) Subject of the e-mail message"
                         },
                         {
                             "name": "messageBody",
                             "type": "expressionTextArea",
                             "required": false,
                             "defaultValue": "",
-                            "description": "Content of the email draft"
+                            "description": "(Optional) Text content of the mail"
                         },
                         {
-                            "name": "threadId",
+                            "name": "from",
                             "type": "stringOrExpression",
-                            "required": false,
+                            "required": true,
                             "defaultValue": "",
-                            "description": "Thread ID to associate with this draft"
+                            "description": "Sender's email address."
                         },
                         {
                             "name": "to",
                             "type": "stringOrExpression",
-                            "required": false,
+                            "required": true,
                             "defaultValue": "",
-                            "description": "Primary recipients"
+                            "description": "A comma separated list of recipients"
                         },
                         {
                             "name": "cc",
                             "type": "stringOrExpression",
                             "required": false,
                             "defaultValue": "",
-                            "description": "Carbon copy recipients"
+                            "description": "A comma separated list of cc recipients"
                         },
                         {
                             "name": "bcc",
                             "type": "stringOrExpression",
                             "required": false,
                             "defaultValue": "",
-                            "description": "Blind carbon copy recipients"
+                            "description": "A comma separated list of bcc recipients"
+                        },
+                        {
+                            "name": "fileName",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "(Optional) A comma separated list of content IDs (should be same as the file names) of attachments"
+                        },
+                        {
+                            "name": "filePath",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "(Optional) A comma separated list of file paths"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned."
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "deleteLabel",
+                    "description": "Delete Label",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "ID of the label to delete"
                         },
                         {
                             "name": "responseVariable",
@@ -114,15 +128,15 @@
                     "isHidden": false
                 },
                 {
-                    "name": "untrashMessage",
-                    "description": "Untrash Message",
+                    "name": "deleteThread",
+                    "description": "Delete Thread",
                     "params": [
                         {
                             "name": "id",
                             "type": "stringOrExpression",
                             "required": true,
                             "defaultValue": "",
-                            "description": "ID of the message to remove from trash"
+                            "description": "ID of the thread to move to trash"
                         },
                         {
                             "name": "responseVariable",
@@ -163,36 +177,64 @@
                     "isHidden": false
                 },
                 {
-                    "name": "listHistory",
-                    "description": "List History",
+                    "name": "updateLabel",
+                    "description": "Update Label",
                     "params": [
                         {
-                            "name": "startHistoryId",
+                            "name": "id",
                             "type": "stringOrExpression",
                             "required": true,
                             "defaultValue": "",
-                            "description": "Returns history records after this history ID"
+                            "description": "ID of the label to update"
                         },
                         {
-                            "name": "labelId",
+                            "name": "name",
+                            "type": "stringOrExpression",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "The display name of the label"
+                        },
+                        {
+                            "name": "labelListVisibility",
+                            "type": "stringOrExpression",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "The visibility of the label in the label list"
+                        },
+                        {
+                            "name": "messageListVisibility",
+                            "type": "stringOrExpression",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "The visibility of messages with this label"
+                        },
+                        {
+                            "name": "messagesTotal",
                             "type": "stringOrExpression",
                             "required": false,
                             "defaultValue": "",
-                            "description": "Only return messages with the specified label"
+                            "description": "Total number of messages with this label"
                         },
                         {
-                            "name": "pageToken",
+                            "name": "messagesUnread",
                             "type": "stringOrExpression",
                             "required": false,
                             "defaultValue": "",
-                            "description": "Page token for pagination"
+                            "description": "Number of unread messages with this label"
                         },
                         {
-                            "name": "maxResults",
+                            "name": "threadsTotal",
                             "type": "stringOrExpression",
                             "required": false,
                             "defaultValue": "",
-                            "description": "Maximum number of history records to return"
+                            "description": "Total number of threads with this label"
+                        },
+                        {
+                            "name": "threadsUnread",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Number of unread threads with this label"
                         },
                         {
                             "name": "responseVariable",
@@ -212,15 +254,57 @@
                     "isHidden": false
                 },
                 {
-                    "name": "untrashThread",
-                    "description": "Untrash Thread",
+                    "name": "readMail",
+                    "description": "Read Message",
                     "params": [
                         {
                             "name": "id",
                             "type": "stringOrExpression",
                             "required": true,
                             "defaultValue": "",
-                            "description": "ID of the thread to remove from trash"
+                            "description": "ID of the message to read"
+                        },
+                        {
+                            "name": "metadataHeaders",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Metadata headers to include in the response"
+                        },
+                        {
+                            "name": "format",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "The format of the message"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "trashThread",
+                    "description": "Trash Thread",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "ID of the thread to move to trash"
                         },
                         {
                             "name": "responseVariable",
@@ -317,286 +401,6 @@
                     "isHidden": false
                 },
                 {
-                    "name": "listAllThreads",
-                    "description": "List Threads",
-                    "params": [
-                        {
-                            "name": "labelIds",
-                            "type": "stringOrExpression",
-                            "required": false,
-                            "defaultValue": "",
-                            "description": "Only return threads with labels that match these IDs"
-                        },
-                        {
-                            "name": "q",
-                            "type": "stringOrExpression",
-                            "required": false,
-                            "defaultValue": "",
-                            "description": "Only return threads matching the specified query"
-                        },
-                        {
-                            "name": "includeSpamTrash",
-                            "type": "stringOrExpression",
-                            "required": false,
-                            "defaultValue": "false",
-                            "description": "Include threads from SPAM and TRASH in the results"
-                        },
-                        {
-                            "name": "pageToken",
-                            "type": "stringOrExpression",
-                            "required": false,
-                            "defaultValue": "",
-                            "description": "Page token for pagination"
-                        },
-                        {
-                            "name": "maxResults",
-                            "type": "stringOrExpression",
-                            "required": false,
-                            "defaultValue": "",
-                            "description": "Maximum number of results to return"
-                        },
-                        {
-                            "name": "responseVariable",
-                            "type": "string",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "Name of the variable to which the output of the operation should be assigned"
-                        },
-                        {
-                            "name": "overwriteBody",
-                            "type": "checkbox",
-                            "required": false,
-                            "defaultValue": "false",
-                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
-                        }
-                    ],
-                    "isHidden": false
-                },
-                {
-                    "name": "modifyExistingThread",
-                    "description": "Modify Thread",
-                    "params": [
-                        {
-                            "name": "id",
-                            "type": "stringOrExpression",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "ID of the thread to modify"
-                        },
-                        {
-                            "name": "addLabelIds",
-                            "type": "stringOrExpression",
-                            "required": false,
-                            "defaultValue": "",
-                            "description": "Labels to add to the thread"
-                        },
-                        {
-                            "name": "removeLabelIds",
-                            "type": "stringOrExpression",
-                            "required": false,
-                            "defaultValue": "",
-                            "description": "Labels to remove from the thread"
-                        },
-                        {
-                            "name": "responseVariable",
-                            "type": "string",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "Name of the variable to which the output of the operation should be assigned"
-                        },
-                        {
-                            "name": "overwriteBody",
-                            "type": "checkbox",
-                            "required": false,
-                            "defaultValue": "false",
-                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
-                        }
-                    ],
-                    "isHidden": false
-                },
-                {
-                    "name": "readThread",
-                    "description": "Read Thread",
-                    "params": [
-                        {
-                            "name": "id",
-                            "type": "stringOrExpression",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "ID of the thread to read"
-                        },
-                        {
-                            "name": "metadataHeaders",
-                            "type": "stringOrExpression",
-                            "required": false,
-                            "defaultValue": "",
-                            "description": "Metadata headers to include in the response"
-                        },
-                        {
-                            "name": "format",
-                            "type": "stringOrExpression",
-                            "required": false,
-                            "defaultValue": "",
-                            "description": "The format of the thread messages"
-                        },
-                        {
-                            "name": "responseVariable",
-                            "type": "string",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "Name of the variable to which the output of the operation should be assigned"
-                        },
-                        {
-                            "name": "overwriteBody",
-                            "type": "checkbox",
-                            "required": false,
-                            "defaultValue": "false",
-                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
-                        }
-                    ],
-                    "isHidden": false
-                },
-                {
-                    "name": "updateLabel",
-                    "description": "Update Label",
-                    "params": [
-                        {
-                            "name": "id",
-                            "type": "stringOrExpression",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "ID of the label to update"
-                        },
-                        {
-                            "name": "name",
-                            "type": "stringOrExpression",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "The display name of the label"
-                        },
-                        {
-                            "name": "labelListVisibility",
-                            "type": "stringOrExpression",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "The visibility of the label in the label list"
-                        },
-                        {
-                            "name": "messageListVisibility",
-                            "type": "stringOrExpression",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "The visibility of messages with this label"
-                        },
-                        {
-                            "name": "messagesTotal",
-                            "type": "stringOrExpression",
-                            "required": false,
-                            "defaultValue": "",
-                            "description": "Total number of messages with this label"
-                        },
-                        {
-                            "name": "messagesUnread",
-                            "type": "stringOrExpression",
-                            "required": false,
-                            "defaultValue": "",
-                            "description": "Number of unread messages with this label"
-                        },
-                        {
-                            "name": "threadsTotal",
-                            "type": "stringOrExpression",
-                            "required": false,
-                            "defaultValue": "",
-                            "description": "Total number of threads with this label"
-                        },
-                        {
-                            "name": "threadsUnread",
-                            "type": "stringOrExpression",
-                            "required": false,
-                            "defaultValue": "",
-                            "description": "Number of unread threads with this label"
-                        },
-                        {
-                            "name": "responseVariable",
-                            "type": "string",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "Name of the variable to which the output of the operation should be assigned"
-                        },
-                        {
-                            "name": "overwriteBody",
-                            "type": "checkbox",
-                            "required": false,
-                            "defaultValue": "false",
-                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
-                        }
-                    ],
-                    "isHidden": false
-                },
-                {
-                    "name": "getUserProfile",
-                    "description": "Get User Profile",
-                    "params": [
-                        {
-                            "name": "id",
-                            "type": "string",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "Unique identifier for the email"
-                        },
-                        {
-                            "name": "attachmentId",
-                            "type": "string",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "Unique identifier for the attachment"
-                        },
-                        {
-                            "name": "responseVariable",
-                            "type": "string",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "Name of the variable to which the output of the operation should be assigned"
-                        },
-                        {
-                            "name": "overwriteBody",
-                            "type": "checkbox",
-                            "required": false,
-                            "defaultValue": "false",
-                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
-                        }
-                    ],
-                    "isHidden": false
-                },
-                {
-                    "name": "readLabel",
-                    "description": "",
-                    "params": [
-                        {
-                            "name": "id",
-                            "type": "stringOrExpression",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "ID of the label to read"
-                        },
-                        {
-                            "name": "responseVariable",
-                            "type": "string",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "Name of the variable to which the output of the operation should be assigned"
-                        },
-                        {
-                            "name": "overwriteBody",
-                            "type": "checkbox",
-                            "required": false,
-                            "defaultValue": "false",
-                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
-                        }
-                    ],
-                    "isHidden": false
-                },
-                {
                     "name": "modifyExistingMessage",
                     "description": "Modify Message",
                     "params": [
@@ -641,6 +445,69 @@
                             "required": true,
                             "defaultValue": "",
                             "description": "ID of the draft to move to trash"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "createDraft",
+                    "description": "Create Draft",
+                    "params": [
+                        {
+                            "name": "subject",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Subject of the email draft"
+                        },
+                        {
+                            "name": "messageBody",
+                            "type": "expressionTextArea",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Content of the email draft"
+                        },
+                        {
+                            "name": "threadId",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Thread ID to associate with this draft"
+                        },
+                        {
+                            "name": "to",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Primary recipients"
+                        },
+                        {
+                            "name": "cc",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Carbon copy recipients"
+                        },
+                        {
+                            "name": "bcc",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Blind carbon copy recipients"
                         },
                         {
                             "name": "responseVariable",
@@ -730,6 +597,181 @@
                     "isHidden": false
                 },
                 {
+                    "name": "listAllThreads",
+                    "description": "List Threads",
+                    "params": [
+                        {
+                            "name": "labelIds",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Only return threads with labels that match these IDs"
+                        },
+                        {
+                            "name": "q",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Only return threads matching the specified query"
+                        },
+                        {
+                            "name": "includeSpamTrash",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Include threads from SPAM and TRASH in the results"
+                        },
+                        {
+                            "name": "pageToken",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Page token for pagination"
+                        },
+                        {
+                            "name": "maxResults",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Maximum number of results to return"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "listHistory",
+                    "description": "List History",
+                    "params": [
+                        {
+                            "name": "startHistoryId",
+                            "type": "stringOrExpression",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Returns history records after this history ID"
+                        },
+                        {
+                            "name": "labelId",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Only return messages with the specified label"
+                        },
+                        {
+                            "name": "pageToken",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Page token for pagination"
+                        },
+                        {
+                            "name": "maxResults",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Maximum number of history records to return"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "readLabel",
+                    "description": "",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "ID of the label to read"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "readThread",
+                    "description": "Read Thread",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "ID of the thread to read"
+                        },
+                        {
+                            "name": "metadataHeaders",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Metadata headers to include in the response"
+                        },
+                        {
+                            "name": "format",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "The format of the thread messages"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
                     "name": "getUserProfile",
                     "description": "Get User Profile",
                     "params": [
@@ -751,127 +793,15 @@
                     "isHidden": false
                 },
                 {
-                    "name": "sendMailWithAttachment",
-                    "description": "Send Message with Attachment",
-                    "params": [
-                        {
-                            "name": "subject",
-                            "type": "stringOrExpression",
-                            "required": false,
-                            "defaultValue": "",
-                            "description": "(Optional) Subject of the e-mail message"
-                        },
-                        {
-                            "name": "messageBody",
-                            "type": "expressionTextArea",
-                            "required": false,
-                            "defaultValue": "",
-                            "description": "(Optional) Text content of the mail"
-                        },
-                        {
-                            "name": "from",
-                            "type": "stringOrExpression",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "Sender's email address."
-                        },
-                        {
-                            "name": "to",
-                            "type": "stringOrExpression",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "A comma separated list of recipients"
-                        },
-                        {
-                            "name": "cc",
-                            "type": "stringOrExpression",
-                            "required": false,
-                            "defaultValue": "",
-                            "description": "A comma separated list of cc recipients"
-                        },
-                        {
-                            "name": "bcc",
-                            "type": "stringOrExpression",
-                            "required": false,
-                            "defaultValue": "",
-                            "description": "A comma separated list of bcc recipients"
-                        },
-                        {
-                            "name": "fileName",
-                            "type": "stringOrExpression",
-                            "required": false,
-                            "defaultValue": "",
-                            "description": "(Optional) A comma separated list of content IDs (should be same as the file names) of attachments"
-                        },
-                        {
-                            "name": "filePath",
-                            "type": "stringOrExpression",
-                            "required": false,
-                            "defaultValue": "",
-                            "description": "(Optional) A comma separated list of file paths"
-                        },
-                        {
-                            "name": "responseVariable",
-                            "type": "string",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "Name of the variable to which the output of the operation should be assigned."
-                        },
-                        {
-                            "name": "overwriteBody",
-                            "type": "checkbox",
-                            "required": false,
-                            "defaultValue": "false",
-                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
-                        }
-                    ],
-                    "isHidden": false
-                },
-                {
-                    "name": "readDraft",
-                    "description": "Read Draft",
+                    "name": "untrashMessage",
+                    "description": "Untrash Message",
                     "params": [
                         {
                             "name": "id",
                             "type": "stringOrExpression",
                             "required": true,
                             "defaultValue": "",
-                            "description": "ID of the draft to read"
-                        },
-                        {
-                            "name": "format",
-                            "type": "stringOrExpression",
-                            "required": false,
-                            "defaultValue": "",
-                            "description": "The format of the draft message"
-                        },
-                        {
-                            "name": "responseVariable",
-                            "type": "string",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "Name of the variable to which the output of the operation should be assigned"
-                        },
-                        {
-                            "name": "overwriteBody",
-                            "type": "checkbox",
-                            "required": false,
-                            "defaultValue": "false",
-                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
-                        }
-                    ],
-                    "isHidden": false
-                },
-                {
-                    "name": "deleteMessage",
-                    "description": "Delete Message",
-                    "params": [
-                        {
-                            "name": "id",
-                            "type": "stringOrExpression",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "ID of the message to move to trash"
+                            "description": "ID of the message to remove from trash"
                         },
                         {
                             "name": "responseVariable",
@@ -933,36 +863,22 @@
                     "isHidden": false
                 },
                 {
-                    "name": "endSession",
-                    "description": "End Session",
-                    "params": [
-                        {
-                            "name": "responseVariable",
-                            "type": "string",
-                            "required": true,
-                            "defaultValue": "",
-                            "description": "Name of the variable to which the output of the operation should be assigned"
-                        },
-                        {
-                            "name": "overwriteBody",
-                            "type": "checkbox",
-                            "required": false,
-                            "defaultValue": "false",
-                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
-                        }
-                    ],
-                    "isHidden": false
-                },
-                {
-                    "name": "trashThread",
-                    "description": "Trash Thread",
+                    "name": "getUserProfile",
+                    "description": "Get User Profile",
                     "params": [
                         {
                             "name": "id",
-                            "type": "stringOrExpression",
+                            "type": "string",
                             "required": true,
                             "defaultValue": "",
-                            "description": "ID of the thread to move to trash"
+                            "description": "Unique identifier for the email"
+                        },
+                        {
+                            "name": "attachmentId",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Unique identifier for the attachment"
                         },
                         {
                             "name": "responseVariable",
@@ -1038,15 +954,15 @@
                     "isHidden": false
                 },
                 {
-                    "name": "deleteThread",
-                    "description": "Delete Thread",
+                    "name": "deleteMessage",
+                    "description": "Delete Message",
                     "params": [
                         {
                             "name": "id",
                             "type": "stringOrExpression",
                             "required": true,
                             "defaultValue": "",
-                            "description": "ID of the thread to move to trash"
+                            "description": "ID of the message to move to trash"
                         },
                         {
                             "name": "responseVariable",
@@ -1066,29 +982,99 @@
                     "isHidden": false
                 },
                 {
-                    "name": "readMail",
-                    "description": "Read Message",
+                    "name": "trashMessage",
+                    "description": "Trash Message",
                     "params": [
                         {
                             "name": "id",
                             "type": "stringOrExpression",
                             "required": true,
                             "defaultValue": "",
-                            "description": "ID of the message to read"
+                            "description": "ID of the message to move to trash"
                         },
                         {
-                            "name": "metadataHeaders",
-                            "type": "stringOrExpression",
-                            "required": false,
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
                             "defaultValue": "",
-                            "description": "Metadata headers to include in the response"
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "endSession",
+                    "description": "End Session",
+                    "params": [
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "untrashThread",
+                    "description": "Untrash Thread",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "ID of the thread to remove from trash"
+                        },
+                        {
+                            "name": "responseVariable",
+                            "type": "string",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "Name of the variable to which the output of the operation should be assigned"
+                        },
+                        {
+                            "name": "overwriteBody",
+                            "type": "checkbox",
+                            "required": false,
+                            "defaultValue": "false",
+                            "description": "Replace the Message Body in Message Context with the output of the operation (This will remove the payload from the above variable)."
+                        }
+                    ],
+                    "isHidden": false
+                },
+                {
+                    "name": "readDraft",
+                    "description": "Read Draft",
+                    "params": [
+                        {
+                            "name": "id",
+                            "type": "stringOrExpression",
+                            "required": true,
+                            "defaultValue": "",
+                            "description": "ID of the draft to read"
                         },
                         {
                             "name": "format",
                             "type": "stringOrExpression",
                             "required": false,
                             "defaultValue": "",
-                            "description": "The format of the message"
+                            "description": "The format of the draft message"
                         },
                         {
                             "name": "responseVariable",
@@ -1108,15 +1094,29 @@
                     "isHidden": false
                 },
                 {
-                    "name": "deleteLabel",
-                    "description": "Delete Label",
+                    "name": "modifyExistingThread",
+                    "description": "Modify Thread",
                     "params": [
                         {
                             "name": "id",
                             "type": "stringOrExpression",
                             "required": true,
                             "defaultValue": "",
-                            "description": "ID of the label to delete"
+                            "description": "ID of the thread to modify"
+                        },
+                        {
+                            "name": "addLabelIds",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Labels to add to the thread"
+                        },
+                        {
+                            "name": "removeLabelIds",
+                            "type": "stringOrExpression",
+                            "required": false,
+                            "defaultValue": "",
+                            "description": "Labels to remove from the thread"
                         },
                         {
                             "name": "responseVariable",
